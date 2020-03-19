@@ -33,7 +33,7 @@ rule all:
 
 rule gatk4_GenotypeGVCFs:
     input:
-        vcf="vcf/{sample}.raw.snps.indels.AS.g.vcf"
+        vcf="../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf"
     output:
         vcf="vcf/{sample}.genotype.vcf"
     log:
