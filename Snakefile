@@ -35,7 +35,7 @@ rule gatk4_GenotypeGVCFs:
     input:
         vcf="../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf"
     output:
-        vcf="vcf/{sample}.genotype.vcf"
+        vcf="genotyped/{sample}.genotype.vcf"
     log:
         "logs/gatk_genotype/{sample}.log"
     benchmark:
@@ -54,7 +54,7 @@ rule gatk4_GenotypeGVCFs:
 
 rule gatk4_VariantRecalibrator_indel:
     input:
-        vcf="vcf/{sample}.genotype.vcf"
+        vcf="genotyped/{sample}.genotype.vcf"
     output:
         report="recalibrated/{sample}.recal.indels",
         tranches="recalibrated/{sample}.tranches.indels",
@@ -187,8 +187,6 @@ rule GENMOD:
         "logs/genmod/{sample}.log"
     benchmark:
         "benchmarks/genmod/{sample}.genmod"
-    conda:
-        "envs/genmod.yaml"
     threads: 4
     shell:
         "genmod annotate {input.vcf} --regions -c {CADD} -o {output.vcf}"
