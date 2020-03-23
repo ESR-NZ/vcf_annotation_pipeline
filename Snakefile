@@ -85,7 +85,7 @@ rule gatk4_VariantRecalibrator_indel:
 
 rule gatk4_VariantRecalibrator_SNP:
     input:
-        vcf="vcf/{sample}.genotype.vcf"
+        vcf="genotyped/{sample}.genotype.vcf"
     output:
         report="recalibrated/{sample}.recal.snps",
         tranches="recalibrated/{sample}.tranches.snps",
@@ -117,7 +117,7 @@ rule gatk4_VariantRecalibrator_SNP:
 
 rule gatk4_VQSR_indel:
     input:
-        vcf="vcf/{sample}.genotype.vcf",
+        vcf="genotyped/{sample}.genotype.vcf",
         recal="recalibrated/{sample}.recal.indels",
         tranches="recalibrated/{sample}.tranches.indels"
     output:
