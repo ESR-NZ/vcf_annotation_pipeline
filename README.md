@@ -91,7 +91,7 @@ wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SN
 
 ### Set up the working environment
 
-Set the working directories in the first section of the Snakefile so that the pipeline can access the vcf data output by 'human_genomics_pipeline' (or other vcf data to be annotated) as well as the downloaded databases (eg. VEP, Mills, 1000G snp, Omni, CADD etc.)
+Set the working directories in the first section of the Snakefile so that the pipeline can access the vcf data output by 'human_genomics_pipeline' (or other vcf data to be annotated) as well as the downloaded databases (eg. VEP, Mills, 1000G snp, Omni, CADD etc.). Note that for now, the CADD database will need to downloaded within the vcf_annotation_pipeline working environment due to how the genmod singularity container is mounted in the GENMOD rule.
 
 Create and activate a conda environment with python, snakemake and genmod installed
 
@@ -99,7 +99,6 @@ Create and activate a conda environment with python, snakemake and genmod instal
 conda create --name annot_pipeline_env python=3.7
 conda activate annot_pipeline_env
 conda install --channel bioconda snakemake=5.10.0
-pip install genmod
 ```
 
 ### Run the pipeline
@@ -107,8 +106,8 @@ pip install genmod
 First start a dry run. If there are no issues, start a full run without the -n flag
 
 ```bash
-snakemake -n -r -j 24 -p --use-conda
-snakemake -r -j 24 -p --use-conda
+snakemake -n -r -j 24 -p --use-conda --use-singularity
+snakemake -r -j 24 -p --use-conda --use-singularity
 ```
 
 ## Useful links/papers

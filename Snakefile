@@ -4,7 +4,7 @@ Affiliation: ESR
 Aim: A simple Snakemake workflow to annotate variant call format (VCF) files using GATK4, SnpSift, VEP and genmod. Designed to be used after human_genomics_pipeline.
 Date created: 2020-03-06
 Modified: 2020-03-19
-Run: snakemake -n -r -j 24 -p --use-conda
+Run: snakemake -n -r -j 24 -p --use-conda --use-singularity
 Rule diagram: snakemake --rulegraph | dot -Tpng > rulegraph.png
 Workflow diagram (specific experiment): snakemake --dag | dot -Tpng > dag.png
 """
@@ -25,7 +25,7 @@ INDEL1000G = "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.indel
 SNP1000G = "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
 OMNI = "/store/lkemp/publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
 HAPMAP = "/store/lkemp/publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
-CADD = "/store/lkemp/publicData/CADD/GRCh37/whole_genome_SNVs.tsv.gz"
+CADD = "../vcf_annotation_pipeline_genmod_container/CADD/whole_genome_SNVs.tsv.gz"
 
 rule all:
     input:
@@ -187,6 +187,8 @@ rule GENMOD:
         "logs/genmod/{sample}.log"
     benchmark:
         "benchmarks/genmod/{sample}.genmod"
+    singularity:
+        "shub://sirselim/singularity-genmod:latest"
     threads: 4
     shell:
         "genmod annotate {input.vcf} --regions -c {CADD} -o {output.vcf}"
