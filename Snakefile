@@ -14,17 +14,17 @@ Workflow diagram (specific experiment): snakemake --dag | dot -Tpng > dag.png
 # Define samples from vcf dir in human_genomics_pipeline using wildcards
 SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
 # Temp dir
-TEMPDIR = "/store/lkemp/tmp/"
+TEMPDIR = "../../tmp/"
 # links to reference human genome and various annotation databases
-GENOME = "/store/lkemp/publicData/referenceGenome/gatkBundle/GRCh37/ucsc.hg19.fasta"
-DBSNP = "/store/lkemp/publicData/dbSNP/ncbi/GRCh37/build151/GATK/All_20180423.vcf.gz"
-VEP = "/store/lkemp/publicData/vep/GRCh37/"
-DBNSFP = "/store/lkemp/publicData/dbNSFP/GRCh37/dbNSFPv4.0a.hg19.custombuild.gz"
-MILLS = "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz"
-INDEL1000G = "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.indels.hg19.sites.vcf.gz"
-SNP1000G = "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
-OMNI = "/store/lkemp/publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
-HAPMAP = "/store/lkemp/publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
+GENOME = "../../publicData/referenceGenome/gatkBundle/GRCh37/ucsc.hg19.fasta"
+DBSNP = "../../publicData/dbSNP/ncbi/GRCh37/build151/GATK/All_20180423.vcf.gz"
+VEP = "../../publicData/vep/GRCh37/"
+DBNSFP = "../../publicData/dbNSFP/GRCh37/dbNSFPv4.0a.hg19.custombuild.gz"
+MILLS = "../../publicData/dbSNP/gatkBundle/GRCh37/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz"
+INDEL1000G = "../../publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.indels.hg19.sites.vcf.gz"
+SNP1000G = "../../publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
+OMNI = "../../publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
+HAPMAP = "../../publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
 CADD = "../vcf_annotation_pipeline_genmod_container/CADD/whole_genome_SNVs.tsv.gz"
 
 rule all:
