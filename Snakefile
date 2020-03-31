@@ -25,7 +25,7 @@ INDEL1000G = "../../publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.indels.hg19.
 SNP1000G = "../../publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
 OMNI = "../../publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
 HAPMAP = "../../publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
-CADD = "../vcf_annotation_pipeline_genmod_container/CADD/whole_genome_SNVs.tsv.gz"
+CADD = "../vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
 
 rule all:
     input:
