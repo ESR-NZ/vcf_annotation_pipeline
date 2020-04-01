@@ -21,15 +21,15 @@ SAMPLEDIR = config["SAMPLEDIR"]
 SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
 
 # links to reference human genome and various annotation databases
-GENOME = expand("{publicdir}referenceGenome/gatkBundle/GRCh37/ucsc.hg19.fasta", publicdir=PUBLICDIR)
-DBSNP = expand("{publicdir}dbSNP/ncbi/GRCh37/build151/GATK/All_20180423.vcf.gz", publicdir=PUBLICDIR)
-VEP = expand("{publicdir}vep/GRCh37/", publicdir=PUBLICDIR)
-DBNSFP = expand("{publicdir}dbNSFP/GRCh37/dbNSFPv4.0a.hg19.custombuild.gz", publicdir=PUBLICDIR)
-MILLS = expand("{publicdir}dbSNP/gatkBundle/GRCh37/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-INDEL1000G = expand("{publicdir}dbSNP/gatkBundle/GRCh37/1000G_phase1.indels.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-SNP1000G = expand("{publicdir}dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-OMNI = expand("{publicdir}genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-HAPMAP = expand("{publicdir}haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
+GENOME = expand("{publicdir}ucsc.hg19.fasta", publicdir=PUBLICDIR)
+DBSNP = expand("{publicdir}All_20180423.vcf.gz", publicdir=PUBLICDIR)
+VEP = expand("{publicdir}GRCh37/", publicdir=PUBLICDIR)
+DBNSFP = expand("{publicdir}dbNSFPv4.0a.hg19.custombuild.gz", publicdir=PUBLICDIR)
+MILLS = expand("{publicdir}Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
+INDEL1000G = expand("{publicdir}1000G_phase1.indels.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
+SNP1000G = expand("{publicdir}1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
+OMNI = expand("{publicdir}1000G_omni2.5.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
+HAPMAP = expand("{publicdir}hapmap_3.3.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
 CADD = "../vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
 
 rule all:
