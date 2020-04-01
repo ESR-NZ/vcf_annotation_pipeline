@@ -101,6 +101,12 @@ aria2c -c -s 10 https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whol
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz.tbi
 ```
 
+Download dbNSFP
+
+```bash
+# Info/code coming
+```
+
 ### Set up the working environment
 
 Set the the appropriate variables in 'config.yaml'. Set the file directory to the publicData folder containing the data we downloaded above
