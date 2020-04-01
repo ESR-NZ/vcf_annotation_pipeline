@@ -26,10 +26,10 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 
 ### Download data/repository
 
-Clone the [vcf_annotation_pipeline](https://github.com/leahkemp/vcf_annotation_pipeline.git) repository
+Clone the [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repository
 
 ```bash
-git clone https://github.com/leahkemp/vcf_annotation_pipeline.git
+git clone https://github.com/ESR-NZ/vcf_annotation_pipeline
 ```
 
 Create a publicData directory to download public databases into
