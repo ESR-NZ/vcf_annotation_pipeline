@@ -1,0 +1,7 @@
+# set file directory of downloaded public data
+PUBLICDIR:
+  "/store/lkemp/publicData/"
+
+# set file directory of your vcf files (such as the those output by human_genomics_pipeline)
+SAMPLEDIR:
+  "../human_genomics_pipeline/vcf/"

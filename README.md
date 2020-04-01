@@ -32,6 +32,13 @@ Clone the [vcf_annotation_pipeline](https://github.com/leahkemp/vcf_annotation_p
 git clone https://github.com/leahkemp/vcf_annotation_pipeline.git
 ```
 
+Create a publicData directory to download public databases into
+
+```bash
+mkdir publicData
+cd publicData
+```
+
 Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
@@ -42,6 +49,7 @@ conda activate download_data_env
 conda install -c bioconda ensembl-vep=99.2
 # Download VEP database
 vep_install -a cf -s homo_sapiens -y GRCh37 -c /store/lkemp/publicData/vep/GRCh37 --CONVERT
+conda deactivate
 ```
 
 Download [other databases](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
@@ -83,16 +91,31 @@ bgzip hapmap_3.3.hg19.sites.vcf
 tabix hapmap_3.3.hg19.sites.vcf.gz
 ```
 
-Download [CADD database and it's associated index file](https://cadd.gs.washington.edu/download)
+Download [CADD database and it's associated index file](https://cadd.gs.washington.edu/download). (For now, the CADD database will need to be downloaded within the vcf_annotation_pipeline working environment due to how the genmod singularity container is mounted in the GENMOD rule.)
 
 ```bash
+cd ../vcf_annotation_pipeline/
+mkdir CADD
+cd CADD
 aria2c -c -s 10 https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz.tbi
 ```
 
 ### Set up the working environment
 
-Set the working directories in the first section of the Snakefile so that the pipeline can access the vcf data output by 'human_genomics_pipeline' (or other vcf data to be annotated) as well as the downloaded databases (eg. VEP, Mills, 1000G snp, Omni, CADD etc.). Note that for now, the CADD database will need to downloaded within the vcf_annotation_pipeline working environment due to how the genmod singularity container is mounted in the GENMOD rule.
+Set the the appropriate variables in 'config.yaml'. Set the file directory to the publicData folder containing the data we downloaded above
+
+```yaml
+PUBLICDIR:
+  "/store/lkemp/publicData/"
+```
+
+Also set the file directory to the variant call format (vcf) files such as those output by human_genomics_pipeline
+
+```yaml
+SAMPLEDIR:
+  "../human_genomics_pipeline/vcf/"
+```
 
 Create and activate a conda environment with python, snakemake and genmod installed
 
