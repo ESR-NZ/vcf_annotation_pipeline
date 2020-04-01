@@ -15,8 +15,6 @@ PUBLICDIR = config["PUBLICDIR"]
 
 SAMPLEDIR = config["SAMPLEDIR"]
 
-# Adapt paths as appropriate
-
 # Define samples from vcf dir in human_genomics_pipeline using wildcards
 SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
 

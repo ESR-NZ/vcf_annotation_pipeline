@@ -117,6 +117,8 @@ SAMPLEDIR:
   "../human_genomics_pipeline/vcf/"
 ```
 
+For now, also manually set this file directory in line 19 of the Snakefile to ensure the global wildcard function works correctly
+
 Create and activate a conda environment with python, snakemake and genmod installed
 
 ```bash
