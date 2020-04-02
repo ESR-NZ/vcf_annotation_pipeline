@@ -1,0 +1,6 @@
+!.snakemake/        
+!annotated/
+!benchmarks/
+!genotyped/
+!logs/
+!recalibrated/
