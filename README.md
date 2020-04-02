@@ -8,7 +8,7 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
   - [Table of contents](#table-of-contents)
   - [Workflow diagram](#workflow-diagram)
   - [Set up and run vcf_annotation_pipeline against GRCh37](#set-up-and-run-vcfannotationpipeline-against-grch37)
-    - [Download data/repository](#download-datarepository)
+    - [Download pipeline and annotation databases](#download-pipeline-and-annotation-databases)
     - [Set up the working environment](#set-up-the-working-environment)
     - [Run the pipeline](#run-the-pipeline)
     - [Resource allocation](#resource-allocation)
@@ -20,11 +20,11 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 
 ## Set up and run vcf_annotation_pipeline against GRCh37
 
-- **Prerequisite software:**  [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/)
+- **Prerequisite software:** [Git](https://git-scm.com/), [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/)
 - **Prerequisite data:** Reference human genome and dbSNP database (see [Database downloads for human_genomics_pipeline and vcf_annotation_pipeline](https://github.com/leahkemp/documentation/blob/master/downloads_for_genomic_pipelines.md#reference-human-genome) for more information on downloading this data)
 - **OS:** Validated on Ubuntu 16.04
 
-### Download data/repository
+### Download pipeline and annotation databases
 
 Clone the [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repository
 
