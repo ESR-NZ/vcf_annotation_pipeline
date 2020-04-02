@@ -20,8 +20,8 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 
 ## Set up and run vcf_annotation_pipeline against GRCh37
 
-- **Prerequisite software:**  [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/), [aria2](https://anaconda.org/bioconda/aria2)
-- **Prerequisite data:** Reference human genome and dbSNP database
+- **Prerequisite software:**  [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/)
+- **Prerequisite data:** Reference human genome and dbSNP database (see [Database downloads for human_genomics_pipeline and vcf_annotation_pipeline](https://github.com/leahkemp/documentation/blob/master/downloads_for_genomic_pipelines.md#reference-human-genome) for more information on downloading this data)
 - **OS:** Validated on Ubuntu 16.04
 
 ### Download data/repository
@@ -39,35 +39,27 @@ mkdir publicData
 cd publicData
 ```
 
-Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
+Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda version of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
 
 ```bash
-# Create a conda environment
 conda create --name download_data_env python=3.7
 conda activate download_data_env
-# Install conda package of VEP
 conda install -c bioconda ensembl-vep=99.2
-# Download VEP database
 vep_install -a cf -s homo_sapiens -y GRCh37 -c /store/lkemp/publicData/vep/GRCh37 --CONVERT
 conda deactivate
 ```
 
-Download [other databases](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
+Download other databases from the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
 
 ```bash
-# Mills
 wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
-# 1000G indel
 wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/1000G_phase1.indels.hg19.sites.vcf.gz
-# 1000G snp
 wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz
-# Omni
 wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/1000G_omni2.5.hg19.sites.vcf.gz
-# Hapmap3
 wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/hapmap_3.3.hg19.sites.vcf.gz
 ```
 
-Convert files to bgzip format and create their associated index files
+Convert these files to bgzip format in order to create their associated index files
 
 ```bash
 gunzip Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
@@ -91,17 +83,17 @@ bgzip hapmap_3.3.hg19.sites.vcf
 tabix hapmap_3.3.hg19.sites.vcf.gz
 ```
 
-Download [CADD database and it's associated index file](https://cadd.gs.washington.edu/download). (For now, the CADD database will need to be downloaded within the vcf_annotation_pipeline working environment due to how the genmod singularity container is mounted in the GENMOD rule.)
+Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file. (For now, the CADD database needs to be downloaded within the vcf_annotation_pipeline working environment/folder because of to how the genmod singularity container is mounted).
 
 ```bash
 cd ../vcf_annotation_pipeline/
 mkdir CADD
 cd CADD
-aria2c -c -s 10 https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz
+wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz.tbi
 ```
 
-Download dbNSFP
+Download [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP)
 
 ```bash
 # Info/code coming
@@ -109,23 +101,27 @@ Download dbNSFP
 
 ### Set up the working environment
 
-Set the the appropriate variables in 'config.yaml'. Set the file directory to the publicData folder containing the data we downloaded above
+Set the the appropriate variables in 'config.yaml'. Set the file directory of the publicData folder containing the data we downloaded above
 
 ```yaml
 PUBLICDIR:
   "/store/lkemp/publicData/"
 ```
 
-Also set the file directory to the variant call format (vcf) files such as those output by human_genomics_pipeline
+Also set the file directory to the input variant call format (vcf) data such as that output by [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
 
 ```yaml
 SAMPLEDIR:
   "../human_genomics_pipeline/vcf/"
 ```
 
-For now, also manually set this file directory in line 19 of the Snakefile to ensure the global wildcard function works correctly
+For now, also manually set this same file directory in line 19 of the Snakefile to ensure the global wildcard function works correctly
 
-Create and activate a conda environment with python, snakemake and genmod installed
+```bash
+SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
+```
+
+Create and activate a conda environment with python and snakemake installed
 
 ```bash
 conda create --name annot_pipeline_env python=3.7
