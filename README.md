@@ -8,11 +8,11 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
   - [Table of contents](#table-of-contents)
   - [Workflow diagram](#workflow-diagram)
   - [Set up and run vcf_annotation_pipeline against GRCh37](#set-up-and-run-vcfannotationpipeline-against-grch37)
-    - [Download pipeline and annotation databases](#download-pipeline-and-annotation-databases)
-    - [Set up the working environment](#set-up-the-working-environment)
-    - [Run the pipeline](#run-the-pipeline)
-    - [Resource allocation](#resource-allocation)
-  - [Evaluation of a pipeline run](#evaluation-of-a-pipeline-run)
+    - [1. Clone pipeline](#1-clone-pipeline)
+    - [2. Download reference genome and vcf annotation databases](#2-download-reference-genome-and-vcf-annotation-databases)
+    - [3. Set up the working environment](#3-set-up-the-working-environment)
+    - [4. Run the pipeline](#4-run-the-pipeline)
+    - [5. Evaluation of the run](#5-evaluation-of-the-run)
   - [Useful links/papers](#useful-linkspapers)
 
 ## Workflow diagram
@@ -25,13 +25,15 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 - **Prerequisite data:** Reference human genome and dbSNP database (see [Database downloads for human_genomics_pipeline and vcf_annotation_pipeline](https://github.com/leahkemp/documentation/blob/master/downloads_for_genomic_pipelines.md#reference-human-genome) for more information on downloading this data)
 - **OS:** Validated on Ubuntu 16.04
 
-### Download pipeline and annotation databases
+### 1. Clone pipeline
 
 Clone the [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repository
 
 ```bash
 git clone https://github.com/ESR-NZ/vcf_annotation_pipeline
 ```
+
+### 2. Download reference genome and vcf annotation databases
 
 Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda version of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
 
@@ -90,7 +92,7 @@ Download [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP)
 # Info/code coming
 ```
 
-### Set up the working environment
+### 3. Set up the working environment
 
 Set the the working directories in the config file (config.yaml) to the reference genome, vcf annotation databases and the input variant call format (vcf) data such as those output by [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
 
@@ -108,7 +110,7 @@ conda activate annot_pipeline_env
 conda install --channel bioconda snakemake=5.10.0
 ```
 
-### Run the pipeline
+### 4. Run the pipeline
 
 First start a dry run. If there are no issues, start a full run without the -n flag
 
@@ -117,17 +119,15 @@ snakemake -n -r -j 24 -p --use-conda --use-singularity
 snakemake -r -j 24 -p --use-conda --use-singularity
 ```
 
-### Resource allocation
-
 If necessary, the maximum number of CPU cores allocated by changing the -j flag in the snakemake program. For example to scale to run on a laptop/desktop...
 
 ```bash
 snakemake -r -j 4 -p --use-conda --use-singularity
 ```
 
-## Evaluation of a pipeline run
+### 5. Evaluation of the run
 
-Generate an interactive html report of the pipeline run with...
+Generate an interactive html report of the pipeline run
 
 ```bash
 snakemake --report report.html
