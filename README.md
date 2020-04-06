@@ -2,10 +2,7 @@
 
 A simple Snakemake workflow to annotate variant call format (VCF) files using GATK4, SnpSift, VEP and genmod. Designed to be used after human_genomics_pipeline.
 
-## Table of contents
-
 - [vcf_annotation_pipeline](#vcfannotationpipeline)
-  - [Table of contents](#table-of-contents)
   - [Workflow diagram](#workflow-diagram)
   - [Set up and run vcf_annotation_pipeline against GRCh37](#set-up-and-run-vcfannotationpipeline-against-grch37)
     - [1. Clone pipeline](#1-clone-pipeline)
