@@ -4,7 +4,7 @@ rule SnpSift:
     output:
         vcf="annotated/{sample}.vqsr.recal.dbnsfp.vcf"
     params:
-        dbsnp=expand("{dbsnp}", dbsnp=config["dbSNP"])
+        dbnsfp=expand("{dbnsfp}", dbnsfp=config["dbNSFP"])
     log: 
         "logs/snpsift/{sample}.log"
     benchmark:
@@ -12,7 +12,7 @@ rule SnpSift:
     conda:
         "../envs/dbnsfp.yaml"
     shell:
-        "SnpSift -Xmx16g dbnsfp -v -db {params.dbsnp} {input.vcf} > {output.vcf}"
+        "SnpSift -Xmx16g dbnsfp -v -db {params.dbnsfp} {input.vcf} > {output.vcf}"
 
 rule VEP:
     input:
