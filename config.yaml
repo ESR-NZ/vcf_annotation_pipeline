@@ -1,7 +1,16 @@
-# set file directory of downloaded public data
-PUBLICDIR:
-  "/store/lkemp/publicData/"
+##### Set file directories #####
 
-# set file directory of your vcf files (such as the those output by human_genomics_pipeline)
-SAMPLEDIR:
-  "../human_genomics_pipeline/vcf/"
+# links to reference human genome and various vcf annotation databases
+GENOME: "/store/lkemp/publicData/referenceGenome/gatkBundle/GRCh37/ucsc.hg19.fasta"
+dbSNP: "/store/lkemp/publicData/dbSNP/ncbi/GRCh37/build151/GATK/All_20180423.vcf.gz"
+VEP: "/store/lkemp/publicData/vep/GRCh37/"
+dbNSFP: "/store/lkemp/publicData/dbNSFP/GRCh37/dbNSFPv4.0a.hg19.custombuild.gz"
+MILLS: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz"
+INDEL1000G: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.indels.hg19.sites.vcf.gz"
+SNP1000G: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
+OMNI: "/store/lkemp/publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
+HAPMAP: "/store/lkemp/publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
+CADD: "/store/lkemp/exome_project/vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
+
+# Input vcf files (such as the those output by human_genomics_pipeline)
+SAMPLEDIR: "/store/lkemp/exome_project/human_genomics_pipeline/vcf/"

@@ -9,28 +9,14 @@ Rule diagram: snakemake --rulegraph | dot -Tpng > rulegraph.png
 Workflow diagram (specific experiment): snakemake --dag | dot -Tpng > dag.png
 """
 
-##### load config and set global variables #####
+##### load config and other set up #####
 
 configfile: "config.yaml"
 
-PUBLICDIR = config["PUBLICDIR"]
-
-SAMPLEDIR = config["SAMPLEDIR"]
+SAMPLEDIR=config["SAMPLEDIR"]
 
 # Define samples from vcf dir in human_genomics_pipeline using wildcards
-SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
-
-# links to reference human genome and various annotation databases
-GENOME = expand("{publicdir}ucsc.hg19.fasta", publicdir=PUBLICDIR)
-DBSNP = expand("{publicdir}All_20180423.vcf.gz", publicdir=PUBLICDIR)
-VEP = expand("{publicdir}GRCh37/", publicdir=PUBLICDIR)
-DBNSFP = expand("{publicdir}dbNSFPv4.0a.hg19.custombuild.gz", publicdir=PUBLICDIR)
-MILLS = expand("{publicdir}Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-INDEL1000G = expand("{publicdir}1000G_phase1.indels.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-SNP1000G = expand("{publicdir}1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-OMNI = expand("{publicdir}1000G_omni2.5.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-HAPMAP = expand("{publicdir}hapmap_3.3.hg19.sites.vcf.gz", publicdir=PUBLICDIR)
-CADD = "../../vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
+SAMPLES,=glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
 
 ##### target rules #####
 

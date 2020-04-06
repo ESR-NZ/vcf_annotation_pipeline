@@ -33,13 +33,6 @@ Clone the [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pip
 git clone https://github.com/ESR-NZ/vcf_annotation_pipeline
 ```
 
-Create a publicData directory to download public databases into
-
-```bash
-mkdir publicData
-cd publicData
-```
-
 Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda version of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
 
 ```bash
@@ -87,9 +80,6 @@ tabix hapmap_3.3.hg19.sites.vcf.gz
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file. (For now, the CADD database needs to be downloaded within the vcf_annotation_pipeline working environment/folder because of to how the genmod singularity container is mounted).
 
 ```bash
-cd ../vcf_annotation_pipeline/
-mkdir CADD
-cd CADD
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz.tbi
 ```
@@ -102,21 +92,9 @@ Download [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP)
 
 ### Set up the working environment
 
-Set the the appropriate variables in 'config.yaml'. Set the file directory of the publicData folder containing the data we downloaded above
+Set the the working directories in the config file (config.yaml) to the reference genome, vcf annotation databases and the input variant call format (vcf) data such as those output by [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
 
-```yaml
-PUBLICDIR:
-  "/store/lkemp/publicData/"
-```
-
-Also set the file directory to the input variant call format (vcf) data such as that output by [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
-
-```yaml
-SAMPLEDIR:
-  "../human_genomics_pipeline/vcf/"
-```
-
-For now, also manually set this same file directory in line 19 of the Snakefile to ensure the global wildcard function works correctly
+For now, also manually set the file directory to the input vcf data in line 19 of the Snakefile to ensure the global wildcard function works correctly
 
 ```bash
 SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")

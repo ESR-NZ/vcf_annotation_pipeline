@@ -3,6 +3,9 @@ rule gatk4_GenotypeGVCFs:
         vcf=expand("{sampledir}{sample}.raw.snps.indels.AS.g.vcf", sampledir=SAMPLEDIR, sample=SAMPLES)
     output:
         vcf="genotyped/{sample}.genotype.vcf"
+    params:
+        genome=expand("{genome}", genome=config["GENOME"]),
+        dbsnp=expand("{dbsnp}", dbsnp=config["dbSNP"])
     log:
         "logs/gatk_genotype/{sample}.log"
     benchmark:
@@ -12,9 +15,9 @@ rule gatk4_GenotypeGVCFs:
     shell:
         """
         gatk --java-options "-Xmx64g -Xms64g" GenotypeGVCFs \
-            -R {GENOME} \
+            -R {params.genome} \
             -V {input.vcf} \
             -O {output.vcf} \
-            -D {DBSNP} \
+            -D {params.dbsnp} \
             -G StandardAnnotation -G AS_StandardAnnotation
         """
