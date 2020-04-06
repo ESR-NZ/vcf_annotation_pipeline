@@ -58,7 +58,7 @@ rule gatk4_VariantRecalibrator_SNP:
             -resource:hapmap,known=false,training=true,truth=true,prior=15.0 {HAPMAP} \
             -resource:omni,known=false,training=true,truth=false,prior=12.0 {OMNI} \
             -resource:1000G,known=false,training=true,truth=false,prior=10.0 {SNP1000G} \
-            -resource:resource:dbsnp,known=true,training=false,truth=false,prior=2.0 {DBSNP}
+            -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 {DBSNP}
         """
 
 rule gatk4_VQSR_indel:
