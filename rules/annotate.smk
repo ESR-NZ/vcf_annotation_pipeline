@@ -12,7 +12,7 @@ rule SnpSift:
     conda:
         "../envs/dbnsfp.yaml"
     shell:
-        "SnpSift -Xmx16g dbnsfp -v -db {params:dbsnp} {input.vcf} > {output.vcf}"
+        "SnpSift -Xmx16g dbnsfp -v -db {params.dbsnp} {input.vcf} > {output.vcf}"
 
 rule VEP:
     input:
