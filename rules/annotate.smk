@@ -11,6 +11,8 @@ rule SnpSift:
         "benchmarks/snipsift/{sample}.dbnsfp"
     conda:
         "../envs/dbnsfp.yaml"
+    message:
+        "Using the dbNSFP database to annotate variants with functional predictions from multiple algorithms (SIFT, Polyphen2, LRT and MutationTaster, PhyloP and GERP++, etc.)"
     shell:
         "SnpSift -Xmx16g dbnsfp -v -db {params.dbnsfp} {input.vcf} > {output.vcf}"
 
@@ -29,6 +31,8 @@ rule VEP:
     conda:
         "../envs/vep.yaml"
     threads: 4
+    message:
+        "Using the VEP database to determine the effect of the variants"
     shell:
         "vep -v --assembly GRCh37 --cache --dir {params.vep} --fasta {params.genome} -i {input.vcf} -o {output.vcf} --stats_text --everything --vcf --force_overwrite --offline"
 
@@ -46,5 +50,7 @@ rule GENMOD:
     singularity:
         "shub://sirselim/singularity-genmod:latest"
     threads: 4
+    message:
+        "Using the CADD database to annotate the variants with deleteriousness scores"
     shell:
         "genmod annotate {input.vcf} --regions -c {params.cadd} -o {output.vcf}"

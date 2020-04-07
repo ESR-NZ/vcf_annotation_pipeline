@@ -12,6 +12,8 @@ rule gatk4_GenotypeGVCFs:
         "benchmarks/gatk_genotype/{sample}.genotype"
     conda:
         "../envs/gatk4.yaml"
+    message:
+        "Running initial genotyping on vcf data from this directory: {input}"
     shell:
         """
         gatk --java-options "-Xmx64g -Xms64g" GenotypeGVCFs \

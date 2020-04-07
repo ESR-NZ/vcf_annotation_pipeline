@@ -16,6 +16,8 @@ rule gatk4_VariantRecalibrator_indel:
         "benchmarks/gatk_recal_indels/{sample}.recal.indels"
     conda:
         "../envs/gatk4.yaml"
+    message:
+        "Building a recalibration model to score variant quality for indels"
     shell:
         """
         gatk --java-options "-Xmx24g -Xms24g" VariantRecalibrator \
@@ -53,6 +55,8 @@ rule gatk4_VariantRecalibrator_SNP:
         "benchmarks/gatk_recal_snps/{sample}.snp.recal"
     conda:
         "../envs/gatk4.yaml"
+    message:
+        "Building a recalibration model to score variant quality for snps"
     shell:
         """
         gatk --java-options "-Xmx3g -Xms3g" VariantRecalibrator \
@@ -87,6 +91,8 @@ rule gatk4_VQSR_indel:
         "benchmarks/gatk_vqsr_indels/{sample}.recal.indels"
     conda:
         "../envs/gatk4.yaml"
+    message:
+        "Using machine learning to filter out probable artifacts from the variant callset (indels)"
     threads: 4
     shell:
         "gatk ApplyVQSR -R {params.genome} -V {input.vcf} -O {output.vcf} --recal-file {input.recal} --tranches-file {input.tranches} --truth-sensitivity-filter-level 99.0 --create-output-variant-index true -mode INDEL"
@@ -106,6 +112,8 @@ rule gatk4_VQSR_SNP:
         "benchmarks/gatk_vqsr_snps/{sample}.recal.snps"
     conda:
         "../envs/gatk4.yaml"
+    message:
+        "Using machine learning to filter out probable artifacts from the variant callset (snps)"
     threads: 4
     shell:
         "gatk ApplyVQSR -R {params.genome} -V {input.vcf} -O {output.vcf} --recal-file {input.recal} --tranches-file {input.tranches} --truth-sensitivity-filter-level 99.0 --create-output-variant-index true -mode SNP"
