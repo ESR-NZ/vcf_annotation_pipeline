@@ -24,10 +24,27 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 
 ### 1. Clone pipeline
 
-Clone the [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repository
+Clone the [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repository into the same directory as a folder named 'vcf' containing your variant call format (vcf) files such as those output by [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
 
 ```bash
 git clone https://github.com/ESR-NZ/vcf_annotation_pipeline
+```
+
+Required folder structure:
+
+```bash
+
+.
+|___vcf/
+|     |___sample1.vcf
+|     |___sample2.vcf
+|
+|___vcf_annotation_pipeline/
+      |___envs/
+      |___rules/
+      |___Snakefile
+      |___config.yaml
+
 ```
 
 ### 2. Download reference genome and vcf annotation databases
@@ -91,13 +108,7 @@ Download [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP)
 
 ### 3. Set up the working environment
 
-Set the the working directories in the config file (config.yaml) to the reference genome, vcf annotation databases and the input variant call format (vcf) data such as those output by [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
-
-For now, also manually set the file directory to the input vcf data in line 19 of the Snakefile to ensure the global wildcard function works correctly
-
-```bash
-SAMPLES, = glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
-```
+Set the the working directories in the config file (config.yaml) to the reference genome and vcf annotation databases.
 
 Create and activate a conda environment with python and snakemake installed
 

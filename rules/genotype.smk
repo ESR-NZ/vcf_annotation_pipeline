@@ -1,6 +1,6 @@
 rule gatk4_GenotypeGVCFs:
     input:
-        vcf=expand("{sampledir}{sample}.raw.snps.indels.AS.g.vcf", sampledir=SAMPLEDIR, sample=SAMPLES)
+        vcf=expand("../vcf/{sample}.raw.snps.indels.AS.g.vcf", sample=SAMPLES)
     output:
         vcf="genotyped/{sample}.genotype.vcf"
     params:

@@ -11,6 +11,3 @@ SNP1000G: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.hig
 OMNI: "/store/lkemp/publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
 HAPMAP: "/store/lkemp/publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
 CADD: "/store/lkemp/exome_project/vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
-
-# Input vcf files (such as the those output by human_genomics_pipeline)
-SAMPLEDIR: "/store/lkemp/exome_project/human_genomics_pipeline/vcf/"

@@ -13,10 +13,8 @@ Workflow diagram (specific experiment): snakemake --dag | dot -Tpng > dag.png
 
 configfile: "config.yaml"
 
-SAMPLEDIR=config["SAMPLEDIR"]
-
 # Define samples from vcf dir in human_genomics_pipeline using wildcards
-SAMPLES,=glob_wildcards("../human_genomics_pipeline/vcf/{sample}.raw.snps.indels.AS.g.vcf")
+SAMPLES,=glob_wildcards("../vcf/{sample}.raw.snps.indels.AS.g.vcf")
 
 ##### target rules #####
 
