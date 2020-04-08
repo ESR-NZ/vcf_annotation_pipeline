@@ -1,10 +1,10 @@
 rule SnpSift:
     input:
-        vcf="recalibrated/{sample}.vqsr.recal.vcf"
+        vcf = "recalibrated/{sample}.vqsr.recal.vcf"
     output:
-        vcf="annotated/{sample}.vqsr.recal.dbnsfp.vcf"
+        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vcf"
     params:
-        dbnsfp=expand("{dbnsfp}", dbnsfp=config["dbNSFP"])
+        dbnsfp = expand("{dbnsfp}", dbnsfp = config["dbNSFP"])
     log: 
         "logs/snpsift/{sample}.log"
     benchmark:
@@ -14,16 +14,18 @@ rule SnpSift:
     message:
         "Using the dbNSFP database to annotate variants with functional predictions from multiple algorithms (SIFT, Polyphen2, LRT and MutationTaster, PhyloP and GERP++, etc.)"
     shell:
-        "SnpSift -Xmx16g dbnsfp -v -db {params.dbnsfp} {input.vcf} > {output.vcf}"
+        "SnpSift -Xmx16g dbnsfp {input.vcf} > {output.vcf} -db {params.dbnsfp} -v"
 
 rule VEP:
     input:
-        vcf="annotated/{sample}.vqsr.recal.dbnsfp.vcf"
+        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vcf"
     output:
-        vcf="annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf"
+        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf"
     params:
-        genome=expand("{genome}", genome=config["GENOME"]),
-        vep=expand("{vep}", vep=config["VEP"])
+        genome = expand("{genome}", genome = config["GENOME"]),
+        vep = expand("{vep}", vep = config["VEP"]),
+        assembly = "GRCh37",
+        extra = " --format=vcf --cache --stats_text --everything --vcf --force_overwrite --offline"
     log: 
         "logs/vep/{sample}.log"
     benchmark:
@@ -34,15 +36,15 @@ rule VEP:
     message:
         "Using the VEP database to determine the effect of the variants"
     shell:
-        "vep -v --assembly GRCh37 --cache --dir {params.vep} --fasta {params.genome} -i {input.vcf} -o {output.vcf} --stats_text --everything --vcf --format=vcf --force_overwrite --offline"
+        "vep -i {input.vcf} -o {output.vcf} --fasta {params.genome} -v --dir {params.vep} --assembly {params.assembly} {params.extra}"
 
 rule GENMOD:
     input:
-        vcf="annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf"
+        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf"
     output:
-        vcf="annotated/{sample}.vqsr.recal.dbnsfp.vep.genmod.vcf"
+        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vep.genmod.vcf"
     params:
-        cadd=expand("{cadd}", cadd=config["CADD"])
+        cadd = expand("{cadd}", cadd = config["CADD"])
     log: 
         "logs/genmod/{sample}.log"
     benchmark:
@@ -53,4 +55,4 @@ rule GENMOD:
     message:
         "Using the CADD database to annotate the variants with deleteriousness scores"
     shell:
-        "genmod annotate {input.vcf} --regions -c {params.cadd} -o {output.vcf}"
+        "genmod annotate {input.vcf} -o {output.vcf} -c {params.cadd} --regions"
