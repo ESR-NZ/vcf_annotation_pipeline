@@ -34,7 +34,7 @@ rule VEP:
     message:
         "Using the VEP database to determine the effect of the variants"
     shell:
-        "vep -v --assembly GRCh37 --cache --dir {params.vep} --fasta {params.genome} -i {input.vcf} -o {output.vcf} --stats_text --everything --vcf --force_overwrite --offline"
+        "vep -v --assembly GRCh37 --cache --dir {params.vep} --fasta {params.genome} -i {input.vcf} -o {output.vcf} --stats_text --everything --vcf --format=vcf --force_overwrite --offline"
 
 rule GENMOD:
     input:
