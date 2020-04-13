@@ -3,5 +3,4 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - bioconda::ensembl-vep =99.2
-  
+  - bioconda::ensembl-vep =99.2  
