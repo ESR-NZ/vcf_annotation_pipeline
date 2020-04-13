@@ -115,7 +115,7 @@ Create and activate a conda environment with python and snakemake installed
 ```bash
 conda create --name annot_pipeline_env python=3.7
 conda activate annot_pipeline_env
-conda install --channel bioconda snakemake=5.10.0
+conda install --channel bioconda snakemake=5.14.0
 ```
 
 ### 4. Run the pipeline
