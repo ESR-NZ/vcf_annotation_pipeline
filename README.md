@@ -100,11 +100,7 @@ wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SN
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz.tbi
 ```
 
-Download [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP)
-
-```bash
-# Info/code coming
-```
+Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) build by following [this documentation](https://github.com/GenomicsAotearoa/dbNSFP_build)
 
 ### 3. Set up the working environment
 
