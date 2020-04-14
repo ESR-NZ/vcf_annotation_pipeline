@@ -90,7 +90,7 @@ rule gatk4_VQSR_indel:
     params:
         genome = expand("{genome}", genome=config["GENOME"]),
         mode = "INDEL",
-        sensitivity = "99.0",
+        sensitivity = expand("{sensitivity}", sensitivity = config["SENSITIVITY"]),
         varindex = "true"
     log:
         "logs/gatk_vqsr_indels/{sample}.log"
@@ -114,7 +114,7 @@ rule gatk4_VQSR_SNP:
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         mode = "SNP",
-        sensitivity = "99.0",
+        sensitivity = expand("{sensitivity}", sensitivity = config["SENSITIVITY"]),
         varindex = "true"
     log:
         "logs/gatk_vqsr_snps/{sample}.log"

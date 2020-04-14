@@ -11,3 +11,13 @@ SNP1000G: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh37/1000G_phase1.snps.hig
 OMNI: "/store/lkemp/publicData/genotype/gatkBundle/GRCh37/1000G_omni2.5.hg19.sites.vcf.gz"
 HAPMAP: "/store/lkemp/publicData/haplotype/gatkBundle/GRCh37/hapmap_3.3.hg19.sites.vcf.gz"
 CADD: "/store/lkemp/exome_project/vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
+
+##### configuration #####
+
+# rule: gatk4_VQSR_indel and gatk4_VQSR_SNP
+# software: gatk ApplyVQSR. See https://gatk.broadinstitute.org/hc/en-us/articles/360037056912-ApplyVQSR
+# parameter: -ts-filter-level
+# description: The truth sensitivity level at which to start filtering
+SENSITIVITY: "99.0"
+
+# rule 
