@@ -119,14 +119,14 @@ conda install --channel bioconda snakemake=5.14.0
 First start a dry run. If there are no issues, start a full run without the -n flag
 
 ```bash
-snakemake -n -r -j 24 -p --use-conda --use-singularity
-snakemake -r -j 24 -p --use-conda --use-singularity
+snakemake -n -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
+snakemake -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
 ```
 
 If necessary, the maximum number of CPU cores allocated by changing the -j flag in the snakemake program. For example to scale to run on a laptop/desktop...
 
 ```bash
-snakemake -r -j 4 -p --use-conda --use-singularity
+snakemake -r -j 4 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
 ```
 
 ### 5. Evaluation of the run
