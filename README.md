@@ -134,7 +134,7 @@ snakemake -r -j 4 -p --use-conda --use-singularity --configfile config_GRCh37.ya
 Generate an interactive html report of the pipeline run
 
 ```bash
-snakemake --report report.html
+snakemake --report report.html --configfile config_GRCh37.yaml
 ```
 
 ## Useful links/papers
