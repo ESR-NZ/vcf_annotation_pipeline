@@ -58,7 +58,7 @@ rule gatk4_VariantRecalibrator_SNP:
         snp1000g = expand("{snp1000g}", snp1000g = config["SNP1000G"]),
         dbsnp = expand("{dbsnp}", dbsnp = config["dbSNP"]),
         mode = "SNP",
-        gaussians = "6"
+        gaussians = "4"
     log: 
         "logs/gatk_recal_snps/{sample}.log"
     benchmark:
