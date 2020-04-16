@@ -14,13 +14,17 @@ Workflow diagram (specific experiment): snakemake --dag --configfile config_GRCh
 # Define samples from vcf dir in human_genomics_pipeline using wildcards
 SAMPLES,=glob_wildcards("../vcf/{sample}.raw.snps.indels.AS.g.vcf")
 
-##### target rules #####
+##### Target rules #####
 
 rule all:
     input:
         expand("annotated/{sample}.vqsr.recal.dbnsfp.vep.genmod.vcf", sample=SAMPLES)
 
-##### load rules #####
+##### Set up report #####
+
+report: config["REPORTWORKFLOW"]
+
+##### Load rules #####
 
 include: "rules/genotype.smk"
 include: "rules/recalibrate.smk"
