@@ -69,7 +69,7 @@ rule gatk4_VariantRecalibrator_SNP:
         "Building a recalibration model to score variant quality for snps"
     shell:
         """
-        gatk --java-options "-Xmx3g -Xms3g" VariantRecalibrator \
+        gatk --java-options "-Xmx24g -Xms24g" VariantRecalibrator \
             -V {input.vcf} \
             -O {output.recal} \
             --tranches-file {output.tranches} \
