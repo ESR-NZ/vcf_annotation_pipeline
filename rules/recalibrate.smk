@@ -102,7 +102,7 @@ rule gatk4_VQSR_indel:
         "Using machine learning to filter out probable artifacts from the variant callset (indels)"
     threads: 4
     shell:
-        "gatk ApplyVQSR -V {input.vcf} --recal-file {input.recal} -O {output.vcf} --tranches-file {input.tranches} -R {params.genome} -mode {params.mode} -ts-filter-level {params.sensitivity} -OVI {params.varindex)"
+        "gatk ApplyVQSR -V {input.vcf} --recal-file {input.recal} -O {output.vcf} --tranches-file {input.tranches} -R {params.genome} -mode {params.mode} -ts-filter-level {params.sensitivity} -OVI {params.varindex}"
 
 rule gatk4_VQSR_SNP:
     input:
@@ -126,4 +126,4 @@ rule gatk4_VQSR_SNP:
         "Using machine learning to filter out probable artifacts from the variant callset (snps)"
     threads: 4
     shell:
-        "gatk ApplyVQSR -V {input.vcf} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} -R {params.genome} -mode {params.mode} -ts-filter-level {params.sensitivity} -OVI {params.varindex)"
+        "gatk ApplyVQSR -V {input.vcf} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} -R {params.genome} -mode {params.mode} -ts-filter-level {params.sensitivity} -OVI {params.varindex}"
