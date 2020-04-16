@@ -2,10 +2,12 @@ rule gatk4_VariantRecalibrator_indel:
     input:
         vcf = "genotyped/{sample}.genotype.vcf"
     output:
-        report = "recalibrated/{sample}.recal.indels",
+        report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
+        report("recalibrated/{sample}.tranches.indels.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
+        recal = "recalibrated/{sample}.recal.indels",
         tranches = "recalibrated/{sample}.tranches.indels",
-        rscript = "recalibrated/{sample}.plots.indels.R",
-        report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels")
+        rscript = "recalibrated/{sample}.plots.indels.R"
+
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         mills = expand("{mills}", mills = config["MILLS"]),
@@ -25,7 +27,7 @@ rule gatk4_VariantRecalibrator_indel:
         """
         gatk --java-options "-Xmx24g -Xms24g" VariantRecalibrator \
             -V {input.vcf} \
-            -O {output.report} \
+            -O {output.recal} \
             --tranches-file {output.tranches} \
             --rscript-file {output.rscript} \
             -R {params.genome} \
@@ -43,10 +45,12 @@ rule gatk4_VariantRecalibrator_SNP:
     input:
         vcf = "genotyped/{sample}.genotype.vcf"
     output:
-        report = "recalibrated/{sample}.recal.snps",
+        report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
+        report("recalibrated/{sample}.tranches.snps.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
+        recal = "recalibrated/{sample}.recal.snps",
         tranches = "recalibrated/{sample}.tranches.snps",
-        rscript = "recalibrated/{sample}.plots.snps.R",
-        report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's")
+        rscript = "recalibrated/{sample}.plots.snps.R"
+
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         hapmap = expand("{hapmap}", hapmap = config["HAPMAP"]),
@@ -67,7 +71,7 @@ rule gatk4_VariantRecalibrator_SNP:
         """
         gatk --java-options "-Xmx3g -Xms3g" VariantRecalibrator \
             -V {input.vcf} \
-            -O {output.report} \
+            -O {output.recal} \
             --tranches-file {output.tranches} \
             --rscript-file {output.rscript} \
             -R {params.genome} \

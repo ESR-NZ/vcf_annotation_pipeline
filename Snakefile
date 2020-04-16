@@ -18,8 +18,6 @@ SAMPLES,=glob_wildcards("../vcf/{sample}.raw.snps.indels.AS.g.vcf")
 
 rule all:
     input:
-        expand("recalibrated/{sample}.plots.indels.R.pdf", sample = SAMPLES),
-	expand("recalibrated/{sample}.plots.snps.R.pdf", sample = SAMPLES),
         expand("annotated/{sample}.vqsr.recal.dbnsfp.vep.genmod.vcf", sample = SAMPLES)
 
 ##### Set up report #####
