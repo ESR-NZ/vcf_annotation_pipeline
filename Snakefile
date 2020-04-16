@@ -5,8 +5,8 @@ Aim: A simple Snakemake workflow to annotate variant call format (VCF) files usi
 Date created: 2020-03-06
 Modified: 2020-03-19
 Run: snakemake -n -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
-Rule diagram: snakemake --rulegraph | dot -Tpng > rulegraph.png
-Workflow diagram (specific experiment): snakemake --dag | dot -Tpng > dag.png
+Rule diagram: snakemake --rulegraph --configfile config_GRCh37.yaml | dot -Tpng > rulegraph.png
+Workflow diagram (specific experiment): snakemake --dag --configfile config_GRCh37.yaml | dot -Tpng > dag.png
 """
 
 ##### Set up #####
