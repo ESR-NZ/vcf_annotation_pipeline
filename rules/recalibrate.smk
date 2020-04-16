@@ -67,7 +67,7 @@ rule gatk4_VariantRecalibrator_SNP:
             -V {input.vcf} \
             -O {output.report} \
             --tranches-file {output.tranches} \
-            --rscript-file {output.rscript} \            
+            --rscript-file {output.rscript} \
             -R {params.genome} \
             -resource:hapmap,known=false,training=true,truth=true,prior=15.0 {params.hapmap} \
             -resource:omni,known=false,training=true,truth=false,prior=12.0 {params.omni} \
