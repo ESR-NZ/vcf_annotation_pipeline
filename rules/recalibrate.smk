@@ -3,7 +3,6 @@ rule gatk4_VariantRecalibrator_indel:
         vcf = "genotyped/{sample}.genotype.vcf"
     output:
         report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
-        report("recalibrated/{sample}.tranches.indels.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
         recal = "recalibrated/{sample}.recal.indels",
         tranches = "recalibrated/{sample}.tranches.indels",
         rscript = "recalibrated/{sample}.plots.indels.R"
