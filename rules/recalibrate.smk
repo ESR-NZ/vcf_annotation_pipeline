@@ -4,7 +4,8 @@ rule gatk4_VariantRecalibrator_indel:
     output:
         report = "recalibrated/{sample}.recal.indels",
         tranches = "recalibrated/{sample}.tranches.indels",
-        rscript = "recalibrated/{sample}.plots.indels.R"
+        rscript = "recalibrated/{sample}.plots.indels.R",
+        report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels")
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         mills = expand("{mills}", mills = config["MILLS"]),
@@ -44,7 +45,8 @@ rule gatk4_VariantRecalibrator_SNP:
     output:
         report = "recalibrated/{sample}.recal.snps",
         tranches = "recalibrated/{sample}.tranches.snps",
-        rscript = "recalibrated/{sample}.plots.snps.R"
+        rscript = "recalibrated/{sample}.plots.snps.R",
+        report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's")
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         hapmap = expand("{hapmap}", hapmap = config["HAPMAP"]),
