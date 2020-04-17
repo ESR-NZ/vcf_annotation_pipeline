@@ -24,7 +24,7 @@ rule VEP:
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         vep = expand("{vep}", vep = config["VEP"]),
-        assembly = expand("{build}", build = config["BUILD"],
+        assembly = expand("{build}", build = config["BUILD"]),
         extra = " --format=vcf --cache --stats_text --everything --vcf --force_overwrite --offline"
     log: 
         "logs/vep/{sample}.log"
