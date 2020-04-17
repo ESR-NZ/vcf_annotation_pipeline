@@ -14,6 +14,12 @@ Workflow diagram (specific experiment): snakemake --dag --configfile config_GRCh
 # Define samples from vcf dir in human_genomics_pipeline using wildcards
 SAMPLES,=glob_wildcards("../vcf/{sample}.raw.snps.indels.AS.g.vcf")
 
+if config['BUILD'] == "GRCh37":
+    MODELRULE = "rules/model_37.smk"
+elif config['BUILD'] == "GRCh38":
+    MODELRULE = "rules/model_38.smk"
+else: print("ERROR: Please choose either the GRCh37 or GRCh38 build of the reference human genome")
+
 ##### Target rules #####
 
 rule all:
@@ -27,5 +33,6 @@ report: config["REPORTWORKFLOW"]
 ##### Load rules #####
 
 include: "rules/genotype.smk"
+include: MODELRULE
 include: "rules/recalibrate.smk"
 include: "rules/annotate.smk"

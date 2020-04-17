@@ -52,7 +52,7 @@ Required folder structure:
 Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda version of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
 
 ```bash
-conda create --name download_data_env python=3.7
+conda create -n download_data_env python=3.7
 conda activate download_data_env
 conda install -c bioconda ensembl-vep=99.2
 vep_install -a cf -s homo_sapiens -y GRCh37 -c /store/lkemp/publicData/vep/GRCh37 --CONVERT
@@ -104,6 +104,11 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 ### 3. Set up the working environment
 
+Choose the appropriate config file:
+
+- use 'config_GRCh37.yaml' to run the pipeline against the GRCh37 reference genome
+- use 'config_GRCh38.yaml' to run the pipeline against the GRCh38 reference genome
+
 Set the the working directories in the config file (config.yaml) to the reference genome and vcf annotation databases.
 
 Create and activate a conda environment with python and snakemake installed
@@ -119,14 +124,14 @@ conda install -c bioconda snakemake=5.14.0
 First start a dry run. If there are no issues, start a full run without the -n flag
 
 ```bash
-snakemake -n -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
-snakemake -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
+snakemake -n -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh38.yaml
+snakemake -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh38.yaml
 ```
 
 If necessary, the maximum number of CPU cores allocated by changing the -j flag in the snakemake program. For example to scale to run on a laptop/desktop...
 
 ```bash
-snakemake -r -j 4 -p --use-conda --use-singularity --configfile config_GRCh37.yaml
+snakemake -r -j 4 -p --use-conda --use-singularity --configfile config_GRCh38.yaml
 ```
 
 ### 5. Evaluation of the run
@@ -134,7 +139,7 @@ snakemake -r -j 4 -p --use-conda --use-singularity --configfile config_GRCh37.ya
 Generate an interactive html report of the pipeline run
 
 ```bash
-snakemake --report report.html --configfile config_GRCh37.yaml
+snakemake --report report.html --configfile config_GRCh38.yaml
 ```
 
 ## Useful links/papers
