@@ -109,9 +109,9 @@ Set the the working directories in the config file (config.yaml) to the referenc
 Create and activate a conda environment with python and snakemake installed
 
 ```bash
-conda create --name annot_pipeline_env python=3.7
+conda create -n annot_pipeline_env python=3.7
 conda activate annot_pipeline_env
-conda install --channel bioconda snakemake=5.14.0
+conda install -c bioconda snakemake=5.14.0
 ```
 
 ### 4. Run the pipeline
