@@ -20,8 +20,8 @@ rule VEP:
     input:
         vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vcf"
     output:
-        report("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_summary.txt", caption = "../report/annotation.rst", category = "Variant effect predictor"),
-        report("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_warnings.txt", caption = "../report/annotation.rst", category = "Variant effect predictor"),
+        report("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
+        report("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_warnings.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
         vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf"
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
