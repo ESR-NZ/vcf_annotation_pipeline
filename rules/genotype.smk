@@ -16,7 +16,7 @@ rule gatk4_GenotypeGVCFs:
         "Running initial genotyping on vcf data from this directory: {input}"
     shell:
         """
-        gatk --java-options "-Xmx64g -Xms64g" GenotypeGVCFs \
+        gatk --java-options "-Xmx24g -Xms24g" GenotypeGVCFs \
             -V {input.vcf} \
             -O {output.vcf} \
             -R {params.genome} \
