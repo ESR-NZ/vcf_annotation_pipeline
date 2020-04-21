@@ -109,7 +109,7 @@ Choose the appropriate config file:
 - use 'config_GRCh37.yaml' to run the pipeline against the GRCh37 reference genome
 - use 'config_GRCh38.yaml' to run the pipeline against the GRCh38 reference genome
 
-Set the the working directories in the config file (config.yaml) to the reference genome and vcf annotation databases.
+Set the the working directories in the config file to the reference genome and vcf annotation databases.
 
 Create and activate a conda environment with python and snakemake installed
 
