@@ -121,7 +121,7 @@ conda install -c bioconda snakemake=5.14.0
 
 ### 4. Run the pipeline
 
-First start a dry run. If there are no issues, start a full run without the -n flag
+First start a dry run. If there are no issues, start a full run without the -n flag. Specify the config file to be used.
 
 ```bash
 snakemake -n -r -j 24 -p --use-conda --use-singularity --configfile config_GRCh38.yaml
