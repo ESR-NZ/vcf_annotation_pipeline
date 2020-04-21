@@ -24,6 +24,8 @@ else: print("ERROR: Please choose either the GRCh37 or GRCh38 build of the refer
 
 rule all:
     input:
+        expand("{sample}.vqsr.recal.dbnsfp.vep.vcf_summary.txt", sample = SAMPLES),
+        expand("{sample}.vqsr.recal.dbnsfp.vep.vcf_warnings.txt", sample = SAMPLES),
         expand("annotated/{sample}.vqsr.recal.dbnsfp.vep.genmod.vcf", sample = SAMPLES)
 
 ##### Set up report #####
