@@ -2,7 +2,7 @@ rule SnpSift:
     input:
         vcf = "recalibrated/{sample}.vqsr.recal.vcf"
     output:
-        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vcf"
+        vcf = temp("annotated/{sample}.vqsr.recal.dbnsfp.vcf")
     params:
         dbnsfp = expand("{dbnsfp}", dbnsfp = config["dbNSFP"])
     log: 
@@ -22,7 +22,7 @@ rule VEP:
     output:
         report("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
         report("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_warnings.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
-        vcf = "annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf"
+        vcf = temp("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf")
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         vep = expand("{vep}", vep = config["VEP"]),
