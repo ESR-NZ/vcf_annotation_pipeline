@@ -10,7 +10,6 @@ rule gatk4_VariantRecalibrator_indel:
     params:
         genome = expand("{genome}", genome = config["GENOME"]),
         mills = expand("{mills}", mills = config["MILLS"]),
-        indel1000g = expand("{indel1000g}", indel1000g = config["INDEL1000G"]),
         dbsnp = expand("{dbsnp}", dbsnp = config["dbSNP"]),
         mode = "INDEL",
         gaussians = "4"
@@ -31,7 +30,6 @@ rule gatk4_VariantRecalibrator_indel:
             --rscript-file {output.rscript} \
             -R {params.genome} \
             -resource:mills,known=false,training=true,truth=true,prior=12.0 {params.mills} \
-            -resource:1000G,known=false,training=true,truth=false,prior=10.0 {params.indel1000g} \
             -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 {params.dbsnp} \
             -mode {params.mode} \
             --max-gaussians {params.gaussians} \
@@ -54,6 +52,7 @@ rule gatk4_VariantRecalibrator_SNP:
         genome = expand("{genome}", genome = config["GENOME"]),
         hapmap = expand("{hapmap}", hapmap = config["HAPMAP"]),
         omni = expand("{omni}", omni = config["OMNI"]),
+        snp1000g = expand("{snp1000g}", snp1000g = config["SNP1000G"]),
         dbsnp = expand("{dbsnp}", dbsnp = config["dbSNP"]),
         mode = "SNP",
         gaussians = "4"
@@ -75,6 +74,7 @@ rule gatk4_VariantRecalibrator_SNP:
             -R {params.genome} \
             -resource:hapmap,known=false,training=true,truth=true,prior=15.0 {params.hapmap} \
             -resource:omni,known=false,training=true,truth=false,prior=12.0 {params.omni} \
+            -resource:1000G,known=false,training=true,truth=false,prior=10.0 {params.snp1000g} \
             -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 {params.dbsnp} \
             -mode {params.mode} \
             --max-gaussians {params.gaussians} \

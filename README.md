@@ -162,11 +162,13 @@ dbSNP: "/home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
 VEP: "/home/lkemp/publicData/VEP/GRCh38/"
 dbNSFP: "/home/lkemp/publicData/dbNSFP/dbNSFPv4.0a_custombuild.gz"
 MILLS: "/home/lkemp/publicData/Mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-INDEL1000G: "/home/lkemp/publicData/1000G/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
+SNP1000G: "/home/lkemp/publicData/1000G/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
 OMNI: "/home/lkemp/publicData/1000G/1000G_omni2.5.hg38.vcf.gz"
 HAPMAP: "/home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz"
 CADD: "/home/lkemp/publicData/CADD/whole_genome_SNVs.tsv.gz"
 ```
+
+*Note. there is no 1000G indel file available for the GRCh38 build of the reference human genome*
 
 ### 5. Create and activate a conda environment with python and snakemake and installed
 
