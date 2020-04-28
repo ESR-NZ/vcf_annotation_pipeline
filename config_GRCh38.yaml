@@ -3,7 +3,7 @@ BUILD: "GRCh38"
 
 ##### Set file directories #####
 
-# links to reference human genome and various vcf annotation databases
+# links to reference human genome, dbSNP database and various vcf annotation databases
 GENOME: "/path/to/reference/human/genome/Homo_sapiens_assembly38.fasta"
 dbSNP: "/path/to/dbSNP/All_20180418.vcf.gz"
 VEP: "/path/to/vep/GRCh38/"
