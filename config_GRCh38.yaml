@@ -4,15 +4,15 @@ BUILD: "GRCh38"
 ##### Set file directories #####
 
 # links to reference human genome and various vcf annotation databases
-GENOME: "/store/lkemp/publicData/referenceGenome/gatkBundle/GRCh38/Homo_sapiens_assembly38.fasta"
-dbSNP: "/store/lkemp/publicData/dbSNP/ncbi/GRCh38/build151/GATK/All_20180418.vcf.gz"
-VEP: "/store/lkemp/publicData/vep/GRCh38/"
-dbNSFP: "/store/lkemp/publicData/dbNSFP/GRCh38/dbNSFPv4.0a_custombuild.gz"
-MILLS: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-INDEL1000G: "/store/lkemp/publicData/dbSNP/gatkBundle/GRCh38/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
-OMNI: "/store/lkemp/publicData/genotype/gatkBundle/GRCh38/1000G_omni2.5.hg38.vcf.gz"
-HAPMAP: "/store/lkemp/publicData/haplotype/gatkBundle/GRCh38/hapmap_3.3.hg38.vcf.gz"
-CADD: "/store/lkemp/exome_project/GRCh38_run/vcf_annotation_pipeline/CADD/whole_genome_SNVs.tsv.gz"
+GENOME: "/path/to/reference/human/genome/Homo_sapiens_assembly38.fasta"
+dbSNP: "/path/to/dbSNP/database/All_20180418.vcf.gz"
+VEP: "/path/to/vep/database/GRCh38/"
+dbNSFP: "/path/to/dbNSFP/database/dbNSFPv4.0a_custombuild.gz"
+MILLS: "/path/to/Mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
+INDEL1000G: "path/to/snps/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
+OMNI: "/path/to/omni/1000G_omni2.5.hg38.vcf.gz"
+HAPMAP: "/path/to/hapmap/hapmap_3.3.hg38.vcf.gz"
+CADD: "/path/to/CADD/whole_genome_SNVs.tsv.gz"
 
 ##### Configuration #####
 
