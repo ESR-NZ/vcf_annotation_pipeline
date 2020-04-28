@@ -13,7 +13,7 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
     - [4. Choose and modify an appropriate configuration file](#4-choose-and-modify-an-appropriate-configuration-file)
     - [5. Create and activate a conda environment with python and snakemake and installed](#5-create-and-activate-a-conda-environment-with-python-and-snakemake-and-installed)
     - [6. Run the pipeline](#6-run-the-pipeline)
-    - [7. Evaluation of the run](#7-evaluation-of-the-run)
+    - [7. Evaluate the pipeline run](#7-evaluate-the-pipeline-run)
     - [8. Commit and push to your forked version of the repo](#8-commit-and-push-to-your-forked-version-of-the-repo)
     - [9. Create a pull request with the upstream repo to merge any useful changes](#9-create-a-pull-request-with-the-upstream-repo-to-merge-any-useful-changes)
   - [Useful reading](#useful-reading)
@@ -194,7 +194,7 @@ snakemake -j 24 --use-conda --use-singularity --configfile config.yaml
 
 See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/executable.html) for additional run parameters.
 
-### 7. Evaluation of the run
+### 7. Evaluate the pipeline run
 
 Generate an interactive html report
 
