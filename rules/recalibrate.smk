@@ -4,7 +4,8 @@ rule gatk4_VQSR_indel:
         recal = "recalibrated/{sample}.recal.indels",
         tranches = "recalibrated/{sample}.tranches.indels"
     output:
-        vcf = temp("recalibrated/{sample}.tmp.vqsr.recal.indels.vcf")
+        vcf = temp("recalibrated/{sample}.tmp.vqsr.recal.indels.vcf"),
+        index = temp("recalibrated/{sample}.tmp.vqsr.recal.indels.vcf.idx")
     params:
         genome = expand("{genome}", genome=config["GENOME"]),
         mode = "INDEL",
