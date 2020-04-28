@@ -145,8 +145,8 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 Choose the appropriate config file:
 
-- Use 'config_GRCh37.yaml' to run the pipeline against the GRCh37 reference genome
-- Use 'config_GRCh38.yaml' to run the pipeline against the GRCh38 reference genome
+- Use 'GRCh37_config_template.yaml' to run the pipeline against the GRCh37 reference genome
+- Use 'GRCh38_config_template.yaml' to run the pipeline against the GRCh38 reference genome
 
 Ensure this choice is defined in your configuration file. For example:
 
@@ -169,6 +169,8 @@ CADD: "/home/lkemp/publicData/CADD/whole_genome_SNVs.tsv.gz"
 ```
 
 *Note. there is no 1000G indel file available for the GRCh38 build of the reference human genome*
+
+Save your modified config file with a descriptive name
 
 ### 5. Create and activate a conda environment with python and snakemake and installed
 
