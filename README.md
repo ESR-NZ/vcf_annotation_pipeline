@@ -148,6 +148,12 @@ Choose the appropriate config file:
 - Use 'config_GRCh37.yaml' to run the pipeline against the GRCh37 reference genome
 - Use 'config_GRCh38.yaml' to run the pipeline against the GRCh38 reference genome
 
+Ensure this choice is defined in your configuration file. For example:
+
+```yaml
+BUILD: "GRCh38"
+```
+
 Set the the working directories in the config file to the reference human genome file, dbSNP database file and the various vcf annotation database files. For example:
 
 ```yaml
