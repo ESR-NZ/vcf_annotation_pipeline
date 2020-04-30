@@ -24,7 +24,7 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 
 ## How to run vcf_annotation_pipeline
 
-- **Prerequisite software:** [Git](https://git-scm.com/), [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [wget](https://www.gnu.org/software/wget/), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/)
+- **Prerequisite software:** [R](https://www.r-project.org/), [Git](https://git-scm.com/), [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [wget](https://www.gnu.org/software/wget/), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/)
 - **Prerequisite data:** Reference human genome and dbSNP database (see [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline) for more information on downloading this data)
 - **OS:** Validated on Ubuntu 16.04
 
