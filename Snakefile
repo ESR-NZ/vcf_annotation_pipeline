@@ -4,8 +4,8 @@ Affiliation: ESR
 Aim: A simple Snakemake workflow to annotate variant call format (VCF) files using GATK4, SnpSift, VEP and genmod. Designed to be used after human_genomics_pipeline.
 Date created: 2020-03-06
 Modified: 2020-04-29
-Dry run: snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /your/dir/' --configfile your_config.yaml
-Full run: snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /your/dir/' --configfile your_config.yaml
+Dry run: snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile your_config.yaml
+Full run: snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile your_config.yaml
 Rule diagram: snakemake --rulegraph --use-singularity --configfile your_config.yaml | dot -Tpng > rulegraph.png
 Workflow diagram (specific experiment): snakemake --dag --configfile your_config.yaml | dot -Tpng > dag.png
 """
