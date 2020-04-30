@@ -183,7 +183,7 @@ conda install -c bioconda snakemake=5.14.0
 
 ### 6. Run the pipeline
 
-Set the singularity bind location to a directory that contains the CADD database with the `--singularity-args` flag (eg. /home/lkemp/publicDatabases/'). Also specify your config file to be used with the `--configfile` flag and modify the number of cores to be used with the `-j` flag. First carry out a dry run. If there are no issues, start a full run without the `-n` flag.
+Set the singularity bind location to a directory that contains the CADD database with the `--singularity-args` flag (eg. /home/lkemp/publicData/'). Also specify your config file to be used with the `--configfile` flag and modify the number of cores to be used with the `-j` flag. First carry out a dry run. If there are no issues, start a full run without the `-n` flag.
 
 Dry run:
 
