@@ -2,6 +2,7 @@ rule gatk4_VQSR_indel:
     input:
         vcf = "genotyped/{sample}.genotype.vcf",
         recal = "recalibrated/{sample}.recal.indels",
+        recalindex = "recalibrated/{sample}.recal.indels.idx",
         tranches = "recalibrated/{sample}.tranches.indels"
     output:
         vcf = temp("recalibrated/{sample}.tmp.vqsr.recal.indels.vcf"),
@@ -27,6 +28,7 @@ rule gatk4_VQSR_SNP:
     input:
         vcf = "recalibrated/{sample}.tmp.vqsr.recal.indels.vcf",
         recal = "recalibrated/{sample}.recal.snps",
+        recalindex = "recalibrated/{sample}.recal.snps.idx",
         tranches = "recalibrated/{sample}.tranches.snps"
     output:
         vcf = "recalibrated/{sample}.vqsr.recal.vcf"
