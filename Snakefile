@@ -18,10 +18,10 @@ SAMPLES,=glob_wildcards("../vcf/{sample}.raw.snps.indels.AS.g.vcf")
 # Define which variation of the modelling rules should used based on the build of reference human genome
 # Also define which overall workflow description should be used in the final report
 if config['BUILD'] == "GRCh37":
-    MODELRULE = "rules/model_37.smk"
+    MODELRULE = "rules/gatk4_variant_recalibrator_37.smk"
     REPORTWORKFLOW = "report/workflow_37.rst"
 elif config['BUILD'] == "GRCh38":
-    MODELRULE = "rules/model_38.smk"
+    MODELRULE = "rules/gatk4_variant_recalibrator_38.smk"
     REPORTWORKFLOW = "report/workflow_38.rst"
 else: print("ERROR: Please choose either the GRCh37 or GRCh38 build of the reference human genome")
 
@@ -42,7 +42,9 @@ report: REPORTWORKFLOW
 
 ##### Load rules #####
 
-include: "rules/genotype.smk"
+include: "rules/gatk4_genotype_gvcfs.smk"
 include: MODELRULE
-include: "rules/recalibrate.smk"
-include: "rules/annotate.smk"
+include: "rules/gatk4_vqsr.smk"
+include: "rules/snpsift.smk"
+include: "rules/vep.smk"
+include: "rules/genmod.smk"
