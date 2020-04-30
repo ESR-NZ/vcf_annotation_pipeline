@@ -3,7 +3,8 @@ rule gatk4_VariantRecalibrator_indel:
         vcf = "genotyped/{sample}.genotype.vcf"
     output:
         report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
-        recal = "recalibrated/{sample}.recal.indels",
+        recal = temp("recalibrated/{sample}.recal.indels"),
+        index = temp("recalibrated/{sample}.recal.indels.idx"),
         tranches = "recalibrated/{sample}.tranches.indels",
         rscript = "recalibrated/{sample}.plots.indels.R"
 
@@ -44,7 +45,8 @@ rule gatk4_VariantRecalibrator_SNP:
     output:
         report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
         report("recalibrated/{sample}.tranches.snps.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
-        recal = "recalibrated/{sample}.recal.snps",
+        recal = temp("recalibrated/{sample}.recal.snps"),
+        index = temp("recalibrated/{sample}.recal.snps.idx"),
         tranches = "recalibrated/{sample}.tranches.snps",
         rscript = "recalibrated/{sample}.plots.snps.R"
 
