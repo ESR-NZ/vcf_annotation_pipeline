@@ -99,7 +99,7 @@ bgzip hapmap_3.3.hg19.sites.vcf
 tabix hapmap_3.3.hg19.sites.vcf.gz
 ```
 
-Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file. (For now, the CADD database needs to be placed within the vcf_annotation_pipeline working environment/folder because of to how the genmod singularity container is mounted).
+Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
 
 ```bash
 wget https://krishna.gs.washington.edu/download/CADD/v1.4/GRCh37/whole_genome_SNVs.tsv.gz
@@ -133,7 +133,7 @@ wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/1000G_omni2
 wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/1000G_omni2.5.hg38.vcf.gz.tbi
 ```
 
-Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file. (For now, the CADD database needs to be placed within the vcf_annotation_pipeline working environment/folder because of to how the genmod singularity container is mounted).
+Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
 
 ```bash
 wget https://krishna.gs.washington.edu/download/CADD/v1.5/GRCh38/whole_genome_SNVs.tsv.gz
@@ -183,18 +183,18 @@ conda install -c bioconda snakemake=5.14.0
 
 ### 6. Run the pipeline
 
-Specify the config file to be used with the `--configfile` flag and modify the number of cores to be used with the `-j` flag. First carry out a dry run. If there are no issues, start a full run without the `-n` flag.
+Set the singularity bind location to a directory that contains the CADD database with the `--singularity-args` flag (eg. /home/lkemp/publicDatabases/'). Also specify your config file to be used with the `--configfile` flag and modify the number of cores to be used with the `-j` flag. First carry out a dry run. If there are no issues, start a full run without the `-n` flag.
 
 Dry run:
 
 ```bash
-snakemake -n -j 24 --use-conda --use-singularity --configfile config.yaml
+snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /your/dir/' --configfile your_config.yaml
 ```
 
 Full run:
 
-```
-snakemake -j 24 --use-conda --use-singularity --configfile config.yaml
+```bash
+snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /your/dir/' --configfile your_config.yaml
 ```
 
 See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/executable.html) for additional run parameters.
