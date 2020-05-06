@@ -4,47 +4,42 @@ Affiliation: ESR
 Aim: A simple Snakemake workflow to annotate variant call format (VCF) files using GATK4, SnpSift, VEP and genmod. Designed to be used after human_genomics_pipeline.
 Date created: 2020-03-06
 Modified: 2020-04-29
-Dry run: snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile your_config.yaml
-Full run: snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile your_config.yaml
-Rule diagram: snakemake --rulegraph --configfile your_config.yaml | dot -Tpng > rulegraph.png
-Workflow diagram (specific experiment): snakemake --dag --configfile your_config.yaml | dot -Tpng > dag.png
+Dry run: snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile config.yaml
+Full run: snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile config.yaml
+Report: snakemake --report report.html --configfile config.yaml --report-stylesheet stylesheet.css
+Rule diagram: snakemake --rulegraph --configfile config.yaml | dot -Tpng > rulegraph.png
+Workflow diagram (specific experiment): snakemake --dag --configfile config.yaml | dot -Tpng > dag.png
 """
 
 ##### Set up #####
 
-# Define samples from vcf dir in human_genomics_pipeline using wildcards
-SAMPLES,=glob_wildcards("../vcf/{sample}.raw.snps.indels.AS.g.vcf")
-
-# Define which variation of the modelling rules should used based on the build of reference human genome
-# Also define which overall workflow description should be used in the final report
-if config['BUILD'] == "GRCh37":
-    MODELRULE = "rules/gatk4_variant_recalibrator_37.smk"
-    REPORTWORKFLOW = "report/workflow_37.rst"
-elif config['BUILD'] == "GRCh38":
-    MODELRULE = "rules/gatk4_variant_recalibrator_38.smk"
-    REPORTWORKFLOW = "report/workflow_38.rst"
-else: print("ERROR: Please choose either the GRCh37 or GRCh38 build of the reference human genome")
+# Define samples from vcf dir using wildcards
+SAMPLES, = glob_wildcards("../vcf/{sample}_raw_snps_indels_AS_g.vcf")
 
 ##### Target rules #####
 
 rule all:
     input:
-        expand("recalibrated/{sample}.plots.indels.R.pdf", sample = SAMPLES),
-        expand("recalibrated/{sample}.plots.snps.R.pdf", sample = SAMPLES),
-        expand("recalibrated/{sample}.tranches.snps.pdf", sample = SAMPLES),
-        expand("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_summary.txt", sample = SAMPLES),
-        expand("annotated/{sample}.vqsr.recal.dbnsfp.vep.vcf_warnings.txt", sample = SAMPLES),
-        expand("annotated/{sample}.vqsr.recal.dbnsfp.vep.genmod.vcf", sample = SAMPLES)
+        expand("annotated/{sample}_filtered_dbnsfp_vep.vcf_summary.txt", sample = SAMPLES),
+        expand("annotated/{sample}_filtered_dbnsfp_vep.vcf_warnings.txt", sample = SAMPLES),
+        expand("annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES)
 
 ##### Set up report #####
 
-report: REPORTWORKFLOW
+report: "report/workflow.rst"
 
 ##### Load rules #####
+if config['DATA'] == "Single":
+    include: "rules/gatk_cnn_score_variants.smk"
+    include: "rules/gatk_filter_variant_tranches.smk"
+elif config['DATA'] == "Cohort":
+    include: "rules/gatk_variant_recalibrator_indel.smk"
+    include: "rules/gatk_variant_recalibrator_snp.smk"
+    include: "rules/gatk_vqsr_indel.smk"
+    include: "rules/gatk_vqsr_snp.smk"
+else:
+    print: ("ERROR: Please check the values you provided in the configuration file")
 
-include: "rules/gatk4_genotype_gvcfs.smk"
-include: MODELRULE
-include: "rules/gatk4_vqsr.smk"
-include: "rules/snpsift.smk"
+include: "rules/snpsift_dbnsfp.smk"
 include: "rules/vep.smk"
-include: "rules/genmod.smk"
+include: "rules/genmod_cadd.smk"

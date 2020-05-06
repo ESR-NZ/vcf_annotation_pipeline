@@ -1,1 +1,1 @@
-Reports produced when annotating vcf files with Ensembl Variant Effect Predictor (VEP)
+Reports produced when annotating vcf files with `Ensembl Variant Effect Predictor (VEP) <https://asia.ensembl.org/info/docs/tools/vep/index.html>`_

@@ -1,1 +1,1 @@
-Building model that will be used to filter variants (SNP's and indels) using GATK4 VariantRecalibrator (see https://gatk.broadinstitute.org/hc/en-us/articles/360036510892-VariantRecalibrator)
+Building model that will be used to filter variants (SNP's and indels) using `GATK4 VariantRecalibrator <https://gatk.broadinstitute.org/hc/en-us/articles/360036510892-VariantRecalibrator>`_

@@ -34,14 +34,19 @@ See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-
 
 ### 2. Take the pipeline to the data on your local machine
 
-Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repo into the same directory as your vcf data to be processed. Required folder structure:
+Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) repo into the same directory as your vcf data to be processed. Required folder structure and file naming convention:
 
 ```bash
 
 .
 |___vcf/
-|     |___sample1.vcf
-|     |___sample2.vcf
+|     |___sample1_raw_snps_indels_AS_g.vcf
+|     |___sample2_raw_snps_indels_AS_g.vcf
+|     |___ ...
+|
+|___bams/
+|     |___sample1_bwa_recal.bam
+|     |___sample2_bwa_recal.bam
 |     |___ ...
 |
 |___vcf_annotation_pipeline/
@@ -151,21 +156,38 @@ Choose the appropriate config file:
 Ensure this choice is defined in your configuration file. For example:
 
 ```yaml
+# Specify the build of reference genome used (either 'GRCh37' or 'GRCh38')
 BUILD: "GRCh38"
+```
+
+Specify whether the data is to be analysed on it's own ('Single') or as a part of a cohort ('Cohort').
+
+```yaml
+# Specify the type of input data (either 'Single' or 'Cohort')
+DATA: "Single"
+```
+
+Also specify whether the data was produced with Whole Genome Sequencing ('WGS') or Whole Exome Sequencing ('WES').
+
+```yaml
+# Specify the sequencing type (either 'WES or WGS')
+SEQUENCING: "WES"
 ```
 
 Set the the working directories in the config file to the reference human genome file, dbSNP database file and the various vcf annotation database files. For example:
 
 ```yaml
-GENOME: "/home/lkemp/publicData/referenceGenome/Homo_sapiens_assembly38.fasta.gz"
-dbSNP: "/home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
-VEP: "/home/lkemp/publicData/VEP/GRCh38/"
-dbNSFP: "/home/lkemp/publicData/dbNSFP/dbNSFPv4.0a_custombuild.gz"
-MILLS: "/home/lkemp/publicData/Mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-SNP1000G: "/home/lkemp/publicData/1000G/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
-OMNI: "/home/lkemp/publicData/1000G/1000G_omni2.5.hg38.vcf.gz"
-HAPMAP: "/home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz"
-CADD: "/home/lkemp/publicData/CADD/whole_genome_SNVs.tsv.gz"
+# File directories to reference genome, dbSNP database and various vcf annotation databases
+FILEDIR:
+  GENOME: "/home/lkemp/publicData/referenceGenome/Homo_sapiens_assembly38.  fasta.gz"
+  dbSNP: "/home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
+  VEP: "/home/lkemp/publicData/VEP/GRCh38/"
+  dbNSFP: "/home/lkemp/publicData/dbNSFP/dbNSFPv4.0a_custombuild.gz"
+  MILLS: "/home/lkemp/publicData/Mills/Mills_and_1000G_gold_standard.indels.  hg38.vcf.gz"
+  SNP1000G: "/home/lkemp/publicData/1000G/1000G_phase1.snps.high_confidence.  hg38.vcf.gz"
+  OMNI: "/home/lkemp/publicData/1000G/1000G_omni2.5.hg38.vcf.gz"
+  HAPMAP: "/home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz"
+  CADD: "/home/lkemp/publicData/CADD/whole_genome_SNVs.tsv.gz"
 ```
 
 *Note. there is no 1000G indel file available for the GRCh38 build of the reference human genome*
@@ -187,13 +209,13 @@ Set the singularity bind location to a directory that contains the CADD database
 Dry run:
 
 ```bash
-snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile your_config.yaml
+snakemake -n -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile config.yaml
 ```
 
 Full run:
 
 ```bash
-snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile your_config.yaml
+snakemake -j 24 --use-conda --use-singularity --singularity-args '-B /dir/to/databases/' --configfile config.yaml
 ```
 
 See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/executable.html) for additional run parameters.
@@ -203,7 +225,7 @@ See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/exe
 Generate an interactive html report
 
 ```bash
-snakemake --report report.html --configfile config.yaml
+snakemake --report report.html --configfile config.yaml --report-stylesheet custom-stylesheet.css
 ```
 
 ### 8. Commit and push to your forked version of the repo

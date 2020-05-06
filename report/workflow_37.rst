@@ -1,1 +1,0 @@
-This genomic pipeline annotates variant call format (VCF) data using GATK4, SnpSift, VEP and genmod. It was run against the GRCh37 reference genome.

@@ -1,16 +1,31 @@
-# Specify the build of reference human genome used (either GRCh37 or GRCh38)
+# Specify the build of reference genome used (either 'GRCh37' or 'GRCh38')
 BUILD: "GRCh37"
 
-##### Set file directories #####
+# Specify the type of input data (either 'Single' or 'Cohort')
+DATA: "Single"
 
-# links to reference human genome, dbSNP database and various vcf annotation databases
-GENOME: "/path/to/reference/human/genome/ucsc.hg19.fasta"
-dbSNP: "/path/to/dbSNP/All_20180423.vcf.gz"
-VEP: "/path/to/vep/GRCh37/"
-dbNSFP: "/path/to/dbNSFP/dbNSFPv4.0a.hg19.custombuild.gz"
-MILLS: "/path/to/Mills/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz"
-INDEL1000G: "/path/to/1000G/indels/1000G_phase1.indels.hg19.sites.vcf.gz"
-SNP1000G: "/path/to/1000G/snps/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
-OMNI: "/path/to/omni/1000G_omni2.5.hg19.sites.vcf.gz"
-HAPMAP: "/path/to/hapmap/hapmap_3.3.hg19.sites.vcf.gz"
-CADD: "/path/to/CADD/whole_genome_SNVs.tsv.gz"
+# Specify the sequencing type (either 'WES' or 'WGS')
+SEQUENCING: "WES"
+
+WES:
+  # These setting apply to WES (leave blank if analysing WGS)
+  # Genomic intervals over which to operate
+  INTERVALS: "-L /path/to/regions/.bed"
+  # Amount of padding (in bp) to add to each interval you are including
+  PADDING: "-ip 100"
+
+# File directories to reference genome, dbSNP database and various vcf annotation databases
+FILEDIR:
+  GENOME: "/path/to/reference/human/genome/ucsc.hg19.fasta"
+  dbSNP: "/path/to/dbSNP/All_20180423.vcf.gz"
+  VEP: "/path/to/vep/GRCh37/"
+  dbNSFP: "/path/to/dbNSFP/dbNSFPv4.0a.hg19.custombuild.gz"
+  MILLS: "/path/to/Mills/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz"
+  INDEL1000G: "/path/to/1000G/indels/1000G_phase1.indels.hg19.sites.vcf.gz"
+  SNP1000G: "/path/to/1000G/snps/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz"
+  OMNI: "/path/to/omni/1000G_omni2.5.hg19.sites.vcf.gz"
+  HAPMAP: "/path/to/hapmap/hapmap_3.3.hg19.sites.vcf.gz"
+  CADD: "/path/to/CADD/whole_genome_SNVs.tsv.gz"
+
+# Temporary file directory
+TEMPDIR: "/file/path/to/tmp/"

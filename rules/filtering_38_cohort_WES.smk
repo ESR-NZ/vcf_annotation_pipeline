@@ -1,6 +1,6 @@
 rule gatk4_VariantRecalibrator_indel:
     input:
-        vcf = "genotyped/{sample}.genotype.vcf"
+        vcf = "raw/{sample}_raw_snps_indels_AS_g.vcf"
     output:
         report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
         recal = temp("recalibrated/{sample}.recal.indels"),
@@ -9,9 +9,9 @@ rule gatk4_VariantRecalibrator_indel:
         rscript = "recalibrated/{sample}.plots.indels.R"
 
     params:
-        genome = expand("{genome}", genome = config["GENOME"]),
-        mills = expand("{mills}", mills = config["MILLS"]),
-        dbsnp = expand("{dbsnp}", dbsnp = config["dbSNP"]),
+        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
+        mills = expand("{mills}", mills = config['FILEDIR']['MILLS']),
+        dbsnp = expand("{dbsnp}", dbsnp = config['FILEDIR']['dbSNP']),
         mode = "INDEL",
         gaussians = "4"
     log: 
@@ -41,7 +41,7 @@ rule gatk4_VariantRecalibrator_indel:
 
 rule gatk4_VariantRecalibrator_SNP:
     input:
-        vcf = "genotyped/{sample}.genotype.vcf"
+        vcf = "raw/{sample}_raw_snps_indels_AS_g.vcf"
     output:
         report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
         report("recalibrated/{sample}.tranches.snps.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
@@ -51,11 +51,11 @@ rule gatk4_VariantRecalibrator_SNP:
         rscript = "recalibrated/{sample}.plots.snps.R"
 
     params:
-        genome = expand("{genome}", genome = config["GENOME"]),
-        hapmap = expand("{hapmap}", hapmap = config["HAPMAP"]),
-        omni = expand("{omni}", omni = config["OMNI"]),
-        snp1000g = expand("{snp1000g}", snp1000g = config["SNP1000G"]),
-        dbsnp = expand("{dbsnp}", dbsnp = config["dbSNP"]),
+        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
+        hapmap = expand("{hapmap}", hapmap = config['FILEDIR']['HAPMAP']),
+        omni = expand("{omni}", omni = config['FILEDIR']['OMNI']),
+        snp1000g = expand("{snp1000g}", snp1000g = config['FILEDIR']['SNP1000G']),
+        dbsnp = expand("{dbsnp}", dbsnp = config['FILEDIR']['dbSNP']),
         mode = "SNP",
         gaussians = "4"
     log: 
@@ -84,3 +84,50 @@ rule gatk4_VariantRecalibrator_SNP:
             -tranche 100.0 -tranche 99.95 -tranche 99.9 -tranche 99.8 -tranche 99.6 -tranche 99.5 -tranche 99.4 -tranche 99.3 -tranche 99.0 -tranche 98.0 -tranche 97.0 -tranche 90.0 \
             -an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR -an DP
         """
+
+rule gatk4_VQSR_indel:
+    input:
+        vcf = "raw/{sample}_raw_snps_indels_AS_g.vcf",
+        genome = expand("{genome}", genome=config['FILEDIR']['GENOME']),
+        recal = "recalibrated/{sample}.recal.indels",
+        recalindex = "recalibrated/{sample}.recal.indels.idx",
+        tranches = "recalibrated/{sample}.tranches.indels"
+    output:
+        vcf = temp("recalibrated/{sample}.tmp.vqsr.recal.indels.vcf"),
+        index = temp("recalibrated/{sample}.tmp.vqsr.recal.indels.vcf.idx")
+    params:
+        "-mode SNP -ts-filter-level 99.0 -OVI true"
+    log:
+        "logs/gatk_vqsr_indels/{sample}.log"
+    benchmark:
+        "benchmarks/gatk_vqsr_indels/{sample}.recal.indels"
+    conda:
+        "../envs/gatk4.yaml"
+    message:
+        "Using machine learning to filter out probable artifacts from the variant callset (indels)"
+    threads: 4
+    shell:
+        "gatk ApplyVQSR -V {input.vcf} -R {input.genome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} {params}"
+
+rule gatk4_VQSR_SNP:
+    input:
+        vcf = "recalibrated/{sample}.tmp.vqsr.recal.indels.vcf",
+        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
+        recal = "recalibrated/{sample}.recal.snps",
+        recalindex = "recalibrated/{sample}.recal.snps.idx",
+        tranches = "recalibrated/{sample}.tranches.snps"
+    output:
+        vcf = "recalibrated/{sample}_filtered.vcf"
+    params:
+        "-mode SNP -ts-filter-level 99.0 -OVI true"
+    log:
+        "logs/gatk_vqsr_snps/{sample}.log"
+    benchmark:
+        "benchmarks/gatk_vqsr_snps/{sample}.recal.snps"
+    conda:
+        "../envs/gatk4.yaml"
+    message:
+        "Using machine learning to filter out probable artifacts from the variant callset (snps)"
+    threads: 4
+    shell:
+        "gatk ApplyVQSR -V {input.vcf} -R {input.genome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} {params}"
