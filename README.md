@@ -160,18 +160,25 @@ Ensure this choice is defined in your configuration file. For example:
 BUILD: "GRCh38"
 ```
 
-Specify whether the data is to be analysed on it's own ('Single') or as a part of a cohort ('Cohort').
+Specify whether the data is to be analysed on it's own ('Single') or as a part of a cohort ('Cohort') and whether the data was produced with Whole Genome Sequencing ('WGS') or Whole Exome Sequencing ('WES'). For example:
 
 ```yaml
 # Specify the type of input data (either 'Single' or 'Cohort')
 DATA: "Single"
-```
 
-Also specify whether the data was produced with Whole Genome Sequencing ('WGS') or Whole Exome Sequencing ('WES').
-
-```yaml
 # Specify the sequencing type (either 'WES or WGS')
 SEQUENCING: "WES"
+```
+
+If analysing WES data, pass a design file (.bed) indicating the genomic regions that were sequenced (see [here](https://leahkemp.github.io/documentation/human_genomic_pipelines/design_files.html) for more information on accessing design files). Also set the level of padding. For example:
+
+```yaml
+WES:
+  # These setting apply to WES (leave blank if analysing WGS)
+  # Genomic intervals over which to operate
+  INTERVALS: "-L /home/lkemp/publicData/sure_select_human_all_exon_V7/S31285117_hs_hg38/S31285117_AllTracks.bed"
+  # Amount of padding (in bp) to add to each interval
+  PADDING: "-ip 100"
 ```
 
 Set the the working directories in the config file to the reference human genome file, dbSNP database file and the various vcf annotation database files. For example:
