@@ -9,7 +9,7 @@ rule SnpSift_dbNSFP:
     log: 
         "logs/snpsift_dbnsfp/{sample}.log"
     benchmark:
-        "benchmarks/snpsift_dbnsfp/{sample}.snpsiftdbnsfp"
+        report("benchmarks/snpsift_dbnsfp/{sample}.snpsiftdbnsfp", caption = benchmarking.rst, category = "Benchmarking")
     conda:
         "../envs/dbnsfp.yaml"
     message:

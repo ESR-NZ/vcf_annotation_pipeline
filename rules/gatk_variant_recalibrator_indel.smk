@@ -16,7 +16,7 @@ rule gatk4_VariantRecalibrator_indel:
     log: 
         "logs/gatk_recal_indels/{sample}.log"
     benchmark:
-        "benchmarks/gatk_recal_indels/{sample}.recal.indels"
+        report("benchmarks/gatk_recal_indels/{sample}.recal.indels", caption = benchmarking.rst, category = "Benchmarking")
     conda:
         "../envs/gatk4.yaml"
     message:

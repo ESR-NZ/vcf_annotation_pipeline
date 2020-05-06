@@ -14,7 +14,7 @@ rule gatk4_FilterVariantTranches:
     log:
         "logs/gatk_filter_variant_tranches/{sample}.log"
     benchmark:
-        "benchmarks/gatk_filter_variant_tranches/{sample}.gatkfiltervartranch"
+        report("benchmarks/gatk_filter_variant_tranches/{sample}.gatkfiltervartranch", caption = benchmarking.rst, category = "Benchmarking")
     singularity:
         "docker://broadinstitute/gatk:4.1.7.0"
     message:

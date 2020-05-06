@@ -17,7 +17,7 @@ rule gatk4_VariantRecalibrator_SNP:
     log: 
         "logs/gatk_recal_snps/{sample}.log"
     benchmark:
-        "benchmarks/gatk_recal_snps/{sample}.snp.recal"
+        report("benchmarks/gatk_recal_snps/{sample}.snp.recal", caption = benchmarking.rst, category = "Benchmarking")
     conda:
         "../envs/gatk4.yaml"
     message:

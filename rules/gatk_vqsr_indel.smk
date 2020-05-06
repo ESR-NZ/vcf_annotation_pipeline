@@ -15,7 +15,7 @@ rule gatk4_VQSR_indel:
     log:
         "logs/gatk_vqsr_indels/{sample}.log"
     benchmark:
-        "benchmarks/gatk_vqsr_indels/{sample}.recal.indels"
+        report("benchmarks/gatk_vqsr_indels/{sample}.recal.indels", caption = benchmarking.rst, category = "Benchmarking")
     conda:
         "../envs/gatk4.yaml"
     message:
