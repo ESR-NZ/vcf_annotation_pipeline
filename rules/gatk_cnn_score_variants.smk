@@ -2,7 +2,7 @@ rule gatk4_CNNScoreVariants:
     input:
         vcf = "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
         bams = "../bams/{sample}_bwa_recal.bam",
-        genome = expand("{genome}", genome = config['FILEDIR']['GENOME'])
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
         "filtered/{sample}_scored.vcf"
     params:
@@ -22,5 +22,5 @@ rule gatk4_CNNScoreVariants:
     shell:
         """
         gatk --java-options "-Xmx64g -Xms64g" CNNScoreVariants \
-            -V {input.vcf} -I {input.bams} -R {input.genome} -O {output} --inter-op-threads {threads} --intra-op-threads {threads} --tmp-dir {params.tdir} {params.padding} {params.intervals} {params.other}
+            -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output} --inter-op-threads {threads} --intra-op-threads {threads} --tmp-dir {params.tdir} {params.padding} {params.intervals} {params.other}
         """

@@ -2,7 +2,7 @@
 BUILD: "GRCh37"
 
 # Specify the type of input data (either 'Single' or 'Cohort')
-DATA: ""
+DATA: "Cohort"
 
 # File directories to reference genome, dbSNP database and various vcf annotation databases
 REFGENOME: "/path/to/reference/human/genome/ucsc.hg19.fasta"
@@ -35,5 +35,10 @@ FILTERING:
 
   # Cohort analyses
   COHORT:
-    INDELS: ""
-    SNPS: ""
+    INDELS: "-resource:mills, known=false, training=true, truth=true, prior=12.0 config['MILLS'])
+            -resource:1000G, known=false, training=true, truth=false, prior=10.0 config['INDEL1000G'])
+            -resource:dbsnp, known=true, training=false, truth=false, prior=2.0 config['dbSNP'])"
+    SNPS: "-resource:hapmap, known=false,training=true,truth=true,prior=15.0 config['HAPMAP'])
+          -resource:omni, known=false,training=true,truth=false,prior=12.0 config['OMNI'])
+          -resource:1000G, known=false,training=true,truth=false,prior=10.0 config['SNP1000G'])
+          -resource:dbsnp, known=true,training=false,truth=false,prior=2.0 config['dbSNP'])"

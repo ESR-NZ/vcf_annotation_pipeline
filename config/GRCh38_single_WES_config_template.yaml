@@ -2,7 +2,7 @@
 BUILD: "GRCh38"
 
 # Specify the type of input data (either 'Single' or 'Cohort')
-DATA: ""
+DATA: "Single"
 
 # File directories to reference genome, dbSNP database and various vcf annotation databases
 REFGENOME: "/path/to/reference/human/genome/Homo_sapiens_assembly38.fasta.gz"
@@ -21,16 +21,17 @@ TEMPDIR: "/file/path/to/tmp/"
 # Whole exome sequencing (WES) specific settings (leave blank if analysing other data such as WGS)
 WES:
   # Genomic intervals over which to operate
-  INTERVALS: ""
+  INTERVALS: "-L /path/to/regions/.bed"
   # Amount of padding (in bp) to add to each interval you are including
-  PADDING: ""
+  PADDING: "-ip 100"
 
 # Resources used to filter indels and SNP's
 # Either call resources from databases defined above or provide a file directory
 # Additional resources can be added
 FILTERING:
   # Single sample analyses
-  SINGLE: ""
+  SINGLE: "--resource config['HAPMAP'])
+          --resource config['MILLS']"
 
   # Cohort analyses
   COHORT:

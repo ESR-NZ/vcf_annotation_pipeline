@@ -160,44 +160,71 @@ Ensure this choice is defined in your configuration file. For example:
 BUILD: "GRCh38"
 ```
 
-Specify whether the data is to be analysed on it's own ('Single') or as a part of a cohort ('Cohort') and whether the data was produced with Whole Genome Sequencing ('WGS') or Whole Exome Sequencing ('WES'). For example:
+Specify whether the data is to be analysed on it's own ('Single') or as a part of a cohort ('Cohort'). For example:
 
 ```yaml
 # Specify the type of input data (either 'Single' or 'Cohort')
 DATA: "Single"
+```
 
-# Specify the sequencing type (either 'WES or WGS')
-SEQUENCING: "WES"
+Set the the working directories in the config file to the reference human genome file, dbSNP database file and the various vcf annotation database files (GRCh37 or GRCh38). For example:
+
+*Note. there is no 1000G indel file available for the GRCh38 build of the reference human genome*
+
+```yaml
+# File directories to reference genome, dbSNP database and various vcf annotation databases
+REFGENOME: "/home/lkemp/publicData/referenceGenome/Homo_sapiens_assembly38.fasta.gz"
+dbSNP: "/home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
+VEP: "/home/lkemp/publicData/VEP/GRCh38/"
+dbNSFP: "/home/lkemp/publicData/dbNSFP/dbNSFPv4.0a_custombuild.gz"
+MILLS: "/home/lkemp/publicData/Mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
+SNP1000G: "/home/lkemp/publicData/1000G/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
+OMNI: "/home/lkemp/publicData/1000G/1000G_omni2.5.hg38.vcf.gz"
+HAPMAP: "/home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz"
+CADD: "/home/lkemp/publicData/CADD/whole_genome_SNVs.tsv.gz"
 ```
 
 If analysing WES data, pass a design file (.bed) indicating the genomic regions that were sequenced (see [here](https://leahkemp.github.io/documentation/human_genomic_pipelines/design_files.html) for more information on accessing design files). Also set the level of padding. For example:
 
+*Note: If not analysing WES data, leave these fields blank*
+
 ```yaml
+# Whole exome sequencing (WES) specific settings (leave blank if analysing other data such as WGS)
 WES:
-  # These setting apply to WES (leave blank if analysing WGS)
   # Genomic intervals over which to operate
-  INTERVALS: "-L /home/lkemp/publicData/sure_select_human_all_exon_V7/S31285117_hs_hg38/S31285117_AllTracks.bed"
-  # Amount of padding (in bp) to add to each interval
+  INTERVALS: "-L /home/lkemp/publicData/sure_select_human_all_exon_V7/S31285117_AllTracks.bed"
+  # Amount of padding (in bp) to add to each interval you are including
   PADDING: "-ip 100"
 ```
 
-Set the the working directories in the config file to the reference human genome file, dbSNP database file and the various vcf annotation database files. For example:
+If analysing single sample data, set the resources to be used to filter variants with [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches`). For example:
 
 ```yaml
-# File directories to reference genome, dbSNP database and various vcf annotation databases
-FILEDIR:
-  GENOME: "/home/lkemp/publicData/referenceGenome/Homo_sapiens_assembly38.  fasta.gz"
-  dbSNP: "/home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
-  VEP: "/home/lkemp/publicData/VEP/GRCh38/"
-  dbNSFP: "/home/lkemp/publicData/dbNSFP/dbNSFPv4.0a_custombuild.gz"
-  MILLS: "/home/lkemp/publicData/Mills/Mills_and_1000G_gold_standard.indels.  hg38.vcf.gz"
-  SNP1000G: "/home/lkemp/publicData/1000G/1000G_phase1.snps.high_confidence.  hg38.vcf.gz"
-  OMNI: "/home/lkemp/publicData/1000G/1000G_omni2.5.hg38.vcf.gz"
-  HAPMAP: "/home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz"
-  CADD: "/home/lkemp/publicData/CADD/whole_genome_SNVs.tsv.gz"
+# Resources used to filter indels and SNP's
+# Either call resources from databases defined above or provide a file directory
+# Additional resources can be added
+FILTERING:
+  # Single sample analyses
+  SINGLE: "--resource config['HAPMAP'])
+          --resource config['MILLS']"
 ```
 
-*Note. there is no 1000G indel file available for the GRCh38 build of the reference human genome*
+*Note: If not analysing single sample data, leave these fields blank*
+
+If analysing cohort data, set the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator). For example:
+
+```yaml
+  # Cohort analyses
+  COHORT:
+    INDELS: "-resource:mills, known=false, training=true, truth=true, prior=12.0 config['MILLS'])
+            -resource:dbsnp, known=true, training=false, truth=false, prior=2.0 config['dbSNP'])"
+    SNPS: "-resource:hapmap, known=false,training=true,truth=true,prior=15.0 config['HAPMAP'])
+          -resource:omni, known=false,training=true,truth=false,prior=12.0 config['OMNI'])
+          -resource:1000G, known=false,training=true,truth=false,prior=10.0 config['SNP1000G'])
+          -resource:dbsnp, known=true,training=false,truth=false,prior=2.0 config['dbSNP'])"
+```
+
+*Note: If not analysing cohort data, leave these fields blank*
 
 Save your modified config file with a descriptive name
 

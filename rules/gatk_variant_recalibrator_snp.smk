@@ -9,8 +9,8 @@ rule gatk4_VariantRecalibrator_SNP:
         tranches = "recalibrated/{sample}.tranches.snps",
         rscript = "recalibrated/{sample}.plots.snps.R"
     params:
-        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
-        resources = expand("{resources}", resources = config['FILTERING']['RESOURCES']['SNPS']),
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
+        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
         other = "-mode SNP --max-gaussians 4 --trust-all-polymorphic"
@@ -29,7 +29,7 @@ rule gatk4_VariantRecalibrator_SNP:
             -O {output.recal} \
             --tranches-file {output.tranches} \
             --rscript-file {output.rscript} \
-            -R {params.genome} \
+            -R {params.refgenome} \
             {params.resources} \
             {params.padding} \
             {params.intervals} \

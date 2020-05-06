@@ -1,7 +1,7 @@
 rule gatk4_VQSR_SNP:
     input:
         vcf = "filtered/{sample}_tmp_vqsr_recal_indels.vcf",
-        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
         recal = "filtered/{sample}_recal_snps",
         recalindex = "filtered/{sample}_recal_snps.idx",
         tranches = "filtered/{sample}_tranches_snps"
@@ -21,4 +21,4 @@ rule gatk4_VQSR_SNP:
         "Using machine learning to filter out probable artifacts from the variant callset (snps)"
     threads: 4
     shell:
-        "gatk ApplyVQSR -V {input.vcf} -R {input.genome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output} {params.padding} {params.intervals} {params.other}"
+        "gatk ApplyVQSR -V {input.vcf} -R {input.refgenome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output} {params.padding} {params.intervals} {params.other}"

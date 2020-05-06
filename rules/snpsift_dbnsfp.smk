@@ -1,7 +1,7 @@
 rule SnpSift_dbNSFP:
     input:
         vcf = "filtered/{sample}_filtered.vcf",
-        dbnsfp = expand("{dbnsfp}", dbnsfp = config['FILEDIR']['dbNSFP'])
+        dbnsfp = expand("{dbnsfp}", dbnsfp = config['dbNSFP'])
     output:
         vcf = temp("annotated/{sample}_filtered_dbnsfp.vcf")
     params:

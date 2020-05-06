@@ -1,7 +1,7 @@
 rule gatk4_VQSR_indel:
     input:
         vcf = "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
-        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
         recal = "filtered/{sample}_recal_indels",
         recalindex = "filtered/{sample}_recal_indels.idx",
         tranches = "filtered/{sample}_tranches_indels"
@@ -22,4 +22,4 @@ rule gatk4_VQSR_indel:
         "Using machine learning to filter out probable artifacts from the variant callset (indels)"
     threads: 4
     shell: 
-        "gatk ApplyVQSR -V {input.vcf} -R {input.genome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} {params.padding} {params.intervals} {params.other}"
+        "gatk ApplyVQSR -V {input.vcf} -R {input.refgenome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} {params.padding} {params.intervals} {params.other}"

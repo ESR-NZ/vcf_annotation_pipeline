@@ -1,7 +1,7 @@
 rule genmod_CADD:
     input:
         vcf = "annotated/{sample}_filtered_dbnsfp_vep.vcf",
-        cadd = expand("{cadd}", cadd = config['FILEDIR']['CADD'])
+        cadd = expand("{cadd}", cadd = config['CADD'])
     output:
         vcf = "annotated/{sample}_filtered_annotated.vcf"
     params:

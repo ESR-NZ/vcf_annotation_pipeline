@@ -2,7 +2,7 @@
 BUILD: "GRCh38"
 
 # Specify the type of input data (either 'Single' or 'Cohort')
-DATA: ""
+DATA: "Single"
 
 # File directories to reference genome, dbSNP database and various vcf annotation databases
 REFGENOME: "/path/to/reference/human/genome/Homo_sapiens_assembly38.fasta.gz"
@@ -30,7 +30,8 @@ WES:
 # Additional resources can be added
 FILTERING:
   # Single sample analyses
-  SINGLE: ""
+  SINGLE: "--resource config['HAPMAP'])
+          --resource config['MILLS']"
 
   # Cohort analyses
   COHORT:

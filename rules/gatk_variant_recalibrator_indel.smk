@@ -8,8 +8,8 @@ rule gatk4_VariantRecalibrator_indel:
         tranches = "recalibrated/{sample}.tranches.indels",
         rscript = "recalibrated/{sample}.plots.indels.R"
     params:
-        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
-        resources = expand("{resources}", resources = config['FILTERING']['RESOURCES']['INDELS']),
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
+        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['INDELS']),
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
         other = "-mode INDEL --max-gaussians 4 --trust-all-polymorphic"
@@ -28,7 +28,7 @@ rule gatk4_VariantRecalibrator_indel:
             -O {output.recal} \
             --tranches-file {output.tranches} \
             --rscript-file {output.rscript} \
-            -R {params.genome} \
+            -R {params.refgenome} \
             {params.resources} \
             {params.padding} \
             {params.intervals} \

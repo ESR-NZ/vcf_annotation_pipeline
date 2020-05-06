@@ -1,8 +1,8 @@
 rule vep:
     input:
         vcf = "annotated/{sample}_filtered_dbnsfp.vcf",
-        genome = expand("{genome}", genome = config['FILEDIR']['GENOME']),
-        vep = expand("{vep}", vep = config['FILEDIR']['VEP']),
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
+        vep = expand("{vep}", vep = config['VEP']),
     output:
         report("annotated/{sample}_filtered_dbnsfp_vep.vcf_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
         report("annotated/{sample}_filtered_dbnsfp_vep.vcf_warnings.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
@@ -20,4 +20,4 @@ rule vep:
     message:
         "Using the VEP database to determine the effect of the variants"
     shell:
-        "vep -i {input.vcf} --fasta {input.genome} --dir {input.vep} -o {output.vcf} --assembly {params.assembly} {params.extra}"
+        "vep -i {input.vcf} --fasta {input.refgenome} --dir {input.vep} -o {output.vcf} --assembly {params.assembly} {params.extra}"
