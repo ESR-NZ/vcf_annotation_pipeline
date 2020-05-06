@@ -30,7 +30,7 @@ WES:
 # Additional resources can be added
 FILTERING:
   # Single sample analyses
-  SINGLE: "--resource config['HAPMAP'])
+  SINGLE: "--resource config['HAPMAP']
           --resource config['MILLS']"
 
   # Cohort analyses
