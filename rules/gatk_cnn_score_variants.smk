@@ -13,7 +13,7 @@ rule gatk4_CNNScoreVariants:
     log:
         "logs/gatk_score_variants/{sample}.log"
     benchmark:
-        report("benchmarks/gatk_score_variants/{sample}.gatkscorevariants", caption = benchmarking.rst, category = "Benchmarking")
+        report("benchmarks/gatk_score_variants/{sample}.gatkscorevariants", caption = "../report/benchmarking.rst", category = "Benchmarking")
     singularity:
         "docker://broadinstitute/gatk:4.1.7.0"
     threads: 12

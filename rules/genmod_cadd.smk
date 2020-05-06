@@ -9,7 +9,7 @@ rule genmod_CADD:
     log: 
         "logs/genmod_cadd/{sample}.log"
     benchmark:
-        report("benchmarks/genmod_cadd/{sample}.genmodcadd", caption = benchmarking.rst, category = "Benchmarking")
+        report("benchmarks/genmod_cadd/{sample}.genmodcadd", caption = "../report/benchmarking.rst", category = "Benchmarking")
     singularity:
         "shub://sirselim/singularity-genmod:latest"
     threads: 4

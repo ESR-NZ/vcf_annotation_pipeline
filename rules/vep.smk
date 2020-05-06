@@ -13,7 +13,7 @@ rule vep:
     log: 
         "logs/vep/{sample}.log"
     benchmark:
-        report("benchmarks/vep/{sample}.vep", caption = benchmarking.rst, category = "Benchmarking")
+        report("benchmarks/vep/{sample}.vep", caption = "../report/benchmarking.rst", category = "Benchmarking")
     conda:
         "../envs/vep.yaml"
     threads: 4
