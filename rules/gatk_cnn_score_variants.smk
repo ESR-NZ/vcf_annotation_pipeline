@@ -1,7 +1,7 @@
 rule gatk4_CNNScoreVariants:
     input:
         vcf = "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
-        bams = "../bams/{sample}_recal.bam",
+        bams = "../bams/{sample}_bwa_recal.bam",
         genome = expand("{genome}", genome = config['FILEDIR']['GENOME'])
     output:
         "filtered/{sample}_scored.vcf"
