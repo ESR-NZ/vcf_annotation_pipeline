@@ -204,6 +204,8 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 ### 5. Modify the configuration file
 
+Either edit the 'config_template.yaml' file from scratch, or edit a config file 'config_examples'.
+
 Specify the build of reference genome used. For example:
 
 ```yaml
@@ -317,13 +319,13 @@ conda install -c bioconda snakemake=5.14.0
 First carry out a dry run
 
 ```bash
-dryrun.sh
+bash dryrun.sh
 ```
 
 If there are no issues, start a full run
 
 ```bash
-fullrun.sh
+bash fullrun.sh
 ```
 
 ### 9. Evaluate the pipeline run
@@ -331,7 +333,7 @@ fullrun.sh
 Generate an interactive html report
 
 ```bash
-report.sh
+bash report.sh
 ```
 
 ### 10. Commit and push to your forked version of the repo
