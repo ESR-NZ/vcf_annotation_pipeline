@@ -12,7 +12,6 @@ rule genmod_CADD:
         "benchmarks/genmod_cadd/{sample}.genmodcadd"
     singularity:
         "shub://sirselim/singularity-genmod:latest"
-    threads: 4
     message:
         "Using the CADD database to annotate the variants with deleteriousness scores"
     shell:

@@ -21,7 +21,6 @@ SAMPLES, = glob_wildcards("../vcf/{sample}_raw_snps_indels_AS_g.vcf")
 rule all:
     input:
         expand("annotated/{sample}_filtered_dbnsfp_vep.vcf_summary.txt", sample = SAMPLES),
-        expand("annotated/{sample}_filtered_dbnsfp_vep.vcf_warnings.txt", sample = SAMPLES),
         expand("annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES)
 
 ##### Set up report #####
