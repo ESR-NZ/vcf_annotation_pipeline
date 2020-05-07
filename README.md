@@ -19,7 +19,7 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
     - [8. Run the pipeline](#8-run-the-pipeline)
     - [9. Evaluate the pipeline run](#9-evaluate-the-pipeline-run)
     - [10. Commit and push to your forked version of the repo](#10-commit-and-push-to-your-forked-version-of-the-repo)
-    - [11. Repeat step 9 each time you re-run the analysis with different parameters](#11-repeat-step-9-each-time-you-re-run-the-analysis-with-different-parameters)
+    - [11. Repeat step 10 each time you re-run the analysis with different parameters](#11-repeat-step-10-each-time-you-re-run-the-analysis-with-different-parameters)
     - [12. Create a pull request with the upstream repo to merge any useful changes (optional)](#12-create-a-pull-request-with-the-upstream-repo-to-merge-any-useful-changes-optional)
   - [Useful reading](#useful-reading)
 
@@ -342,7 +342,7 @@ To maintain reproducibility, commit and push:
 - All run scripts
 - The final report
 
-### 11. Repeat step 9 each time you re-run the analysis with different parameters
+### 11. Repeat step 10 each time you re-run the analysis with different parameters
 
 ### 12. Create a pull request with the [upstream repo](https://github.com/ESR-NZ/vcf_annotation_pipeline) to merge any useful changes (optional)
 
