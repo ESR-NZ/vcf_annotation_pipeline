@@ -1,0 +1,46 @@
+############################
+##### Overall workflow #####
+############################
+
+# Build of reference genome (either 'GRCh37' or 'GRCh38')
+BUILD: ""
+
+# Type of input data (either 'Single' or 'Cohort')
+DATA: ""
+
+# File directories to reference genome and dbSNP database
+REFGENOME: ""
+dbSNP: ""
+
+# Temporary file directory
+TEMPDIR: ""
+
+# WES settings (leave blank if analysing other data such as WGS)
+WES:
+  # Genomic intervals over which to operate
+  INTERVALS: ""
+  # Padding (in bp) to add to each interval
+  PADDING: ""
+
+#############################
+##### Variant filtering #####
+#############################
+
+# Resources used to filter indels and SNP's...
+FILTERING:
+  # ...for analysis of single samples
+  SINGLE: ""
+
+  # ...for analysis of cohorts
+  COHORT:
+    INDELS: ""
+    SNPS: ""
+
+##########################
+##### VCF annotation #####
+##########################
+
+# File directories to vcf annotation databases
+VEP: ""
+dbNSFP: ""
+CADD: ""
