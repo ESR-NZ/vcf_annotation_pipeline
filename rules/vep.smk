@@ -2,7 +2,7 @@ rule vep:
     input:
         vcf = "annotated/{sample}_filtered_dbnsfp.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
-        vep = expand("{vep}", vep = config['VEP']),
+        vep = expand("{vep}", vep = config['VEP'])
     output:
         report("annotated/{sample}_filtered_dbnsfp_vep.vcf_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
         report("annotated/{sample}_filtered_dbnsfp_vep.vcf_warnings.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
