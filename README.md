@@ -1,6 +1,6 @@
 # vcf_annotation_pipeline
 
-A simple Snakemake workflow to annotate variant call format (VCF) files using GATK4, SnpSift, VEP and genmod. Designed to be used after human_genomics_pipeline.
+A simple Snakemake workflow to annotate variant call format (VCF) files using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) and [genmod](https://github.com/moonso/genmod). Designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
 
 - [vcf_annotation_pipeline](#vcfannotationpipeline)
   - [Workflow diagram](#workflow-diagram)
@@ -34,7 +34,7 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using GA
 
 ### 1. Fork the pipeline repo to a personal or lab account
 
-See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository) for help forking a github repository
+See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository) for help
 
 ### 2. Take the pipeline to the data on your local machine
 
@@ -57,7 +57,7 @@ Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotat
 
 ```
 
-See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#keep-your-fork-synced) for help cloning a forked github repository.
+See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#keep-your-fork-synced) for help
 
 ### 3. Create a local copy of the reference genome and dbSNP database (either GRCh37 or GRCh38)
 
@@ -350,7 +350,7 @@ To maintain reproducibility, commit and push:
 
 Contributions and feedback are more than welcome! :blush:
 
-See [here](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request) for help creating a pull request.
+See [here](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request) for help
 
 ## Useful reading
 Van der Auwera et al., (2013). *Current Protocols in Bioinformatics*. [From FastQ data to high confidence variant calls: the Genome Analysis Toolkit best practices pipeline](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4243306/); 11(1110): 11.10.1–11.10.33.
