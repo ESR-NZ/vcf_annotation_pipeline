@@ -32,6 +32,12 @@ A simple Snakemake workflow to annotate variant call format (VCF) files using [G
 - **Prerequisite software:** [R](https://www.r-project.org/), [Git](https://git-scm.com/), [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [wget](https://www.gnu.org/software/wget/), [tabix](http://www.htslib.org/doc/tabix.html), [bgzip](http://www.htslib.org/doc/bgzip.html), [gunzip](https://linux.die.net/man/1/gunzip), [bwa](http://bio-bwa.sourceforge.net/), [samtools](http://www.htslib.org/)
 - **OS:** Validated on Ubuntu 16.04
 
+---
+
+*This pipeline is in ongoing development. It is currently operational for single samples of whole exome sequencing data (not cohort data yet). It should theoretically be operational for whole genome sequencing data, but this has not yet been validated. It can be run against either the GRCh37 or GRCh38 reference genome. Benchmarking is currently underway.*
+
+---
+
 ### 1. Fork the pipeline repo to a personal or lab account
 
 See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository) for help
