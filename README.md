@@ -72,11 +72,11 @@ See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-
 Download the reference human genome (GRCh37) and it's associated fasta sequence dictionary file (.dict) and fasta index file (.fai) files from the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
 
 ```bash
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg19/ucsc.hg19.fasta.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org/bundle/hg19/ucsc.hg19.fasta.gz
 gunzip ucsc.hg19.fasta.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg19/ucsc.hg19.dict.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org/bundle/hg19/ucsc.hg19.dict.gz
 gunzip ucsc.hg19.dict.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg19/ucsc.hg19.fasta.fai.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org/bundle/hg19/ucsc.hg19.fasta.fai.gz
 gunzip ucsc.hg19.fasta.fai.gz
 ```
 
@@ -98,10 +98,10 @@ wget ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/GATK/All
 Download the reference human genome (GRCh38) and it's associated fasta sequence dictionary file (.dict) and fasta index file (.fai) files from the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
 
 ```bash
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/Homo_sapiens_assembly38.fasta.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org/bundle/hg38/Homo_sapiens_assembly38.fasta.gz
 gunzip Homo_sapiens_assembly38.fasta.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/Homo_sapiens_assembly38.dict
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/Homo_sapiens_assembly38.fasta.fai
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org/bundle/hg38/Homo_sapiens_assembly38.dict
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org/bundle/hg38/Homo_sapiens_assembly38.fasta.fai
 ```
 
 Create index files for the genome sequence (.amb, .ann, .bwt, .pac, .sa)
@@ -134,11 +134,11 @@ conda deactivate
 Download other databases from the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
 
 ```bash
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/1000G_phase1.indels.hg19.sites.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/1000G_omni2.5.hg19.sites.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg19/hapmap_3.3.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg19/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg19/1000G_phase1.indels.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg19/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg19/1000G_omni2.5.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg19/hapmap_3.3.hg19.sites.vcf.gz
 ```
 
 Convert these files to bgzip format in order to create their associated index files
@@ -189,14 +189,14 @@ conda deactivate
 Download other databases from the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle)
 
 ```bash
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/1000G_omni2.5.hg38.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/1000G_omni2.5.hg38.vcf.gz.tbi
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/hapmap_3.3.hg38.vcf.gz
-wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org:21/bundle/hg38/hapmap_3.3.hg38.vcf.gz.tbi
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/1000G_omni2.5.hg38.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/1000G_omni2.5.hg38.vcf.gz.tbi
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/hapmap_3.3.hg38.vcf.gz
+wget ftp://gsapubftp-anonymous:password@ftp.broadinstitute.org:21/bundle/hg38/hapmap_3.3.hg38.vcf.gz.tbi
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
