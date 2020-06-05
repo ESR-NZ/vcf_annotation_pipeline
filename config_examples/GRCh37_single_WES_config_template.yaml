@@ -29,8 +29,10 @@ WES:
 # Resources used to filter indels and SNP's...
 FILTERING:
   # ...for analysis of single samples
-  SINGLE: "--resource /path/to/hapmap/hapmap_3.3.hg19.sites.vcf.gz
-          --resource /path/to/mills/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz"
+  SINGLE: "--resource /home/lkemp/publicData/dbSNP/All_20180423.vcf.gz
+          --resource /path/to/hapmap/hapmap_3.3.hg19.sites.vcf.gz
+          --resource /path/to/mills/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
+          --resource /home/lkemp/publicData/omni/1000G_omni2.5.hg19.sites.vcf.gz"
 
   # ...for analysis of cohorts
   COHORT:
