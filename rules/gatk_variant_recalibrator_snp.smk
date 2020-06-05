@@ -2,7 +2,7 @@ rule gatk4_VariantRecalibrator_SNP:
     input:
         "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
-        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
+        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS'])
     output:
         report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
         report("recalibrated/{sample}.tranches.snps.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
