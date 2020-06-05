@@ -1,6 +1,8 @@
 rule gatk4_VariantRecalibrator_SNP:
     input:
-        "../vcf/{sample}_raw_snps_indels_AS_g.vcf"
+        "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
+        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
+        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
     output:
         report("recalibrated/{sample}.plots.snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
         report("recalibrated/{sample}.tranches.snps.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
@@ -9,8 +11,7 @@ rule gatk4_VariantRecalibrator_SNP:
         tranches = "recalibrated/{sample}.tranches.snps",
         rscript = "recalibrated/{sample}.plots.snps.R"
     params:
-        refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
-        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
+
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
         other = "-mode SNP --max-gaussians 4 --trust-all-polymorphic"
@@ -29,8 +30,8 @@ rule gatk4_VariantRecalibrator_SNP:
             -O {output.recal} \
             --tranches-file {output.tranches} \
             --rscript-file {output.rscript} \
-            -R {params.refgenome} \
-            {params.resources} \
+            -R {input.refgenome} \
+            {input.resources} \
             {params.padding} \
             {params.intervals} \
             {params.other} \
