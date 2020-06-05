@@ -11,7 +11,6 @@ rule gatk4_VariantRecalibrator_SNP:
         tranches = "recalibrated/{sample}.tranches.snps",
         rscript = "recalibrated/{sample}.plots.snps.R"
     params:
-
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
         other = "-mode SNP --max-gaussians 4 --trust-all-polymorphic"
