@@ -2,9 +2,9 @@
 
 A simple Snakemake workflow to annotate variant call format (VCF) files using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) and [genmod](https://github.com/moonso/genmod). Designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
 
-- [vcf_annotation_pipeline](#vcfannotationpipeline)
+- [vcf_annotation_pipeline](#vcf_annotation_pipeline)
   - [Workflow diagram](#workflow-diagram)
-  - [How to run vcf_annotation_pipeline](#how-to-run-vcfannotationpipeline)
+  - [How to run vcf_annotation_pipeline](#how-to-run-vcf_annotation_pipeline)
     - [1. Fork the pipeline repo to a personal or lab account](#1-fork-the-pipeline-repo-to-a-personal-or-lab-account)
     - [2. Take the pipeline to the data on your local machine](#2-take-the-pipeline-to-the-data-on-your-local-machine)
     - [3. Create a local copy of the reference genome and dbSNP database (either GRCh37 or GRCh38)](#3-create-a-local-copy-of-the-reference-genome-and-dbsnp-database-either-grch37-or-grch38)
@@ -328,9 +328,8 @@ See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/exe
 ### 7. Create and activate a conda environment with python and snakemake and installed
 
 ```bash
-conda create -n annot_pipeline_env python=3.7
-conda activate annot_pipeline_env
-conda install -c bioconda snakemake=5.14.0
+conda env create -f pipeline_run_env.yml
+conda activate pipeline_run_env
 ```
 
 ### 8. Run the pipeline
