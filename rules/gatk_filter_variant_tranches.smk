@@ -1,4 +1,3 @@
-# Add more resources
 rule gatk4_FilterVariantTranches:
     input:
         vcf = "filtered/{sample}_scored.vcf" 
