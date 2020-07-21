@@ -212,6 +212,13 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 Either edit the 'config_template.yaml' file from scratch, or edit a config file 'config_examples'.
 
+Specify whether or not the pipeline should run using GPU's where the software is GPU enabled ([see here](https://www.nvidia.com/en-us/docs/parabricks/quickstart-guide/software-overview/))
+
+```yaml
+# Run GPU accelerated where possible - big speed ups (either 'Yes' or 'No')
+GPU: "Yes"
+```
+
 Specify the build of reference genome used. For example:
 
 ```yaml
@@ -264,19 +271,19 @@ FILTERING:
           --resource /home/lkemp/publicData/omni/1000G_omni2.5.hg38.vcf.gz"
 ```
 
-If analysing cohort data, pass the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator) to the `-resource` flag. For example:
+If analysing cohort data, pass the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator) to the `--resource` flag. For example:
 
 *If NOT analysing cohort data, leave these fields blank*
 
 ```yaml
   # ...for analysis of cohorts
   COHORT:
-    INDELS: "-resource:mills, known=false, training=true, truth=true, prior=12.0 /home/lkemp/publicData/mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-            -resource:dbsnp, known=true, training=false, truth=false, prior=2.0 /home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
-    SNPS: "-resource:hapmap, known=false, training=true, truth=true, prior=15.0 /home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz
-          -resource:omni, known=false, training=true, truth=false, prior=12.0 /home/lkemp/publicData/omni/1000G_omni2.5.hg38.vcf.gz
-          -resource:1000G, known=false, training=true, truth=false, prior=10.0 /home/lkemp/publicData/1000G/snps/1000G_phase1.snps.high_confidence.hg38.vcf.gz
-          -resource:dbsnp, known=true, training=false, truth=false, prior=2.0 /home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
+    INDELS: "--resource:mills, known=false, training=true, truth=true, prior=12.0 /home/lkemp/publicData/mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+            --resource:dbsnp, known=true, training=false, truth=false, prior=2.0 /home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
+    SNPS: "--resource:hapmap, known=false, training=true, truth=true, prior=15.0 /home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz
+          --resource:omni, known=false, training=true, truth=false, prior=12.0 /home/lkemp/publicData/omni/1000G_omni2.5.hg38.vcf.gz
+          --resource:1000G, known=false, training=true, truth=false, prior=10.0 /home/lkemp/publicData/1000G/snps/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+          --resource:dbsnp, known=true, training=false, truth=false, prior=2.0 /home/lkemp/publicData/dbSNP/All_20180418.vcf.gz"
 ```
 
 Set the the working directories to the vcf annotation databases (GRCh37 or GRCh38). For example:

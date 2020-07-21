@@ -1,4 +1,4 @@
-rule genmod_CADD:
+rule genmod_annotate_CADD:
     input:
         vcf = "annotated/{sample}_filtered_dbnsfp_vep.vcf",
         cadd = expand("{cadd}", cadd = config['CADD'])

@@ -1,4 +1,4 @@
-rule gatk4_CNNScoreVariants:
+rule gatk_CNNScoreVariants:
     input:
         vcf = "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
         bams = "../bams/{sample}_bwa_recal.bam",
@@ -16,11 +16,10 @@ rule gatk4_CNNScoreVariants:
         "benchmarks/gatk_score_variants/{sample}.gatkscorevariants"
     singularity:
         "docker://broadinstitute/gatk:4.1.7.0"
-    threads: 12
     message:
         "Annotating vcf with scores from a Convolutional Neural Network (CNN) (2D model with pre-trained architecture)"
     shell:
         """
         gatk --java-options "-Xmx64g -Xms64g" CNNScoreVariants \
-            -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output} --inter-op-threads {threads} --intra-op-threads {threads} --tmp-dir {params.tdir} {params.padding} {params.intervals} {params.other}
+            -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output} --tmp-dir {params.tdir} {params.padding} {params.intervals} {params.other}
         """

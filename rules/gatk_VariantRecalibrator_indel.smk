@@ -1,8 +1,7 @@
-rule gatk4_VariantRecalibrator_indel:
+rule gatk_VariantRecalibrator_indel:
     input:
-        "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
+        vcf = "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
-        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['INDELS'])
     output:
         report("recalibrated/{sample}.plots.indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
         recal = temp("recalibrated/{sample}.recal.indels"),
@@ -10,6 +9,7 @@ rule gatk4_VariantRecalibrator_indel:
         tranches = "recalibrated/{sample}.tranches.indels",
         rscript = "recalibrated/{sample}.plots.indels.R"
     params:
+        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['INDELS']),
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
         other = "-mode INDEL --max-gaussians 4 --trust-all-polymorphic"
@@ -24,11 +24,11 @@ rule gatk4_VariantRecalibrator_indel:
     shell:
         """
         gatk --java-options "-Xmx24g -Xms24g" VariantRecalibrator \
-            -V {input} \
+            -V {input.vcf} \
             -O {output.recal} \
             --tranches-file {output.tranches} \
             --rscript-file {output.rscript} \
-            -R {params.refgenome} \
+            -R {input.refgenome} \
             {params.resources} \
             {params.padding} \
             {params.intervals} \

@@ -2,6 +2,9 @@
 ##### Overall workflow #####
 ############################
 
+# Run GPU accelerated where possible - big speed ups (either 'Yes' or 'No')
+GPU: ""
+
 # Build of reference genome (either 'GRCh37' or 'GRCh38')
 BUILD: ""
 

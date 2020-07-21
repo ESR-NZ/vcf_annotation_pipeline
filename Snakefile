@@ -28,17 +28,23 @@ rule all:
 report: "report/workflow.rst"
 
 ##### Load rules #####
-if config['DATA'] == "Single":
-    include: "rules/gatk_cnn_score_variants.smk"
-    include: "rules/gatk_filter_variant_tranches.smk"
-elif config['DATA'] == "Cohort":
-    include: "rules/gatk_variant_recalibrator_indel.smk"
-    include: "rules/gatk_variant_recalibrator_snp.smk"
-    include: "rules/gatk_vqsr_indel.smk"
-    include: "rules/gatk_vqsr_snp.smk"
-else:
-    print: ("ERROR: Please check the values you provided in the configuration file")
+if config['DATA'] == "Single" and config['GPU'] == "No":
+    include: "rules/gatk_CNNScoreVariants.smk"
+    include: "rules/gatk_FilterVariantTranches.smk"
+    
+if config['DATA'] == "Single" and config['GPU'] == "Yes":
+    include: "rules/pbrun_cnnscorevariants.smk"
+    include: "rules/gatk_FilterVariantTranches.smk"
 
-include: "rules/snpsift_dbnsfp.smk"
+if config['DATA'] == "Cohort" and config['GPU'] == "No":
+    include: "rules/gatk_VariantRecalibrator_indel.smk"
+    include: "rules/gatk_VariantRecalibrator_snp.smk"
+    include: "rules/gatk_VQSR_indel.smk"
+    include: "rules/gatk_VQSR_snp.smk" # create option for hard filtering if a sample fails vqsr
+
+if config['DATA'] == "Cohort" and config['GPU'] == "Yes":
+    include: "rules/pbrun_vqsr.smk" # create option for hard filtering if a sample fails vqsr
+
+include: "rules/SnpSift_dbNSFP.smk"
 include: "rules/vep.smk"
-include: "rules/genmod_cadd.smk"
+include: "rules/genmod_annotate_CADD.smk"

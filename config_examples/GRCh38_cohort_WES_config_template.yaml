@@ -2,6 +2,9 @@
 ##### Overall workflow #####
 ############################
 
+# Run GPU accelerated where possible - big speed ups (either 'Yes' or 'No')
+GPU: "No"
+
 # Build of reference genome (either 'GRCh37' or 'GRCh38')
 BUILD: "GRCh38"
 
@@ -33,12 +36,12 @@ FILTERING:
 
   # ...for analysis of cohorts
   COHORT:
-    INDELS: "-resource:mills, known=false, training=true, truth=true, prior=12.0 /path/to/Mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-            -resource:dbsnp, known=true, training=false, truth=false, prior=2.0 /path/to/dbSNP/All_20180418.vcf.gz"
-    SNPS: "-resource:hapmap, known=false,training=true,truth=true,prior=15.0 /path/to/hapmap/hapmap_3.3.hg38.vcf.gz
-          -resource:omni, known=false,training=true,truth=false,prior=12.0 /path/to/omni/1000G_omni2.5.hg38.vcf.gz
-          -resource:1000G, known=false,training=true,truth=false,prior=10.0 /path/to/1000G/snps/1000G_phase1.snps.high_confidence.hg38.vcf.gz
-          -resource:dbsnp, known=true,training=false,truth=false,prior=2.0 /path/to/dbSNP/All_20180418.vcf.gz"
+    INDELS: "--resource:mills, known=false, training=true, truth=true, prior=12.0 /path/to/Mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+            --resource:dbsnp, known=true, training=false, truth=false, prior=2.0 /path/to/dbSNP/All_20180418.vcf.gz"
+    SNPS: "--resource:hapmap, known=false,training=true,truth=true,prior=15.0 /path/to/hapmap/hapmap_3.3.hg38.vcf.gz
+          --resource:omni, known=false,training=true,truth=false,prior=12.0 /path/to/omni/1000G_omni2.5.hg38.vcf.gz
+          --resource:1000G, known=false,training=true,truth=false,prior=10.0 /path/to/1000G/snps/1000G_phase1.snps.high_confidence.hg38.vcf.gz
+          --resource:dbsnp, known=true,training=false,truth=false,prior=2.0 /path/to/dbSNP/All_20180418.vcf.gz"
 
 ##########################
 ##### VCF annotation #####

@@ -1,17 +1,17 @@
-rule gatk4_VQSR_indel:
+rule gatk_VQSR_indel:
     input:
         vcf = "../vcf/{sample}_raw_snps_indels_AS_g.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
-        recal = "filtered/{sample}_recal_indels",
-        recalindex = "filtered/{sample}_recal_indels.idx",
-        tranches = "filtered/{sample}_tranches_indels"
+        recal = "recalibrated/{sample}.recal.indels",
+        recalindex = "recalibrated/{sample}.recal.indels.idx",
+        tranches = "recalibrated/{sample}.tranches.indels"
     output:
         vcf = temp("filtered/{sample}_tmp_vqsr_recal_indels.vcf"),
         index = temp("filtered/{sample}_tmp_vqsr_recal_indels.vcf.idx")
     params:
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
-        other = "-mode SNP -ts-filter-level 99.0 -OVI true"
+        other = "-mode INDEL -ts-filter-level 99.0 -OVI true"
     log:
         "logs/gatk_vqsr_indels/{sample}.log"
     benchmark:

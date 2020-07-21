@@ -1,10 +1,10 @@
-rule gatk4_VQSR_SNP:
+rule gatk_VQSR_snp:
     input:
         vcf = "filtered/{sample}_tmp_vqsr_recal_indels.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
-        recal = "filtered/{sample}_recal_snps",
-        recalindex = "filtered/{sample}_recal_snps.idx",
-        tranches = "filtered/{sample}_tranches_snps"
+        recal = "recalibrated/{sample}.recal.snps",
+        recalindex = "recalibrated/{sample}.recal.snps.idx",
+        tranches = "recalibrated/{sample}.tranches.snps"
     output:
         "filtered/{sample}_filtered.vcf"
     params:

@@ -1,4 +1,4 @@
-rule gatk4_FilterVariantTranches:
+rule gatk_FilterVariantTranches:
     input:
         vcf = "filtered/{sample}_scored.vcf" 
     output:
