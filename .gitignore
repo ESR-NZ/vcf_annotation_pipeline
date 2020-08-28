@@ -1,7 +1,0 @@
-!.snakemake/        
-!annotated/
-!benchmarks/
-!genotyped/
-!logs/
-!recalibrated/
-!report.html

@@ -1,0 +1,8 @@
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - conda-forge::pip =20.2.2
+  - pip:
+    - gunzip==0.1.10

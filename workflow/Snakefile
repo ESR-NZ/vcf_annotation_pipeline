@@ -1,0 +1,52 @@
+"""
+Author: Miles Benton, Joep de Ligt and Leah Kemp
+Affiliation: ESR
+Aim: A simple Snakemake workflow to annotate variant call format (VCF) files using GATK4, SnpSift, VEP and genmod. Designed to be used after human_genomics_pipeline.
+Date created: 2020-03-06
+Modified: 2020-08-28
+"""
+
+##### Set up #####
+
+# Define samples from vcf dir using wildcards
+if config['DATA'] == "Single" or config['DATA'] == 'single':
+    SAMPLES, = glob_wildcards("../../vcf/{sample}_raw_snps_indels.vcf")
+
+if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+    SAMPLES, = glob_wildcards("../../vcf/{sample}_raw_snps_indels_g.vcf")
+
+##### Target rules #####
+
+rule all:
+        input:
+            expand("../results/filtered/{sample}_filtered_scoutfiltered.vcf", sample = SAMPLES),
+            expand("../results/annotated/{sample}_filtered_scoutfiltered_annotated.vcf", sample = SAMPLES)
+
+##### Set up report #####
+
+report: "report/workflow.rst"
+
+##### Load rules #####
+
+localrules: gunzip, bgzip, tabix
+
+if config['DATA'] == "Single" or config['DATA'] == 'single':
+    include: "rules/gatk_CNNScoreVariants.smk"
+    include: "rules/gatk_FilterVariantTranches.smk"
+    include: "rules/bcftools_view_multiallelicsites.smk"
+
+if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+    include: "rules/gatk_VariantRecalibrator_indel.smk"
+    include: "rules/gatk_VariantRecalibrator_snp.smk"
+    include: "rules/gatk_ApplyVQSR_indel.smk"
+    include: "rules/gatk_ApplyVQSR_snp.smk"
+    include: "rules/bcftools_view_multiallelicsites.smk"
+    include: "rules/gunzip.smk"
+    include: "rules/SnpSift_filter_proband.smk"
+
+include: "rules/SnpSift_dbnsfp.smk"
+include: "rules/bgzip.smk"
+include: "rules/tabix.smk"
+include: "rules/vep.smk"
+include: "rules/genmod_annotate_CADD.smk"
+include: "rules/SnpSift_annotate_dbSNP.smk"
