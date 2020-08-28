@@ -1,0 +1,58 @@
+{
+    "__default__" :
+    {
+        "account" : "",
+        "nodes" : 1,
+        "ntasks" : 4,
+        "partition" : "",
+        "nodelist" : ""
+    },
+    "__gatk_CNNScoreVariants__" :
+    {
+        "nodes" : 12
+    },
+    "__gatk_FilterVariantTranches__" :
+    {
+        "nodes" : 1
+    },
+    "__gatk_VariantRecalibrator_indel__" :
+    {
+        "nodes" : 1
+    },
+    "__gatk_VariantRecalibrator_snp__" :
+    {
+        "nodes" : 1
+    },
+    "__gatk_ApplyVQSR_indel__" :
+    {
+        "nodes" : 4
+    },
+    "__gatk_ApplyVQSR_snp__" :
+    {
+        "nodes" : 4
+    },
+    "__bcftools_view_multiallelicsites__" :
+    {
+        "nodes" : 1
+    },
+    "__SnpSift_filter_proband__" :
+    {
+        "nodes" : 1
+    },
+    "__SnpSift_dbnsfp__" :
+    {
+        "nodes" : 1
+    },
+    "__vep__" :
+    {
+        "nodes" : 8
+    },
+    "__genmod_annotate_CADD__" :
+    {
+        "nodes" : 4
+    },
+    "__SnpSift_annotate_dbSNP__" :
+    {
+        "nodes" : 1
+    }
+}

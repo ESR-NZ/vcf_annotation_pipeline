@@ -2,24 +2,26 @@
 ##### Overall workflow #####
 ############################
 
-# Build of reference genome (either 'GRCh37' or 'GRCh38')
+# Build of reference genome (either 'GRCh37' (for b37) or 'GRCh38' (for hg38))
 BUILD: ""
 
 # Type of input data (either 'Single' or 'Cohort')
 DATA: ""
 
-# File directories to reference genome and dbSNP database
+# File paths to the reference genome (.fasta)
 REFGENOME: ""
+
+# File path to dbSNP database
 dbSNP: ""
 
 # Temporary file directory
 TEMPDIR: ""
 
-# WES settings (leave blank if analysing other data such as WGS)
+# Whole exome sequence settings (leave blank if analysing other data such as whole genome sequence data)
 WES:
-  # Genomic intervals over which to operate
+  # File path to the exome capture regions over which to operate (prefix with the '-L' flag)
   INTERVALS: ""
-  # Padding (in bp) to add to each interval
+  # Padding (in bp) to add to each region (prefix with the '-ip' flag)
   PADDING: ""
 
 #############################
@@ -36,11 +38,16 @@ FILTERING:
     INDELS: ""
     SNPS: ""
 
+  # Tranche filtering level/truth sensitivity
+  TRANCHE: 
+    SNPS: ""
+    INDELS: ""
+
 ##########################
 ##### VCF annotation #####
 ##########################
 
-# File directories to vcf annotation databases
+# File paths to vcf annotation databases
 VEP: ""
 dbNSFP: ""
 CADD: ""
