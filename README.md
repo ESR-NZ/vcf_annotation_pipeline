@@ -1,6 +1,6 @@
 # vcf_annotation_pipeline
 
-A simple Snakemake workflow to filter raw variants (snp and indels) and annotate variant call format (VCF) files using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html), [genmod](https://github.com/moonso/genmod) and [dbSNP](https://www.ncbi.nlm.nih.gov/SNP/). After annotation, the data is partially prepared to be ingested into [scout](http://www.clinicalgenomics.se/scout/). Designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
+A simple Snakemake workflow to filter raw variants (snp and indels) and annotate variant call format (VCF) files using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html), [genmod](https://github.com/moonso/genmod) and [dbSNP](https://www.ncbi.nlm.nih.gov/SNP/). The data is alos partially prepared for ingested into [scout](http://www.clinicalgenomics.se/scout/). Designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
 
 - [vcf_annotation_pipeline](#vcf_annotation_pipeline)
   - [Workflow diagram - single samples](#workflow-diagram---single-samples)
