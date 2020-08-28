@@ -214,10 +214,10 @@ If analysing single sample data, pass the resources to be used to filter variant
 ```yaml
 FILTERING:
   # ...for analysis of single samples
-  SINGLE: "--resource /home/lkemp/publicData/dbSNP/All_20180418.vcf.gz
-          --resource /home/lkemp/publicData/hapmap/hapmap_3.3.hg38.vcf.gz
-          --resource /home/lkemp/publicData/mills/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-          --resource /home/lkemp/publicData/omni/1000G_omni2.5.hg38.vcf.gz"
+  SINGLE: "--resource /home/lkemp/publicData/b37/dbsnp_138.b37.vcf
+          --resource /home/lkemp/publicData/b37/hapmap_3.3.b37.vcf
+          --resource /home/lkemp/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
+          --resource /home/lkemp/publicData/b37/1000G_omni2.5.b37.vcf"
 ```
 
 If analysing cohort data, pass the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator) to the `--resource` flag. For example:
