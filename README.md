@@ -3,7 +3,8 @@
 A simple Snakemake workflow to filter raw variants (snp and indels) and annotate variant call format (VCF) files using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html), [genmod](https://github.com/moonso/genmod) and [dbSNP](https://www.ncbi.nlm.nih.gov/SNP/). After annotation, the data is partially prepared to be ingested into [scout](http://www.clinicalgenomics.se/scout/). Designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
 
 - [vcf_annotation_pipeline](#vcf_annotation_pipeline)
-  - [Workflow diagram](#workflow-diagram)
+  - [Workflow diagram - single samples](#workflow-diagram---single-samples)
+  - [Workflow diagram - cohort samples](#workflow-diagram---cohort-samples)
   - [Run vcf_annotation_pipeline](#run-vcf_annotation_pipeline)
     - [1. Fork the pipeline repo to a personal or lab account](#1-fork-the-pipeline-repo-to-a-personal-or-lab-account)
     - [2. Take the pipeline to the data on your local machine](#2-take-the-pipeline-to-the-data-on-your-local-machine)
@@ -24,9 +25,13 @@ A simple Snakemake workflow to filter raw variants (snp and indels) and annotate
     - [12. Repeat step 10 each time you re-run the analysis with different parameters](#12-repeat-step-10-each-time-you-re-run-the-analysis-with-different-parameters)
     - [13. Create a pull request with the upstream repo to merge any useful changes (optional)](#13-create-a-pull-request-with-the-upstream-repo-to-merge-any-useful-changes-optional)
 
-## Workflow diagram
+## Workflow diagram - single samples
 
-<img src="./images/rulegraph.png" class="center">
+<img src="./images/rulegraph_single.png" class="center">
+
+## Workflow diagram - cohort samples
+
+<img src="./images/rulegraph_cohort.png" class="center">
 
 ## Run vcf_annotation_pipeline
 
