@@ -1,13 +1,13 @@
 if config['DATA'] == "Single" or config['DATA'] == 'single':
-    outfile = temp("../results/filtered/{sample}_filtered_scoutfiltered.vcf")
+    outfile = "../results/filtered/{sample}_filtered_scoutfiltered.vcf.gz"
 elif config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    outfile = temp("../results/filtered/{sample}_filtered_multiallelicsites.vcf.gz")
+    outfile = "../results/filtered/{sample}_filtered_multiallelicsites.vcf.gz"
 
 rule bcftools_view_multiallelicsites:
     input:
         "../results/filtered/{sample}_filtered.vcf" 
     output:
-        outfile
+        temp(outfile)
     params:
         "-O z --max-alleles 2 --exclude-types indels"
     log:

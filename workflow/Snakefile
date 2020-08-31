@@ -34,6 +34,7 @@ if config['DATA'] == "Single" or config['DATA'] == 'single':
     include: "rules/gatk_CNNScoreVariants.smk"
     include: "rules/gatk_FilterVariantTranches.smk"
     include: "rules/bcftools_view_multiallelicsites.smk"
+    include: "rules/gunzip.smk"
 
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     include: "rules/gatk_VariantRecalibrator_indel.smk"
