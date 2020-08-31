@@ -15,4 +15,4 @@ rule SnpSift_annotate_dbSNP:
     message:
         "Using SnpSift to annotate {input.vcf} with dbSNP"
     shell:
-        "SnpSift -Xmx16g annotate {input.dbsnp} {input.vcf} > {output} &> {log}"
+        "SnpSift -Xmx16g annotate {input.dbsnp} {input.vcf} > {output}"
