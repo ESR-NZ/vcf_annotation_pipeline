@@ -35,7 +35,7 @@ A simple Snakemake workflow to filter raw variants (snp and indels) and annotate
 
 ## Run vcf_annotation_pipeline
 
-- **Prerequisite software:** [R 3.2.2 ](https://www.r-project.org/), [Git 2.7.4](https://git-scm.com/), [Mamba 0.4.4](https://github.com/TheSnakePit/mamba) with [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [gsutil 4.52](https://pypi.org/project/gsutil/), [gunzip 1.6](https://linux.die.net/man/1/gunzip), [bgzip 1.9](http://www.htslib.org/doc/bgzip.html)
+- **Prerequisite software:** [Singularity 2.5.2](https://singularity.lbl.gov/), [R 3.2.2 ](https://www.r-project.org/), [Git 2.7.4](https://git-scm.com/), [Mamba 0.4.4](https://github.com/TheSnakePit/mamba) with [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [gsutil 4.52](https://pypi.org/project/gsutil/), [gunzip 1.6](https://linux.die.net/man/1/gunzip), [bgzip 1.9](http://www.htslib.org/doc/bgzip.html)
 - **OS:** Validated on Ubuntu 16.04
 
 ### 1. Fork the pipeline repo to a personal or lab account
