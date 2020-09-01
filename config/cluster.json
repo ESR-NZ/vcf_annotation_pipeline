@@ -31,14 +31,6 @@
     {
         "nodes" : 4
     },
-    "__bcftools_view_multiallelicsites__" :
-    {
-        "nodes" : 1
-    },
-    "__SnpSift_filter_proband__" :
-    {
-        "nodes" : 1
-    },
     "__SnpSift_dbnsfp__" :
     {
         "nodes" : 1
@@ -52,6 +44,30 @@
         "nodes" : 4
     },
     "__SnpSift_annotate_dbSNP__" :
+    {
+        "nodes" : 1
+    },
+    "__gatk_CalculateGenotypePosteriors__" :
+    {
+        "nodes" : 1
+    },
+    "__gatk_VariantAnnotator_PossibleDeNovo__" :
+    {
+        "nodes" : 1
+    },
+    "__genmod_models__" :
+    {
+        "nodes" : 16
+    },
+    "__bcftools_view_multiallelicsites__" :
+    {
+        "nodes" : 1
+    },
+    "__genmod_score__" :
+    {
+        "nodes" : 1
+    },
+    "__SnpSift_filter_proband__" :
     {
         "nodes" : 1
     }
