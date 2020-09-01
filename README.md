@@ -35,7 +35,7 @@ A simple Snakemake workflow to filter raw variants (snp and indels) and annotate
 
 ## Run vcf_annotation_pipeline
 
-- **Prerequisite software:** [Singularity 2.5.2](https://singularity.lbl.gov/), [R 3.2.2 ](https://www.r-project.org/), [Git 2.7.4](https://git-scm.com/), [Mamba 0.4.4](https://github.com/TheSnakePit/mamba) with [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [gsutil 4.52](https://pypi.org/project/gsutil/), [gunzip 1.6](https://linux.die.net/man/1/gunzip), [bgzip 1.9](http://www.htslib.org/doc/bgzip.html)
+- **Prerequisite software:** [R 3.2.2 ](https://www.r-project.org/), [Git 2.7.4](https://git-scm.com/), [Mamba 0.4.4](https://github.com/TheSnakePit/mamba) with [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [gsutil 4.52](https://pypi.org/project/gsutil/), [gunzip 1.6](https://linux.die.net/man/1/gunzip), [bgzip 1.9](http://www.htslib.org/doc/bgzip.html)
 - **OS:** Validated on Ubuntu 16.04
 
 ### 1. Fork the pipeline repo to a personal or lab account
@@ -52,10 +52,10 @@ Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotat
 
 .
 |___vcf/
-|     |___sample1_raw_snps_indels_g.vcf
-|     |___sample1_raw_snps_indels_g.vcf.idx
-|     |___sample2_raw_snps_indels_g.vcf
-|     |___sample2_raw_snps_indels_g.vcf.idx
+|     |___sample1_raw_snps_indels.vcf
+|     |___sample1_raw_snps_indels.vcf.idx
+|     |___sample2_raw_snps_indels.vcf
+|     |___sample2_raw_snps_indels.vcf.idx
 |     |___ ...
 |
 |___bams/
@@ -81,9 +81,22 @@ Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotat
 |     |___sample2_raw_snps_indels_g.vcf.idx
 |     |___ ...
 |
+|___pedigrees/
+|     |___proband1_pedigree.ped
+|     |___proband2_pedigree.ped
+|     |___ ...
+|
 |___vcf_annotation_pipeline/
 
 ```
+
+Requirements:
+  - Input paired end fastq files need to identified with `_1` and `_2` (not `_R1` and `_R2`)
+  - Currently, the filenames of the pedigree files need to be labelled with the name of the proband/individual affected with the disease phenotype in the cohort (we will be working towards removing this requirement)
+  - Singletons and cohorts need to be run in separate pipeline runs
+
+Assumptions:
+  - There is one proband/individual affected with the disease phenotype of interest in a given cohort (one individual with a value of 2 in the 6th column of the pedigree file)
 
 See [here](https://help.github.com/en/github/getting-started-with-github/fork-a-repo#keep-your-fork-synced) for help
 
@@ -97,12 +110,24 @@ Download from [Google Cloud Bucket](https://console.cloud.google.com/storage/bro
 gsutil cp -r gs://gatk-legacy-bundles/b37 /where/to/download/
 ```
 
+Unzip all zipped files
+
+```bash
+gunzip -f /location/you/downloaded/bundle/*.gz
+```
+
 #### hg38
 
 Download from [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/genomics-public-data/resources/broad/hg38/v0)
 
 ```bash
-gsutil cp -r gs://genomics-public-data/resources/broad/hg38/ /where/to/download/
+gsutil cp -r gs://genomics-public-data/resources/broad/hg38/v0/ /where/to/download/
+```
+
+Unzip all zipped files
+
+```bash
+gunzip -f /location/you/downloaded/bundle/*.gz
 ```
 
 ### 4. Create a local copy of other databases (either GRCh37 or GRCh38)

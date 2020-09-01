@@ -1,12 +1,12 @@
 rule vep:
     input:
-        vcf = "../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp.vcf.gz",
-        index = "../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp.vcf.gz.tbi",
+        vcf = "../results/annotated/{sample}_filtered_dbnsfp.vcf.gz",
+        index = "../results/annotated/{sample}_filtered_dbnsfp.vcf.gz.tbi",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
         vep = expand("{vep}", vep = config['VEP'])
     output:
-        report("../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp_vep.vcf.gz_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
-        vcf = temp("../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp_vep.vcf.gz")
+        report("../results/annotated/{sample}_filtered_dbnsfp_vep.vcf.gz_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
+        vcf = temp("../results/annotated/{sample}_filtered_dbnsfp_vep.vcf.gz")
     params:
         build = expand("{build}", build = config['BUILD']),
         other = "--compress_output bgzip --cache --offline --stats_text --everything --vcf --force_overwrite"

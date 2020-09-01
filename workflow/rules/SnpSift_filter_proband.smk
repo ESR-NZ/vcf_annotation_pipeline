@@ -1,10 +1,10 @@
 rule SnpSift_filter_proband:
     input:
-        "../results/filtered/{sample}_filtered_multiallelicsites.vcf"
+        "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites.vcf"
     output:
-        temp("../results/filtered/{sample}_filtered_scoutfiltered.vcf")
+        temp("../results/readyforscout/{sample}_filtered_annotated_multiallelicsites_probandonly.vcf")
     params:
-        " ' ( isVariant ( GEN[0] ) ) ' " # Proband must be in the first column of the vcf
+        " '( isVariant ( GEN[{sample}] ) ) ' "
     log: 
         "logs/SnpSift_filter_proband/{sample}.log"
     benchmark:
@@ -12,6 +12,6 @@ rule SnpSift_filter_proband:
     conda:
         "../envs/SnpSift.yaml"
     message:
-        "Filtering for variants only found in the proband"
+        "Filtering for variants only found in the proband in {input}"
     shell:
         "cat {input} | SnpSift filter {params} > {output}"

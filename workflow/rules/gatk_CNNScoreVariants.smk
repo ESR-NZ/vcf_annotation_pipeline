@@ -4,7 +4,8 @@ rule gatk_CNNScoreVariants:
         bams = "../../bams/{sample}_recalibrated.bam",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
-        temp("../results/filtered/{sample}_scored.vcf")
+        vcf = temp("../results/filtered/{sample}_scored.vcf"),
+        index = temp("../results/filtered/{sample}_scored.vcf.idx")
     params:
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
@@ -21,5 +22,5 @@ rule gatk_CNNScoreVariants:
     shell:
         """
         gatk --java-options "-Xmx64g -Xms64g" CNNScoreVariants \
-            -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output} --intra-op-threads {threads} {params.padding} {params.intervals} {params.other} &> {log}
+            -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output.vcf} --intra-op-threads {threads} {params.padding} {params.intervals} {params.other} &> {log}
         """

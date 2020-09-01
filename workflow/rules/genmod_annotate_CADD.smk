@@ -1,9 +1,9 @@
 rule genmod_annotate_CADD:
     input:
-        vcf = "../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp_vep.vcf.gz",
+        vcf = "../results/annotated/{sample}_filtered_dbnsfp_vep.vcf.gz",
         cadd = expand("{cadd}", cadd = config['CADD'])
     output:
-        temp("../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp_vep_cadd.vcf")
+        temp("../results/annotated/{sample}_filtered_dbnsfp_vep_cadd.vcf")
     params:
         "--regions"
     log: 

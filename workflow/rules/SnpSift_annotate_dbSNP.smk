@@ -1,9 +1,15 @@
+if config['DATA'] == "Single" or config['DATA'] == 'single':
+    outfile = "../results/annotated/{sample}_filtered_annotated.vcf"
+
+elif config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+    outfile = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp.vcf"
+
 rule SnpSift_annotate_dbSNP:
     input:
-        vcf = "../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp_vep_cadd.vcf",
+        vcf = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd.vcf",
         dbsnp = expand("{dbsnp}", dbsnp = config['dbSNP'])
     output:
-        protected("../results/annotated/{sample}_filtered_scoutfiltered_annotated.vcf")
+        protected(outfile)
     params:
         "--regions"
     log: 

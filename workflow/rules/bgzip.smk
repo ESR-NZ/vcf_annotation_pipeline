@@ -1,8 +1,8 @@
 rule bgzip:
     input:
-        "../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp.vcf"
+        "../results/annotated/{sample}_filtered_dbnsfp.vcf"
     output:
-        temp("../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp.vcf.gz")
+        temp("../results/annotated/{sample}_filtered_dbnsfp.vcf.gz")
     conda:
         "../envs/bgzip.yaml"
     message:

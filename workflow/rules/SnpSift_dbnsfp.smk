@@ -1,9 +1,9 @@
 rule SnpSift_dbnsfp:
     input:
-        vcf = "../results/filtered/{sample}_filtered_scoutfiltered.vcf",
+        vcf = "../results/filtered/{sample}_filtered.vcf",
         dbnsfp = expand("{dbnsfp}", dbnsfp = config['dbNSFP'])
     output:
-        temp("../results/annotated/{sample}_filtered_scoutfiltered_dbnsfp.vcf")
+        temp("../results/annotated/{sample}_filtered_dbnsfp.vcf")
     params:
         "-v"
     log: 

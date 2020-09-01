@@ -1,13 +1,8 @@
-if config['DATA'] == "Single" or config['DATA'] == 'single':
-    outfile = "../results/filtered/{sample}_filtered_scoutfiltered.vcf.gz"
-elif config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    outfile = "../results/filtered/{sample}_filtered_multiallelicsites.vcf.gz"
-
 rule bcftools_view_multiallelicsites:
     input:
-        "../results/filtered/{sample}_filtered.vcf" 
+        "../results/annotated/{sample}_filtered_annotated.vcf"
     output:
-        temp(outfile)
+        temp("../results/readyforscout/{sample}_filtered_annotated_multiallelicsites.vcf.gz")
     params:
         "-O z --max-alleles 2 --exclude-types indels"
     log:
@@ -17,6 +12,6 @@ rule bcftools_view_multiallelicsites:
     conda:
         "../envs/bcftools.yaml"
     message:
-        "Filtering out multiallelic sites"
+        "Filtering out multiallelic sites in {input}"
     shell:
         "bcftools view {params} {input} > {output}"
