@@ -3,3 +3,5 @@ vcf_annotation_pipeline filters raw variants (snp and indels) and annotates vari
 Run parameters:
     * Reference genome build: {{ snakemake.config["BUILD"] }}
     * Input data type: {{ snakemake.config["DATA"] }}
+    * Reference genome: {{ snakemake.config["REFGENOME"] }}
+    * dbSNP database {{ snakemake.config["dbSNP"] }}
