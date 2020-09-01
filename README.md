@@ -271,7 +271,7 @@ Configure `account:`, `partition:` and `nodelist:` in default section of 'cluste
 
 [This](https://hpc-carpentry.github.io/hpc-python/17-cluster/) is a good place to go for a good working example.
 
-*These variables will need to be passed to snakemake in the snakemake run script (see example in the HPC section of step 6).*
+*These variables will need to be passed to snakemake in the snakemake run script (see example in the HPC section of step 7).*
 
 ### 7. Modify the run scripts
 
