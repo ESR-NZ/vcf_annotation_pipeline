@@ -64,7 +64,9 @@ if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
 
 # Filtering to prepare for scout
 include: "rules/bcftools_view_multiallelicsites.smk"
-include: "rules/genmod_score.smk"
+
+if config['DATA'] == "Single" or config['DATA'] == 'single':
+    include: "rules/genmod_score.smk"
 
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     include: "rules/gunzip.smk"
