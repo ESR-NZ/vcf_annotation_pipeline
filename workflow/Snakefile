@@ -36,18 +36,26 @@ report: "report/workflow.rst"
 
 ##### Load rules #####
 
-localrules: gunzip, bgzip, tabix
+localrules: gunzip, bgzip, tabix, pbrun_cnnscorevariants, pbrun_vqsr_indel, pbrun_vqsr_snp
 
 # Variant filtering
-if config['DATA'] == "Single" or config['DATA'] == 'single':
+if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
     include: "rules/gatk_CNNScoreVariants.smk"
     include: "rules/gatk_FilterVariantTranches.smk"
+        
+if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+    include: "rules/pbrun_cnnscorevariants.smk"
+    include: "rules/gatk_FilterVariantTranches.smk"
 
-if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
     include: "rules/gatk_VariantRecalibrator_indel.smk"
     include: "rules/gatk_VariantRecalibrator_snp.smk"
     include: "rules/gatk_ApplyVQSR_indel.smk"
     include: "rules/gatk_ApplyVQSR_snp.smk"
+
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+    include: "rules/pbrun_vqsr_indel.smk"
+    include: "rules/pbrun_vqsr_snp.smk"
 
 # Annotation
 include: "rules/SnpSift_dbnsfp.smk"
