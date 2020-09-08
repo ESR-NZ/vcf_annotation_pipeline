@@ -1,6 +1,6 @@
 rule pbrun_vqsr_indel:
     input:
-        "../../vcf/{sample}_raw_snps_indels_g.vcf"
+        "../../vcf/{sample}_raw_snps_indels.g.vcf"
     output:
         vcf = temp("../results/filtered/{sample}_tmp_vqsr_recal_indels.vcf"),
         recal = temp("../results/filtered/{sample}_recal_indels"),

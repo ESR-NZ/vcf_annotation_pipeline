@@ -86,10 +86,10 @@ Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotat
 
 .
 |___vcf/
-|     |___sample1_raw_snps_indels_g.vcf
-|     |___sample1_raw_snps_indels_g.vcf.idx
-|     |___sample2_raw_snps_indels_g.vcf
-|     |___sample2_raw_snps_indels_g.vcf.idx
+|     |___sample1_raw_snps_indels.g.vcf
+|     |___sample1_raw_snps_indels.g.vcf.idx
+|     |___sample2_raw_snps_indels.g.vcf
+|     |___sample2_raw_snps_indels.g.vcf.idx
 |     |___ ...
 |
 |___pedigrees/

@@ -1,6 +1,6 @@
 rule gatk_VQSR_indel:
     input:
-        vcf = "../../vcf/{sample}_raw_snps_indels_g.vcf",
+        vcf = "../../vcf/{sample}_raw_snps_indels.g.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
         recal = "../results/filtered/{sample}_recal_indels",
         recalindex = "../results/filtered/{sample}_recal_indels.idx",

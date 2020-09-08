@@ -1,6 +1,6 @@
 rule gatk_VariantRecalibrator_indel:
     input:
-        vcf = "../../vcf/{sample}_raw_snps_indels_g.vcf",
+        vcf = "../../vcf/{sample}_raw_snps_indels.g.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
         report("../results/filtered/{sample}_plots_indels.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - Indels"),
