@@ -8,6 +8,9 @@ BUILD: ""
 # Type of input data (either 'Single' or 'Cohort')
 DATA: ""
 
+# Should the pipeline be GPU accelerated where possible? (either 'Yes' or 'No')
+GPU_ACCELERATED: ""
+
 # File paths to the reference genome (.fasta)
 REFGENOME: ""
 

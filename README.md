@@ -4,7 +4,9 @@ A Snakemake workflow to filter raw variants (snp and indels) and annotate varian
 
 - [vcf_annotation_pipeline](#vcf_annotation_pipeline)
   - [Workflow diagram - single samples](#workflow-diagram---single-samples)
+  - [Workflow diagram - single samples - GPU accelerated](#workflow-diagram---single-samples---gpu-accelerated)
   - [Workflow diagram - cohort samples](#workflow-diagram---cohort-samples)
+  - [Workflow diagram - cohort samples - GPU accelerated](#workflow-diagram---cohort-samples---gpu-accelerated)
   - [Run vcf_annotation_pipeline](#run-vcf_annotation_pipeline)
     - [1. Fork the pipeline repo to a personal or lab account](#1-fork-the-pipeline-repo-to-a-personal-or-lab-account)
     - [2. Take the pipeline to the data on your local machine](#2-take-the-pipeline-to-the-data-on-your-local-machine)
@@ -29,13 +31,22 @@ A Snakemake workflow to filter raw variants (snp and indels) and annotate varian
 
 <img src="./images/rulegraph_single.png" class="center">
 
+## Workflow diagram - single samples - GPU accelerated
+
+<img src="./images/rulegraph_single_gpu.png" class="center">
+
 ## Workflow diagram - cohort samples
 
 <img src="./images/rulegraph_cohort.png" class="center">
 
+## Workflow diagram - cohort samples - GPU accelerated
+
+<img src="./images/rulegraph_cohort_gpu.png" class="center">
+
 ## Run vcf_annotation_pipeline
 
-- **Prerequisite software:** [R 3.2.2 ](https://www.r-project.org/), [Git 2.7.4](https://git-scm.com/), [Mamba 0.4.4](https://github.com/TheSnakePit/mamba) with [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [gsutil 4.52](https://pypi.org/project/gsutil/), [gunzip 1.6](https://linux.die.net/man/1/gunzip), [bgzip 1.9](http://www.htslib.org/doc/bgzip.html)
+- **Prerequisite hardware:** [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) (for GPU accelerated runs)
+- **Prerequisite software:** [NVIDIA CLARA PARABRICKS and dependencies](https://www.nvidia.com/en-us/docs/parabricks/local-installation/) (for GPU accelerated runs), [R 3.2.2 ](https://www.r-project.org/), [Git 2.7.4](https://git-scm.com/), [Mamba 0.4.4](https://github.com/TheSnakePit/mamba) with [Conda 4.8.2](https://docs.conda.io/projects/conda/en/latest/index.html), [gsutil 4.52](https://pypi.org/project/gsutil/), [gunzip 1.6](https://linux.die.net/man/1/gunzip), [bgzip 1.9](http://www.htslib.org/doc/bgzip.html)
 - **OS:** Validated on Ubuntu 16.04
 
 ### 1. Fork the pipeline repo to a personal or lab account
@@ -177,6 +188,11 @@ Specify whether the data is to be analysed on it's own ('Single') or as a part o
 DATA: "Single"
 ```
 
+Specify whether the pipeline should be GPU accelerated where possible (either 'Yes' or 'No', this requires [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) and [NVIDIA CLARA PARABRICKS](https://www.nvidia.com/en-us/docs/parabricks/local-installation/))
+```yaml
+GPU_ACCELERATED: "Yes"
+```
+
 Set the the working directories to the reference human genome file (b37 or hg38). For example:
 
 ```yaml
@@ -234,6 +250,19 @@ If analysing cohort data, pass the resources to be used to filter variants with 
           --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /home/lkemp/publicData/b37/dbsnp_138.b37.vcf"
 ```
 
+If running as GPU accelerated, use the following syntax when setting the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator)
+
+```yaml
+  COHORT:
+    INDELS: "--resource mills,known=false,training=true,truth=true,prior=12.0:/home/lkemp/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
+            --resource 1000G,known=false,training=true,truth=false,prior=10.0:/home/lkemp/publicData/b37/1000G_phase1.indels.b37.vcf
+            --resource dbsnp,known=true,training=false,truth=false,prior=2.0:/home/lkemp/publicData/b37/dbsnp_138.b37.vcf"
+    SNPS: "--resource hapmap,known=false,training=true,truth=true,prior=15.0:/home/lkemp/publicData/b37/hapmap_3.3.b37.vcf
+          --resource omni,known=false,training=true,truth=false,prior=12.0:/home/lkemp/publicData/b37/1000G_omni2.5.b37.vcf
+          --resource 1000G,known=false,training=true,truth=false,prior=10.0:/home/lkemp/publicData/b37/1000G_phase1.indels.b37.vcf
+          --resource dbsnp,known=true,training=false,truth=false,prior=2.0:/home/lkemp/publicData/b37/dbsnp_138.b37.vcf"
+```
+
 Set the tranche filtering level for snps and indels (by [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360041417412-FilterVariantTranches) for single samples and [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360041851391-VariantRecalibrator) for cohorts). For example:
 
 ```yaml
@@ -251,6 +280,8 @@ CADD: "/home/lkemp/publicData/CADD/GRCh37/whole_genome_SNVs.tsv.gz"
 ```
 
 ### 6. Configure to run on a HPC (optional)
+
+*This will deploy the non-GPU accelerated rules to slurm and deploy the GPU accelerated rules locally (pbrun_cnnscorevariants, pbrun_vqsr_indel, pbrun_vqsr_snp)*
 
 In theory, this cluster configuration should be adaptable to other job scheduler systems, but here I will demonstrate how to deploy this pipeline to [slurm](https://slurm.schedmd.com/).
 
@@ -275,7 +306,7 @@ Configure `account:`, `partition:` and `nodelist:` in default section of 'cluste
 
 ### 7. Modify the run scripts
 
-Set the singularity bind location to a directory that contains your pipeline working directory with the --singularity-args flag (eg. '-B /home/lkemp/'). Set the number of cores to be used with the `-j` flag. For example:
+Set the singularity bind location to a directory that contains your pipeline working directory with the --singularity-args flag (eg. '-B /home/lkemp/'). Set the number of cores to be used with the `-j` flag. If running GPU accelerated, also set the number of gpus with the `--resources` flag. For example:
 
 Dry run (dryrun.sh):
 
@@ -283,6 +314,7 @@ Dry run (dryrun.sh):
 snakemake \
 -n \
 -j 32 \
+--resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
 --latency-wait 20 \
@@ -296,6 +328,7 @@ Full run (run.sh):
 ```bash
 snakemake \
 -j 32 \
+--resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
 --latency-wait 20 \
@@ -325,6 +358,7 @@ Dry run (dryrun.sh):
 snakemake \
 -n \
 -j 32 \
+--resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
 --latency-wait 20 \
@@ -342,6 +376,7 @@ Full run (run.sh):
 ```bash
 snakemake \
 -j 32 \
+--resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
 --latency-wait 20 \
