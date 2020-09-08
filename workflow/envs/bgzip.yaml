@@ -3,6 +3,4 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - conda-forge::pip =20.2.2
-  - pip:
-    - bgzip==0.3.5
+  - bioconda::htslib = 1.10.2
