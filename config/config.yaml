@@ -11,6 +11,9 @@ DATA: ""
 # Should the pipeline be GPU accelerated where possible? (either 'Yes' or 'No')
 GPU_ACCELERATED: ""
 
+# Should the data be prepared to be ingested into scout? (either 'Yes' or 'No')
+PREPARE_FOR_SCOUT: ""
+
 # File paths to the reference genome (.fasta)
 REFGENOME: ""
 
