@@ -13,7 +13,7 @@ if config['DATA'] == "Single" or config['DATA'] == 'single':
     SAMPLES, = glob_wildcards("../../vcf/{sample}_raw_snps_indels.vcf")
 
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    SAMPLES, = glob_wildcards("../../vcf/{sample}_raw_snps_indels_g.vcf")
+    SAMPLES, = glob_wildcards("../../vcf/{sample}_raw_snps_indels.g.vcf")
 
 ##### Target rules #####
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "No" or config['PREPARE_FOR_SCOUT'] == 'no'):
