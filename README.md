@@ -317,7 +317,7 @@ snakemake \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
---latency-wait 20 \
+--latency-wait 120 \
 --use-singularity \
 --singularity-args '-B /store/lkemp/' \
 --configfile ../config/config.yaml
@@ -331,7 +331,7 @@ snakemake \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
---latency-wait 20 \
+--latency-wait 120 \
 --use-singularity \
 --singularity-args '-B /store/lkemp/' \
 --configfile ../config/config.yaml
@@ -361,7 +361,7 @@ snakemake \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
---latency-wait 20 \
+--latency-wait 120 \
 --configfile ../config/config.yaml \
 --cluster-config ../config/cluster.json \
 --cluster "sbatch -A {cluster.account} \
@@ -379,7 +379,7 @@ snakemake \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
---latency-wait 20 \
+--latency-wait 120 \
 --configfile ../config/config.yaml \
 --cluster-config ../config/cluster.json \
 --cluster "sbatch -A {cluster.account} \
