@@ -1,6 +1,6 @@
 # vcf_annotation_pipeline
 
-A Snakemake workflow to filter raw variants (snp and indels) and annotate variant call format (VCF) files (single samples or cohorts) using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html), [genmod](https://github.com/moonso/genmod) and [dbSNP](https://www.ncbi.nlm.nih.gov/SNP/). The vcf file is also prepared for ingestion into [scout](http://www.clinicalgenomics.se/scout/) which involves some filtering steps. However a vcf file is also output after annotation and before this preparation for scout. This workflow is designed to follow the [GATK best practice workflow for germline short variant discovery (SNPs + Indels)](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-) and is designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
+A Snakemake workflow to filter raw variants (snp and indels) and annotate variant call format (VCF) files (single samples or cohorts) using [GATK4](https://gatk.broadinstitute.org/hc/en-us), [SnpSift](http://snpeff.sourceforge.net/SnpSift.html), [VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html), [genmod](https://github.com/moonso/genmod) and [dbSNP](https://www.ncbi.nlm.nih.gov/SNP/). The vcf file can also optionally be prepared for ingestion into [scout](http://www.clinicalgenomics.se/scout/) which involves some filtering steps. This workflow is designed to follow the [GATK best practice workflow for germline short variant discovery (SNPs + Indels)](https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-) and is designed to be used after [human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline).
 
 - [vcf_annotation_pipeline](#vcf_annotation_pipeline)
   - [Workflow diagram - single samples](#workflow-diagram---single-samples)
@@ -191,6 +191,12 @@ DATA: "Single"
 Specify whether the pipeline should be GPU accelerated where possible (either 'Yes' or 'No', this requires [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) and [NVIDIA CLARA PARABRICKS](https://www.nvidia.com/en-us/docs/parabricks/local-installation/))
 ```yaml
 GPU_ACCELERATED: "Yes"
+```
+
+Specify whether the data should be prepared to be ingested into [scout](http://www.clinicalgenomics.se/scout/) (either 'Yes' or 'No'). This will output an additional vcf file that has undergone additional filtering steps. For example:
+
+```yaml
+PREPARE_FOR_SCOUT: "Yes"
 ```
 
 Set the the working directories to the reference human genome file (b37 or hg38). For example:

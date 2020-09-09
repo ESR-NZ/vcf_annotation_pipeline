@@ -16,14 +16,26 @@ if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     SAMPLES, = glob_wildcards("../../vcf/{sample}_raw_snps_indels_g.vcf")
 
 ##### Target rules #####
-if config['DATA'] == "Single" or config['DATA'] == 'single':
+if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "No" or config['PREPARE_FOR_SCOUT'] == 'no'):
+    rule all:
+           input:
+               expand("../results/filtered/{sample}_filtered.vcf", sample = SAMPLES),
+               expand("../results/annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES)
+
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPARE_FOR_SCOUT'] == "No" or config['PREPARE_FOR_SCOUT'] == 'no'):
+    rule all:
+           input:
+               expand("../results/filtered/{sample}_filtered.vcf", sample = SAMPLES),
+               expand("../results/annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES)
+
+if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
     rule all:
            input:
                expand("../results/filtered/{sample}_filtered.vcf", sample = SAMPLES),
                expand("../results/annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES),
                expand("../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf.gz", sample = SAMPLES)
 
-if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
     rule all:
            input:
                expand("../results/filtered/{sample}_filtered.vcf", sample = SAMPLES),
@@ -71,12 +83,12 @@ if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     include: "rules/genmod_models.smk"
 
 # Filtering to prepare for scout
-include: "rules/bcftools_view_multiallelicsites.smk"
-
-if config['DATA'] == "Single" or config['DATA'] == 'single':
+if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
+    include: "rules/bcftools_view_multiallelicsites.smk"
     include: "rules/genmod_score.smk"
 
-if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
+    include: "rules/bcftools_view_multiallelicsites.smk"
     include: "rules/gunzip.smk"
     include: "rules/SnpSift_filter_proband.smk"
     include: "rules/genmod_score.smk"
