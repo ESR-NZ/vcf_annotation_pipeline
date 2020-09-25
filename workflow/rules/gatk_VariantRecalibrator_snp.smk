@@ -16,9 +16,9 @@ rule gatk_VariantRecalibrator_snp:
         resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
         other = "-mode SNP -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
     log: 
-        "logs/gatk4_VariantRecalibrator_snp/{sample}.log"
+        "logs/gatk_VariantRecalibrator_snp/{sample}.log"
     benchmark:
-        "benchmarks/gatk4_VariantRecalibrator_snp/{sample}.tsv"
+        "benchmarks/gatk_VariantRecalibrator_snp/{sample}.tsv"
     conda:
         "../envs/gatk4.yaml"
     message:
