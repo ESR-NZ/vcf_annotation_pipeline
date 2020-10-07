@@ -5,7 +5,8 @@ rule SnpSift_dbnsfp:
     output:
         temp("../results/annotated/{sample}_filtered_dbnsfp.vcf")
     params:
-        "-v"
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
+        other = "-v"
     log: 
         "logs/SnpSift_dbnsfp/{sample}.log"
     benchmark:
@@ -15,4 +16,4 @@ rule SnpSift_dbnsfp:
     message:
         "Using the dbNSFP database to annotate {input.vcf} with functional predictions from multiple algorithms (SIFT, Polyphen2, LRT and MutationTaster, PhyloP and GERP++, etc.)"
     shell:
-        "SnpSift -Xmx16g dbnsfp {input.vcf} > {output} -db {input.dbnsfp} {params}"
+        "SnpSift {params.maxmemory} dbnsfp {input.vcf} > {output} -db {input.dbnsfp} {params.other}"

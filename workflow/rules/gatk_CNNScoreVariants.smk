@@ -7,6 +7,7 @@ rule gatk_CNNScoreVariants:
         vcf = temp("../results/filtered/{sample}_scored.vcf"),
         index = temp("../results/filtered/{sample}_scored.vcf.idx")
     params:
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
         other = "-tensor-type read_tensor"
@@ -16,11 +17,8 @@ rule gatk_CNNScoreVariants:
         "benchmarks/gatk_CNNScoreVariants/{sample}.tsv"
     singularity:
         "docker://broadinstitute/gatk:4.1.7.0"
-    threads: 12
+    threads: config['THREADS']
     message:
         "Annotating {input.vcf} with scores from a Convolutional Neural Network (CNN) (2D model with pre-trained architecture)"
     shell:
-        """
-        gatk --java-options "-Xmx64g -Xms64g" CNNScoreVariants \
-            -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output.vcf} --intra-op-threads {threads} {params.padding} {params.intervals} {params.other} &> {log}
-        """
+        "gatk --java-options {params.maxmemory} CNNScoreVariants -V {input.vcf} -I {input.bams} -R {input.refgenome} -O {output.vcf} --intra-op-threads {threads} {params.padding} {params.intervals} {params.other} &> {log}"

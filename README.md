@@ -17,6 +17,10 @@ A Snakemake workflow to filter raw variants (snp and indels) and annotate vcf fi
       - [GRCh37](#grch37)
       - [GRCh38](#grch38)
     - [5. Modify the configuration file](#5-modify-the-configuration-file)
+      - [Overall workflow](#overall-workflow)
+      - [Pipeline resources](#pipeline-resources)
+      - [Variant filtering](#variant-filtering)
+      - [VCF annotation](#vcf-annotation)
     - [6. Configure to run on a HPC (optional)](#6-configure-to-run-on-a-hpc-optional)
     - [7. Modify the run scripts](#7-modify-the-run-scripts)
       - [HPC](#hpc)
@@ -176,6 +180,8 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 Edit 'config.yaml' found within the config directory.
 
+#### Overall workflow
+
 Specify the build of reference genome (either 'GRCh37' (for b37) or 'GRCh38' (for hg38)) to use
 
 ```yaml
@@ -229,6 +235,32 @@ WES:
   PADDING: "-ip 100"
 ```
 
+#### Pipeline resources
+
+These settings allow you to configure the resources per rule/sample
+
+Set the number of threads to use per sample/rule for multithreaded rules (`rule gatk_CNNScoreVariants`, `rule vep` and `genmod models`). Multithreading will significantly speed up these rules, however the improvements in speed will diminish beyond 8 threads. If desired, a different number of threads can be set for these multithreaded rules by utilising the `--set-threads` flag in the runscript (see step 6).
+
+```yaml
+THREADS: 8
+```
+
+Set the maximum memory usage per rule/sample (eg. '40g' for 40 gigabytes, this should suffice for exomes)
+
+```yaml
+MAXMEMORY: "40g"
+```
+
+Set the maximum number of GPU's to be used per rule/sample for gpu-accelerated runs (eg `1` for 1 GPU)
+
+```yaml
+GPU: 1
+```
+
+It is a good idea to consider the number of samples that you are processing. For example, if you set `THREADS: "8"` and set the maximum number of cores to be used by the pipeline in the run script to `-j 32` (see step 6), a maximum of 3 samples will be able to run at one time for these rules (if they are deployed at the same time), but each sample will complete faster. In contrast, if you set `THREADS: "1"` and `-j 32`, a maximum of 32 samples could be run at one time, but each sample will take longer to complete. This also needs to be considered when setting `MAXMEMORY` + `--resources mem_mb` and `GPU` + `--resources gpu`.
+
+#### Variant filtering
+
 If analysing single sample data, pass the resources to be used to filter variants with [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches`) to the `--resource` flag. For example:
 
 *If NOT analysing single sample data, leave these fields blank*
@@ -277,6 +309,8 @@ Set the tranche filtering level for snps and indels (by [gatk FilterVariantTranc
     INDELS: "99.4"
 ```
 
+#### VCF annotation
+
 Set the the working directories to the other vcf annotation databases (GRCh37 or GRCh38). For example:
 
 ```yaml
@@ -287,7 +321,7 @@ CADD: "/home/lkemp/publicData/CADD/GRCh37/whole_genome_SNVs.tsv.gz"
 
 ### 6. Configure to run on a HPC (optional)
 
-*This will deploy the non-GPU accelerated rules to slurm and deploy the GPU accelerated rules locally (pbrun_cnnscorevariants, pbrun_vqsr_indel, pbrun_vqsr_snp)*
+*This will deploy the non-GPU accelerated rules to slurm and deploy the GPU accelerated rules locally (pbrun_cnnscorevariants, pbrun_vqsr_indel, pbrun_vqsr_snp). Therefore, if running the pipeline gpu accelerated, the pipeline should be deployed from the machine with the GPU's.*
 
 In theory, this cluster configuration should be adaptable to other job scheduler systems, but here I will demonstrate how to deploy this pipeline to [slurm](https://slurm.schedmd.com/).
 
@@ -298,24 +332,24 @@ Configure `account:` and `partition:` in the default section of 'cluster.json' i
     "__default__" :
     {
         "account" : "lkemp",
-        "nodes" : 1,
-        "ntasks" : 4,
         "partition" : "prod"
-    },
+    }
+}
 ```
 
-[This](https://hpc-carpentry.github.io/hpc-python/17-cluster/) is a good place to go for a good working example.
+There are a plethora of additional slurm parameters that can be configured (and can be configured per rule). If you set additional slurm parameters, remember to pass them to the `--cluster` flag in the runscripts. See [here](https://snakemake-on-nesi.sschmeier.com/snake.html#slurm-and-nesi-specific-setup) and [here](https://hpc-carpentry.github.io/hpc-python/17-cluster/) for good working examples.
 
 ### 7. Modify the run scripts
 
-Set the singularity bind location to a directory that contains your pipeline working directory with the --singularity-args flag (eg. `-B /home/lkemp/`). Set the number maximum number of cores to be used with the `-j` flag. If running GPU accelerated, also set the maximum number of GPU's to be used with the `--resources` flag. For example:
+Set the singularity bind location to a directory that contains your pipeline working directory with the `--singularity-args '-B'` flag. Set the number maximum number of cores to be used with the `--cores` flag and the maximum amount of memory to be used (in megabytes) with the `resources mem_mb=` flag. If running GPU accelerated, also set the maximum number of GPU's to be used with the `--resources gpu=` flag. For example:
 
 Dry run (dryrun.sh):
 
 ```bash
 snakemake \
--n \
--j 32 \
+--dryrun \
+--cores 32 \
+--resources mem_mb=150000 \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
@@ -329,7 +363,8 @@ Full run (run.sh):
 
 ```bash
 snakemake \
--j 32 \
+--cores 32 \
+--resources mem_mb=150000 \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
@@ -343,14 +378,15 @@ See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/exe
 
 #### HPC
 
-If you want to run the pipeline on a HPC, set the singularity bind location, `-j` flag and `--resources` flag in dryrun_hpc.sh and run_hpc.sh run scripts instead. For example:
+If you want to run the pipeline on a HPC, set the `--singularity-args '-B'`, `--cores`, `resources mem_mb=`, and `--resources gpu=` flags in dryrun_hpc.sh and run_hpc.sh run scripts instead. For example:
 
 Dry run (dryrun_hpc.sh):
 
 ```bash
 snakemake \
--n \
--j 32 \
+--dryrun \
+--cores 32 \
+--resources mem_mb=150000 \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
@@ -360,16 +396,15 @@ snakemake \
 --singularity-args '-B /home/lkemp/' \
 --cluster-config ../config/cluster.json \
 --cluster "sbatch -A {cluster.account} \
--p {cluster.partition} \
---nodes {cluster.nodes} \
---ntasks {cluster.ntasks}"
+-p {cluster.partition}"
 ```
 
 Full run (run_hpc.sh):
 
 ```bash
 snakemake \
--j 32 \
+--cores 32 \
+--resources mem_mb=150000 \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \
@@ -379,9 +414,7 @@ snakemake \
 --singularity-args '-B /home/lkemp/' \
 --cluster-config ../config/cluster.json \
 --cluster "sbatch -A {cluster.account} \
--p {cluster.partition} \
---nodes {cluster.nodes} \
---ntasks {cluster.ntasks}"
+-p {cluster.partition}"
 ```
 
 ### 8. Create and activate a conda environment with python and snakemake installed

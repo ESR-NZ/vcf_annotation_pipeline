@@ -6,7 +6,7 @@ rule pbrun_vqsr_snp:
         recal = temp("../results/filtered/{sample}_recal_snp"),
         tranches = temp("../results/filtered/{sample}_tranches_snp")
     resources:
-        gpu = 1
+        gpu = config['GPU']
     params:
         snptranche = expand("--truth-sensitivity-level {snptranche}", snptranche = config['FILTERING']['TRANCHE']['SNPS']),
         resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
@@ -18,4 +18,4 @@ rule pbrun_vqsr_snp:
     message:
         "Building a recalibration model to score variant quality and using machine learning to filter out probable artifacts from the variant callset (snps) for {input}"
     shell:
-        "pbrun vqsr --in-vcf {input} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} {params.snptranche} {params.resources} {params.other} &> {log}"
+        "pbrun vqsr --in-vcf {input} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} --num-gpus {resources.gpu} {params.snptranche} {params.resources} {params.other} &> {log}"

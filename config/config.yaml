@@ -1,6 +1,6 @@
-############################
-##### Overall workflow #####
-############################
+#############################
+##### Overall workflow ######
+#############################
 
 # Build of reference genome (either 'GRCh37' (for b37) or 'GRCh38' (for hg38))
 BUILD: ""
@@ -30,9 +30,22 @@ WES:
   # Padding (in bp) to add to each region (prefix with the '-ip' flag)
   PADDING: ""
 
-#############################
-##### Variant filtering #####
-#############################
+##############################
+##### Pipeline resources #####
+##############################
+
+# Number of threads to use per rule/sample for multithreaded rules, multithreading will significantly speed up these rules (diminishing speed gains beyond 8 threads)
+THREADS:
+
+# Maximum memory usage per rule/sample (eg. '40g' for 40 gigabytes, this should suffice for exomes)
+MAXMEMORY: ""
+
+# Maximum number of GPU's to be used per rule/sample for gpu-accelerated runs (eg `1` for 1 GPU)
+GPU:
+
+##############################
+###### Variant filtering #####
+##############################
 
 # Resources used to filter indels and SNP's...
 FILTERING:
@@ -49,9 +62,9 @@ FILTERING:
     SNPS: ""
     INDELS: ""
 
-##########################
-##### VCF annotation #####
-##########################
+##############################
+####### VCF annotation #######
+##############################
 
 # File paths to vcf annotation databases
 VEP: ""

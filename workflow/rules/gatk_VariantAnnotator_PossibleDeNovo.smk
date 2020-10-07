@@ -7,7 +7,8 @@ rule gatk_VariantAnnotator_PossibleDeNovo:
         vcf = temp("../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp_posteriors_denovo.vcf"),
         index = temp("../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp_posteriors_denovo.vcf.idx")
     params:
-        "-A PossibleDeNovo"
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
+        other = "-A PossibleDeNovo"
     log: 
         "logs/gatk_VariantAnnotator_PossibleDeNovo/{sample}.log"
     benchmark:
@@ -17,6 +18,4 @@ rule gatk_VariantAnnotator_PossibleDeNovo:
     message:
         "Marking variants in {input.vcf} that are possible denovo mutations"
     shell:
-        """
-        gatk --java-options "-Xmx64g -Xms64g" VariantAnnotator -R {input.refgenome} -V {input.vcf} -O {output.vcf} --pedigree {input.pedigree} {params} &> {log}
-        """
+        "gatk --java-options {params.maxmemory} VariantAnnotator -R {input.refgenome} -V {input.vcf} -O {output.vcf} --pedigree {input.pedigree} {params.other} &> {log}"

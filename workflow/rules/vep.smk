@@ -16,7 +16,7 @@ rule vep:
         "benchmarks/vep/{sample}.tsv"
     conda:
         "../envs/vep.yaml"
-    threads: 8
+    threads: config['THREADS']
     message:
         "Using the VEP database to determine the effect of the variants in {input.vcf}"
     shell:

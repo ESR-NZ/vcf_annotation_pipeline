@@ -9,6 +9,7 @@ rule gatk_VariantRecalibrator_indel:
         tranches = temp("../results/filtered/{sample}_tranches_indels"),
         rscript = "../results/filtered/{sample}_plots_indels.R"
     params:
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
         indeltranche = expand("-tranche {indeltranche}", indeltranche = config['FILTERING']['TRANCHE']['INDELS']),
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
@@ -24,7 +25,7 @@ rule gatk_VariantRecalibrator_indel:
         "Building a recalibration model to score variant quality (indels)"
     shell:
         """
-        gatk --java-options "-Xmx24g -Xms24g" VariantRecalibrator \
+        gatk --java-options {params.maxmemory} VariantRecalibrator \
             -V {input.vcf} \
             -O {output.recal} \
             --tranches-file {output.tranches} \

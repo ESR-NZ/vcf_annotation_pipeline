@@ -11,8 +11,8 @@ rule genmod_models:
         "benchmarks/genmod_models/{sample}.tsv"
     conda:
         "../envs/genmod.yaml"
-    threads: 16
+    threads: config['THREADS']
     message:
-        ""
+        "Annotating {input.vcf} with patterns of inheritance"
     shell:
         "genmod models {input.vcf} -f {input.pedigree} -o {output} -p {threads} &> {log}"
