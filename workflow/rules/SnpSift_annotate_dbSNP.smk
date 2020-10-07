@@ -11,8 +11,7 @@ rule SnpSift_annotate_dbSNP:
     output:
         protected(outfile)
     params:
-        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
-        other = "--regions"
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY'])
     log: 
         "logs/SnpSift_annotate_dbSNP/{sample}.log"
     benchmark:
@@ -22,4 +21,4 @@ rule SnpSift_annotate_dbSNP:
     message:
         "Using SnpSift to annotate {input.vcf} with dbSNP"
     shell:
-        "SnpSift {params.maxmemory} annotate {input.dbsnp} {input.vcf} > {output} {params.other}"
+        "SnpSift {params.maxmemory} annotate {input.dbsnp} {input.vcf} > {output}"
