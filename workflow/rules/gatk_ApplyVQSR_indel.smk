@@ -1,4 +1,4 @@
-rule gatk_VQSR_indel:
+rule gatk_ApplyVQSR_indel:
     input:
         vcf = "../../vcf/{sample}_raw_snps_indels.g.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
@@ -20,6 +20,5 @@ rule gatk_VQSR_indel:
         "../envs/gatk4.yaml"
     message:
         "Using machine learning to filter out probable artifacts from the variant callset (indels)"
-    threads: 4
     shell: 
         "gatk ApplyVQSR -V {input.vcf} -R {input.refgenome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output.vcf} {params.padding} {params.intervals} {params.other} &> {log}"

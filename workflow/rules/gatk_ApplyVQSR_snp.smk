@@ -1,4 +1,4 @@
-rule gatk_VQSR_snp:
+rule gatk_ApplyVQSR_snp:
     input:
         vcf = "../results/filtered/{sample}_tmp_vqsr_recal_indels.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
@@ -19,6 +19,5 @@ rule gatk_VQSR_snp:
         "../envs/gatk4.yaml"
     message:
         "Using machine learning to filter out probable artifacts from the variant callset (snps)"
-    threads: 4
     shell:
         "gatk ApplyVQSR -V {input.vcf} -R {input.refgenome} --recal-file {input.recal} --tranches-file {input.tranches} -O {output} {params.padding} {params.intervals} {params.other} &> {log}"

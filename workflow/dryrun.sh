@@ -1,8 +1,8 @@
 #!/bin/bash -x
 
 snakemake \
--n \
--j 32 \
+--dryrun \
+--cores 32 \
 --resources gpu=2 \
 --use-conda \
 --conda-frontend mamba \

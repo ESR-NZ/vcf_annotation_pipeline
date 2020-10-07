@@ -7,7 +7,8 @@ rule gatk_CalculateGenotypePosteriors:
         vcf = temp("../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp_posteriors.vcf"),
         index = temp("../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp_posteriors.vcf.idx")
     params:
-        "--skip-population-priors"
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
+        other = "--skip-population-priors"
     log: 
         "logs/gatk_CalculateGenotypePosteriors/{sample}.log"
     benchmark:
@@ -17,6 +18,4 @@ rule gatk_CalculateGenotypePosteriors:
     message:
         "Calculating genotype posterior probabilities given family and/or known population genotypes for {input.vcf}"
     shell:
-        """
-        gatk --java-options "-Xmx64g -Xms64g" CalculateGenotypePosteriors -R {input.refgenome} -V {input.vcf} -O {output.vcf} --pedigree {input.pedigree} {params} &> {log}
-        """
+        "gatk --java-options {params.maxmemory} CalculateGenotypePosteriors -R {input.refgenome} -V {input.vcf} -O {output.vcf} --pedigree {input.pedigree} {params.other} &> {log}"

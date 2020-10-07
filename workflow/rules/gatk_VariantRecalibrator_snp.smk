@@ -10,6 +10,7 @@ rule gatk_VariantRecalibrator_snp:
         tranches = temp("../results/filtered/{sample}_tranches_snps"),
         rscript = "../results/filtered/{sample}_plots_snps.R"
     params:
+        maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
         snptranche = expand("-tranche {snptranche}", snptranche = config['FILTERING']['TRANCHE']['SNPS']),
         padding = expand("{padding}", padding = config['WES']['PADDING']),
         intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
@@ -25,7 +26,7 @@ rule gatk_VariantRecalibrator_snp:
         "Building a recalibration model to score variant quality (snps)"
     shell:
         """
-        gatk --java-options "-Xmx24g -Xms24g" VariantRecalibrator \
+        gatk --java-options {params.maxmemory} VariantRecalibrator \
             -V {input.vcf} \
             -O {output.recal} \
             --tranches-file {output.tranches} \

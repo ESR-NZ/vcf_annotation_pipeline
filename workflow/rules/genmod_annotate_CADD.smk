@@ -12,7 +12,6 @@ rule genmod_annotate_CADD:
         "benchmarks/genmod_annotate_CADD/{sample}.tsv"
     conda:
         "../envs/genmod.yaml"
-    threads: 4
     message:
         "Using genmod to annotate {input.vcf} with CADD"
     shell:

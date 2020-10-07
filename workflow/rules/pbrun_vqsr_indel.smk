@@ -6,7 +6,7 @@ rule pbrun_vqsr_indel:
         recal = temp("../results/filtered/{sample}_recal_indels"),
         tranches = temp("../results/filtered/{sample}_tranches_indels")
     resources:
-        gpu = 1
+        gpu = config['GPU']
     params:
         indeltranche = expand("--truth-sensitivity-level {indeltranche}", indeltranche = config['FILTERING']['TRANCHE']['INDELS']),
         resources = expand("{resources}", resources = config['FILTERING']['COHORT']['INDELS']),
@@ -18,4 +18,4 @@ rule pbrun_vqsr_indel:
     message:
         "Building a recalibration model to score variant quality and using machine learning to filter out probable artifacts from the variant callset (indels) for {input}"
     shell:
-        "pbrun vqsr --in-vcf {input} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} {params.indeltranche} {params.resources} {params.other} &> {log}"
+        "pbrun vqsr --in-vcf {input} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} --num-gpus {resources.gpu} {params.indeltranche} {params.resources} {params.other} &> {log}"

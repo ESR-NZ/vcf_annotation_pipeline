@@ -6,7 +6,7 @@ rule pbrun_cnnscorevariants:
     output:
         temp("../results/filtered/{sample}_scored.vcf")
     resources:
-        gpu = 1
+        gpu = config['GPU']
     log:
         "logs/pbrun_cnnscorevariants/{sample}.log"
     benchmark:
@@ -14,4 +14,4 @@ rule pbrun_cnnscorevariants:
     message:
         "Annotating {input.vcf} with scores from a Convolutional Neural Network (CNN) (2D model with pre-trained architecture)"
     shell:
-        "pbrun cnnscorevariants --in-vcf {input.vcf} --in-bam {input.bams} --ref {input.refgenome} --out-vcf {output} &> {log}"
+        "pbrun cnnscorevariants --in-vcf {input.vcf} --in-bam {input.bams} --ref {input.refgenome} --out-vcf {output} --num-gpus {resources.gpu} &> {log}"
