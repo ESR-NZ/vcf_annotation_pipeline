@@ -66,19 +66,19 @@ Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotat
 ```bash
 
 .
-|___vcf/
-|     |___sample1_raw_snps_indels.vcf
-|     |___sample1_raw_snps_indels.vcf.idx
-|     |___sample2_raw_snps_indels.vcf
-|     |___sample2_raw_snps_indels.vcf.idx
-|     |___ ...
+|___human_genomics_pipeline/results/called/
+|                                      |___sample1_raw_snps_indels.vcf
+|                                      |___sample1_raw_snps_indels.vcf.idx
+|                                      |___sample2_raw_snps_indels.vcf
+|                                      |___sample2_raw_snps_indels.vcf.idx
+|                                      |___ ...
 |
-|___bams/
-|     |___sample1_recalibrated.bam
-|     |___sample1_recalibrated.bai
-|     |___sample2_recalibrated.bam
-|     |___sample2_recalibrated.bai
-|     |___ ...
+|___human_genomics_pipeline/results/mapped/
+|                                      |___sample1_recalibrated.bam
+|                                      |___sample1_recalibrated.bai
+|                                      |___sample2_recalibrated.bam
+|                                      |___sample2_recalibrated.bai
+|                                      |___ ...
 |
 |___vcf_annotation_pipeline/
 
@@ -89,12 +89,12 @@ Clone the forked [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotat
 ```bash
 
 .
-|___vcf/
-|     |___sample1_raw_snps_indels.g.vcf
-|     |___sample1_raw_snps_indels.g.vcf.idx
-|     |___sample2_raw_snps_indels.g.vcf
-|     |___sample2_raw_snps_indels.g.vcf.idx
-|     |___ ...
+|___human_genomics_pipeline/results/called/
+|                                      |___sample1_raw_snps_indels.g.vcf
+|                                      |___sample1_raw_snps_indels.g.vcf.idx
+|                                      |___sample2_raw_snps_indels.g.vcf
+|                                      |___sample2_raw_snps_indels.g.vcf.idx
+|                                      |___ ...
 |
 |___pedigrees/
 |     |___proband1_pedigree.ped

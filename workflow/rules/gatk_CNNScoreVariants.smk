@@ -1,7 +1,7 @@
 rule gatk_CNNScoreVariants:
     input:
-        vcf = "../../vcf/{sample}_raw_snps_indels.vcf",
-        bams = "../../bams/{sample}_recalibrated.bam",
+        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf",
+        bams = "../../human_genomics_pipeline/results/mapped/{sample}_recalibrated.bam",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
         vcf = temp("../results/filtered/{sample}_scored.vcf"),
