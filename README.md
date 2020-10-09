@@ -321,7 +321,7 @@ CADD: "/home/lkemp/publicData/CADD/GRCh37/whole_genome_SNVs.tsv.gz"
 
 ### 6. Configure to run on a HPC (optional)
 
-*This will deploy the non-GPU accelerated rules to slurm and deploy the GPU accelerated rules locally (pbrun_cnnscorevariants, pbrun_vqsr_indel, pbrun_vqsr_snp). Therefore, if running the pipeline gpu accelerated, the pipeline should be deployed from the machine with the GPU's.*
+*This will deploy the non-GPU accelerated rules to slurm and deploy the GPU accelerated rules locally (pbrun_cnnscorevariants). Therefore, if running the pipeline gpu accelerated, the pipeline should be deployed from the machine with the GPU's.*
 
 In theory, this cluster configuration should be adaptable to other job scheduler systems, but here I will demonstrate how to deploy this pipeline to [slurm](https://slurm.schedmd.com/).
 
