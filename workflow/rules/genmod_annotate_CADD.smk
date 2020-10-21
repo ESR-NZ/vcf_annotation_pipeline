@@ -4,8 +4,6 @@ rule genmod_annotate_CADD:
         cadd = expand("{cadd}", cadd = config['CADD'])
     output:
         temp("../results/annotated/{sample}_filtered_dbnsfp_vep_cadd.vcf")
-    params:
-        "--regions"
     log: 
         "logs/genmod_annotate_CADD/{sample}.log"
     benchmark:
@@ -15,4 +13,4 @@ rule genmod_annotate_CADD:
     message:
         "Using genmod to annotate {input.vcf} with CADD"
     shell:
-        "genmod annotate {input.vcf} -c {input.cadd} -o {output} {params} &> {log}"
+        "genmod annotate {input.vcf} -c {input.cadd} -o {output} &> {log}"
