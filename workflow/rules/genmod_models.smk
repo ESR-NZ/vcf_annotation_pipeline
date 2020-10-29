@@ -5,6 +5,8 @@ rule genmod_models:
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
         protected("../results/annotated/{sample}_filtered_annotated.vcf")
+    params:
+        "--vep"
     log: 
         "logs/genmod_models/{sample}.log"
     benchmark:
@@ -15,4 +17,4 @@ rule genmod_models:
     message:
         "Annotating {input.vcf} with patterns of inheritance"
     shell:
-        "genmod models {input.vcf} -f {input.pedigree} -o {output} -p {threads} &> {log}"
+        "genmod models {input.vcf} -f {input.pedigree} -o {output} {params} -p {threads} &> {log}"
