@@ -14,4 +14,4 @@ rule bcftools_view_multiallelicsites:
     message:
         "Filtering out multiallelic sites in {input}"
     shell:
-        "bcftools view {params} {input} > {output}"
+        "bcftools view {params} {input} > {output} 2> {log}"
