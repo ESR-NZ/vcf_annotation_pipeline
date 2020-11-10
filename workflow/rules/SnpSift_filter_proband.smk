@@ -14,4 +14,4 @@ rule SnpSift_filter_proband:
     message:
         "Filtering for variants only found in the proband in {input}"
     shell:
-        "cat {input} | SnpSift filter {params} > {output}"
+        "cat {input} 2> {log} | SnpSift filter {params} > {output} 2>> {log}"

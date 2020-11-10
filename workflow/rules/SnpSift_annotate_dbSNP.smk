@@ -21,4 +21,4 @@ rule SnpSift_annotate_dbSNP:
     message:
         "Using SnpSift to annotate {input.vcf} with dbSNP"
     shell:
-        "SnpSift {params.maxmemory} annotate {input.dbsnp} {input.vcf} > {output}"
+        "SnpSift {params.maxmemory} annotate {input.dbsnp} {input.vcf} > {output} 2> {log}"

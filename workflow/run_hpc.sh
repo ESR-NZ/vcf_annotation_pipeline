@@ -11,4 +11,5 @@ snakemake \
 --configfile ../config/config.yaml \
 --cluster-config ../config/cluster.json \
 --cluster "sbatch -A {cluster.account} \
--p {cluster.partition}"
+-p {cluster.partition} \
+-o {cluster.output}"
