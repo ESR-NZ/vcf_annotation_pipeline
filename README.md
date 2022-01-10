@@ -12,17 +12,35 @@ A Snakemake workflow to filter raw variants (snp and indels) and annotate vcf (v
 
 ## Pipeline summary - single samples
 
+1. Filter variants ([gatk cnnscoreVariants](https://gatk.broadinstitute.org/hc/en-us/articles/360037226672-CNNScoreVariants) and [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches))
+2. Annotate variants with known information (with [dbNSFP](http://database.liulab.science/dbNSFP), [vep](https://grch37.ensembl.org/info/docs/tools/vep/index.html), [CADD](https://cadd.gs.washington.edu/), [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) databases)
+3. Prepare for [scout](https://github.com/Clinical-Genomics/scout) (remove multiallelic sites, scoring/ranking of variants)
+
 <img src="./images/rulegraph_single.png" class="center">
 
 ## Pipeline summary - single samples - GPU accelerated
+
+1. Filter variants ([parabricks CNNScoreVariants](https://docs.nvidia.com/clara/parabricks/v3.6.1/text/variant_processing.html#cnnscorevariants) and [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches))
+2. Annotate variants with known information (with [dbNSFP](http://database.liulab.science/dbNSFP), [vep](https://grch37.ensembl.org/info/docs/tools/vep/index.html), [CADD](https://cadd.gs.washington.edu/), [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) databases)
+3. Prepare for [scout](https://github.com/Clinical-Genomics/scout) (remove multiallelic sites, scoring/ranking of variants)
 
 <img src="./images/rulegraph_single_gpu.png" class="center">
 
 ## Pipeline summary - cohort samples
 
+1. Filter variants ([gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360036351392-VariantRecalibrator) and [gatk ApplyVQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037423291-ApplyVQSR))
+2. Annotate variants with known information (with [dbNSFP](http://database.liulab.science/dbNSFP), [vep](https://grch37.ensembl.org/info/docs/tools/vep/index.html), [CADD](https://cadd.gs.washington.edu/), [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) databases)
+3. Annotate variants with other information (genotype posterior probabilities, mark denovo variants, patterns of inheritance)
+4. Prepare for [scout](https://github.com/Clinical-Genomics/scout) (remove multiallelic sites, filter for variants found in the proband, scoring/ranking of variants)
+
 <img src="./images/rulegraph_cohort.png" class="center">
 
 ## Pipeline summary - cohort samples - GPU accelerated
+
+1. Filter variants ([gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360036351392-VariantRecalibrator) and [gatk ApplyVQSR](https://gatk.broadinstitute.org/hc/en-us/articles/360037423291-ApplyVQSR))
+2. Annotate variants with known information (with [dbNSFP](http://database.liulab.science/dbNSFP), [vep](https://grch37.ensembl.org/info/docs/tools/vep/index.html), [CADD](https://cadd.gs.washington.edu/), [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) databases)
+3. Annotate variants with other information (genotype posterior probabilities, mark denovo variants, patterns of inheritance)
+4. Prepare for [scout](https://github.com/Clinical-Genomics/scout) (remove multiallelic sites, filter for variants found in the proband, scoring/ranking of variants)
 
 <img src="./images/rulegraph_cohort_gpu.png" class="center">
 
