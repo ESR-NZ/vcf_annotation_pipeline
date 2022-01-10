@@ -30,17 +30,15 @@ A Snakemake workflow to filter raw variants (snp and indels) and annotate vcf (v
 
 Single samples:
 
-- `results/qc/multiqc_report.html`
-- `results/mapped/sample1_recalibrated.bam`
-- `results/called/sample1_raw_snps_indels.vcf`
+- `results/filtered/sample1_filtered.vcf`
+- `results/annotated/sample1_filtered_annotated.vcf`
+- `results/readyforscout/sample1_filtered_annotated_readyforscout.vcf.gz`
 
 Cohort samples:
 
-- `results/qc/multiqc_report.html`
-- `results/mapped/sample1_recalibrated.bam`
-- `results/mapped/sample2_recalibrated.bam`
-- `results/mapped/sample3_recalibrated.bam`
-- `results/called/proband1_raw_snps_indels.g.vcf`
+- `results/filtered/sample1_filtered.vcf`
+- `results/annotated/sample1_filtered_annotated.vcf`
+- `results/readyforscout/sample1_filtered_annotated_readyforscout.vcf`
 
 ## Prerequisites
 
