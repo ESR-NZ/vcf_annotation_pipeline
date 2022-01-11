@@ -1,20 +1,11 @@
-if config['DATA'] == "Single" or config['DATA'] == 'single':
-    infile = "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites.vcf.gz"
-    outfile = "../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf.gz"
-    params = "--score_config scripts/score_single.ini"
-elif config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    infile = "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites_probandonly.vcf"
-    outfile = "../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf"
-    params = "--score_config scripts/score_cohort.ini --family_file ../../pedigrees/{sample}_pedigree.ped"
-
 rule genmod_score:
     input:
-        vcf = infile,
+        vcf = get_genmod_score_input,
         refgenome = config['REFGENOME']
     params:
-        params
+        get_genmod_score_params
     output:
-        protected(outfile)
+        protected(get_genmod_score_output)
     log: 
         "logs/genmod_score/{sample}.log"
     benchmark:

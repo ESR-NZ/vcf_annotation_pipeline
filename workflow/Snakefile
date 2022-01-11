@@ -6,7 +6,7 @@ Date created: 2020-03-06
 Modified: 2020-08-28
 """
 
-##### Set up #####
+##### Set up wildcards #####
 
 # Define samples from vcf dir using wildcards
 if config['DATA'] == "Single" or config['DATA'] == 'single':
@@ -15,7 +15,73 @@ if config['DATA'] == "Single" or config['DATA'] == 'single':
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
 
+##### Setup helper functions #####
+import csv
+import glob
+
+def get_genmod_score_input(command):
+    """Return a string which defines the input file for the genmod_score rule. This changes based on the
+    user configurable options for running single samples or cohorts of samples
+    """
+    
+    input_files = ""
+
+    if config['DATA'] == "Single" or config['DATA'] == 'single':
+        input_files = "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites.vcf.gz"
+    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+        input_files = "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites_probandonly.vcf"
+
+    return input_files
+
+def get_genmod_score_output(command):
+    """Return a string which defines the output file for the genmod_score rule. This changes based on the
+    user configurable options for running single samples or cohorts of samples
+    """
+    
+    output_files = ""
+
+    if config['DATA'] == "Single" or config['DATA'] == 'single':
+        output_files = "../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf.gz"
+    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+        output_files = "../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf"
+
+    return output_files
+
+def get_genmod_score_params(command):
+    """Return a string which defines some of the parameters for the genmod_score rule. This changes based on the
+    user configurable options for running single samples or cohorts of samples
+    """
+    
+    params = ""
+
+    if config['DATA'] == "Single" or config['DATA'] == 'single':
+        params = "--score_config scripts/score_single.ini"
+    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+        params = "--score_config scripts/score_cohort.ini --family_file ../../pedigrees/{sample}_pedigree.ped"
+
+    return params
+
+def get_annotate_dbsnp_output(command):
+    """Return a string which defines the output file for the SnpSift_annotate_dbSNP rule. This changes based on the
+    user configurable options for running single samples or cohorts of samples
+    """
+    
+    output_files = ""
+
+    if config['DATA'] == "Single" or config['DATA'] == 'single':
+        output_files = "../results/annotated/{sample}_filtered_annotated.vcf"
+    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+        output_files = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp.vcf"
+
+    return output_files
+
+##### Set up report #####
+
+report: "report/workflow.rst"
+
+
 ##### Target rules #####
+
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "No" or config['PREPARE_FOR_SCOUT'] == 'no'):
     rule all:
            input:
@@ -41,10 +107,6 @@ if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPA
                expand("../results/filtered/{sample}_filtered.vcf", sample = SAMPLES),
                expand("../results/annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES),
                expand("../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf", sample = SAMPLES)
-
-##### Set up report #####
-
-report: "report/workflow.rst"
 
 ##### Load rules #####
 
