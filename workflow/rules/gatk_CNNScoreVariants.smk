@@ -8,8 +8,8 @@ rule gatk_CNNScoreVariants:
         index = temp("../results/filtered/{sample}_scored.vcf.idx")
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'])
         other = "-tensor-type read_tensor"
     log:
         "logs/gatk_CNNScoreVariants/{sample}.log"

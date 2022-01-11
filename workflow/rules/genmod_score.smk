@@ -10,7 +10,7 @@ elif config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
 rule genmod_score:
     input:
         vcf = infile,
-        refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
+        refgenome = config['REFGENOME']
     params:
         params
     output:

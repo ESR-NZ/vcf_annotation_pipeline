@@ -11,9 +11,9 @@ rule gatk_VariantRecalibrator_indel:
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
         indeltranche = expand("-tranche {indeltranche}", indeltranche = config['FILTERING']['TRANCHE']['INDELS']),
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
-        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['INDELS']),
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'],
+        resources = config['FILTERING']['COHORT']['INDELS'],
         other = "-mode INDEL -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
     log: 
         "logs/gatk_VariantRecalibrator_indel/{sample}.log"

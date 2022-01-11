@@ -8,8 +8,8 @@ rule gatk_ApplyVQSR_snp:
     output:
         protected("../results/filtered/{sample}_filtered.vcf")
     params:
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'],
         other = "-mode SNP -ts-filter-level 99.0 -OVI true"
     log:
         "logs/gatk_VQSR_snp/{sample}.log"
