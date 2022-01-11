@@ -25,7 +25,7 @@
   - [10. Run the pipeline](#10-run-the-pipeline)
   - [11. Evaluate the pipeline run](#11-evaluate-the-pipeline-run)
   - [12. Commit and push to your forked version of the github repo](#12-commit-and-push-to-your-forked-version-of-the-github-repo)
-  - [13. Repeat step 13 each time you re-run the analysis with different parameters](#13-repeat-step-13-each-time-you-re-run-the-analysis-with-different-parameters)
+  - [13. Repeat step 12 each time you re-run the analysis with different parameters](#13-repeat-step-12-each-time-you-re-run-the-analysis-with-different-parameters)
   - [14. Raise issues, create feature requests or create a pull request with the upstream repo to merge any useful changes to the pipeline (optional)](#14-raise-issues-create-feature-requests-or-create-a-pull-request-with-the-upstream-repo-to-merge-any-useful-changes-to-the-pipeline-optional)
 
 ## 1. Fork the pipeline repo to a personal or lab account
@@ -298,19 +298,6 @@ If analysing cohort data, pass the resources to be used to filter variants with 
           --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /scratch/publicData/b37/dbsnp_138.b37.vcf"
 ```
 
-If running as GPU accelerated, use the following syntax when setting the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator)
-
-```yaml
-  COHORT:
-    INDELS: "--resource mills,known=false,training=true,truth=true,prior=12.0:/scratch/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
-            --resource 1000G,known=false,training=true,truth=false,prior=10.0:/scratch/publicData/b37/1000G_phase1.indels.b37.vcf
-            --resource dbsnp,known=true,training=false,truth=false,prior=2.0:/scratch/publicData/b37/dbsnp_138.b37.vcf"
-    SNPS: "--resource hapmap,known=false,training=true,truth=true,prior=15.0:/scratch/publicData/b37/hapmap_3.3.b37.vcf
-          --resource omni,known=false,training=true,truth=false,prior=12.0:/scratch/publicData/b37/1000G_omni2.5.b37.vcf
-          --resource 1000G,known=false,training=true,truth=false,prior=10.0:/scratch/publicData/b37/1000G_phase1.indels.b37.vcf
-          --resource dbsnp,known=true,training=false,truth=false,prior=2.0:/scratch/publicData/b37/dbsnp_138.b37.vcf"
-```
-
 Set the tranche filtering level for snps and indels (by [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360041417412-FilterVariantTranches) for single samples and [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360041851391-VariantRecalibrator) for cohorts). For example:
 
 ```yaml
@@ -412,7 +399,7 @@ To maintain reproducibility, commit and push:
 - All run scripts
 - The final report
 
-## 13. Repeat step 13 each time you re-run the analysis with different parameters
+## 13. Repeat step 12 each time you re-run the analysis with different parameters
 
 ## 14. Raise issues, create feature requests or create a pull request with the [upstream repo](https://github.com/ESR-NZ/vcf_annotation_pipeline) to merge any useful changes to the pipeline (optional)
 
