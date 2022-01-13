@@ -11,10 +11,10 @@ rule gatk_VariantRecalibrator_snp:
         rscript = "../results/filtered/{sample}_plots_snps.R"
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
-        snptranche = expand("-tranche {snptranche}", snptranche = config['FILTERING']['TRANCHE']['SNPS']),
+        snptranche = expand("-tranche {snptranche}", snptranche = config['TRANCHE']['SNPS']),
         padding = config['WES']['PADDING'],
         intervals = config['WES']['INTERVALS'],
-        resources = config['FILTERING']['COHORT']['SNPS'],
+        resources = get_cohort_snp_filtering_command,
         other = "-mode SNP -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
     log: 
         "logs/gatk_VariantRecalibrator_snp/{sample}.log"

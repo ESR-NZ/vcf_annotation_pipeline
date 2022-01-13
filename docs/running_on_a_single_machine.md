@@ -19,6 +19,8 @@
     - [Overall workflow](#overall-workflow)
     - [Pipeline resources](#pipeline-resources)
     - [Variant filtering](#variant-filtering)
+      - [Single samples](#single-samples)
+      - [Cohort samples](#cohort-samples)
     - [VCF annotation](#vcf-annotation)
   - [8. Modify the run scripts](#8-modify-the-run-scripts)
   - [9. Create and activate a conda environment with python and snakemake installed](#9-create-and-activate-a-conda-environment-with-python-and-snakemake-installed)
@@ -271,39 +273,69 @@ It is a good idea to consider the number of samples that you are processing. For
 
 ### Variant filtering
 
-If analysing single sample data, pass the resources to be used to filter variants with [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches`) to the `--resource` flag. For example:
-
-*If NOT analysing single sample data, leave these fields blank*
-
-```yaml
-FILTERING:
-  # ...for analysis of single samples
-  SINGLE: "--resource /scratch/publicData/b37/hapmap_3.3.b37.vcf
-          --resource /scratch/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf"
-```
-
-If analysing cohort data, pass the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator) to the `--resource` flag. For example:
-
-*If NOT analysing cohort data, leave these fields blank*
-
-```yaml
-  # ...for analysis of cohorts
-  COHORT:
-    INDELS: "--resource:mills,known=false,training=true,truth=true,prior=12.0 /scratch/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
-            --resource:1000G,known=false,training=true,truth=false,prior=10.0 /scratch/publicData/b37/1000G_phase1.indels.b37.vcf
-            --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /scratch/publicData/b37/dbsnp_138.b37.vcf"
-    SNPS: "--resource:hapmap,known=false,training=true,truth=true,prior=15.0 /scratch/publicData/b37/hapmap_3.3.b37.vcf
-          --resource:omni,known=false,training=true,truth=false,prior=12.0 /scratch/publicData/b37/1000G_omni2.5.b37.vcf
-          --resource:1000G,known=false,training=true,truth=false,prior=10.0 /scratch/publicData/b37/1000G_phase1.indels.b37.vcf
-          --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /scratch/publicData/b37/dbsnp_138.b37.vcf"
-```
-
-Set the tranche filtering level for snps and indels (by [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360041417412-FilterVariantTranches) for single samples and [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360041851391-VariantRecalibrator) for cohorts). For example:
+Set the tranche filtering level for snps and indels (by [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360041417412-FilterVariantTranches) and [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360041851391-VariantRecalibrator) for single samples and cohorts respectively. For example:
 
 ```yaml
   TRANCHE: 
     SNPS: "99.95"
     INDELS: "99.4"
+```
+
+#### Single samples
+
+If analysing single sample data, define the resources to be used to filter variants with [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches`). For example:
+
+*If NOT analysing single sample data, leave this section blank*
+
+```yaml
+SINGLE:
+
+  # Provide a list of resources
+  RESOURCES:
+    - /scratch/publicData/b37/hapmap_3.3.b37.vcf
+    - /scratch/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
+```
+
+#### Cohort samples
+
+If analysing cohort data instead, define the resources to be used to filter variants with [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator). You'll need to add some additional information for each resource. For example:
+
+*If NOT analysing cohort data, leave this section blank*
+
+```yaml
+COHORT:
+
+  # For indels...
+  INDELS:
+
+    # ...provide a list of resources
+    RESOURCES:
+      - /scratch/publicData/b37/Mills_and_1000G_gold_standard.indels.b37.vcf
+      - /scratch/publicData/b37/1000G_phase1.indels.b37.vcf
+      - /scratch/publicData/b37/dbsnp_138.b37.vcf
+
+    # ...provide associated machine learning parameters
+    PARAMS:
+      - mills,known=false,training=true,truth=true,prior=12.0
+      - 1000G,known=false,training=true,truth=false,prior=10.0
+      - dbsnp,known=true,training=false,truth=false,prior=2.0
+
+  # For SNP's...
+  SNPS:
+
+    # ...provide a list of resources
+    RESOURCES:
+    - /scratch/publicData/b37/hapmap_3.3.b37.vcf
+    - /scratch/publicData/b37/1000G_omni2.5.b37.vcf
+    - /scratch/publicData/b37/1000G_phase1.indels.b37.vcf
+    - /scratch/publicData/b37/dbsnp_138.b37.vcf
+
+    # ...provide associated machine learning parameters
+    PARAMS:
+    - hapmap,known=false,training=true,truth=true,prior=15.0
+    - omni,known=false,training=true,truth=false,prior=12.0
+    - 1000G,known=false,training=true,truth=false,prior=10.0
+    - dbsnp,known=true,training=false,truth=false,prior=2.0
 ```
 
 ### VCF annotation
