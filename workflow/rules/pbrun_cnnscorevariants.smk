@@ -14,4 +14,4 @@ rule pbrun_cnnscorevariants:
     message:
         "Annotating {input.vcf} with scores from a Convolutional Neural Network (CNN) (2D model with pre-trained architecture)"
     shell:
-        "/opt/parabricks/3.6.1/parabricks/pbrun cnnscorevariants --in-vcf {input.vcf} --in-bam {input.bams} --ref {input.refgenome} --out-vcf {output} --num-gpus {resources.gpu} &> {log}"
+        "pbrun cnnscorevariants --in-vcf {input.vcf} --in-bam {input.bams} --ref {input.refgenome} --out-vcf {output} --num-gpus {resources.gpu} &> {log}"
