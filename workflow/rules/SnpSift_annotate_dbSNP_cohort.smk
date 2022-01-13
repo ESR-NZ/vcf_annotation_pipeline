@@ -1,9 +1,9 @@
-rule SnpSift_annotate_dbSNP:
+rule SnpSift_annotate_dbSNP_cohort:
     input:
         vcf = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd.vcf",
         dbsnp = expand("{dbsnp}", dbsnp = config['dbSNP'])
     output:
-        get_annotate_dbsnp_output
+        "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp.vcf"
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY'])
     log: 

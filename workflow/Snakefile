@@ -33,20 +33,6 @@ def get_genmod_score_input(command):
 
     return input_files
 
-def get_genmod_score_output(command):
-    """Return a string which defines the output file for the genmod_score rule. This changes based on the
-    user configurable options for running single samples or cohorts of samples
-    """
-    
-    output_files = ""
-
-    if config['DATA'] == "Single" or config['DATA'] == 'single':
-        output_files = "../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf.gz"
-    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-        output_files = "../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf"
-
-    return output_files
-
 def get_genmod_score_params(command):
     """Return a string which defines some of the parameters for the genmod_score rule. This changes based on the
     user configurable options for running single samples or cohorts of samples
@@ -60,20 +46,6 @@ def get_genmod_score_params(command):
         params = "--score_config scripts/score_cohort.ini --family_file ../../pedigrees/{sample}_pedigree.ped"
 
     return params
-
-def get_annotate_dbsnp_output(command):
-    """Return a string which defines the output file for the SnpSift_annotate_dbSNP rule. This changes based on the
-    user configurable options for running single samples or cohorts of samples
-    """
-    
-    output_files = ""
-
-    if config['DATA'] == "Single" or config['DATA'] == 'single':
-        output_files = "../results/annotated/{sample}_filtered_annotated.vcf"
-    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-        output_files = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp.vcf"
-
-    return output_files
 
 ##### Set up report #####
 
@@ -133,7 +105,12 @@ include: "rules/bgzip.smk"
 include: "rules/tabix.smk"
 include: "rules/vep.smk"
 include: "rules/genmod_annotate_CADD.smk"
-include: "rules/SnpSift_annotate_dbSNP.smk"
+
+if (config['DATA'] == "Single" or config['DATA'] == 'single'):
+    include: "rules/SnpSift_annotate_dbSNP_single.smk"
+
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort'):
+    include: "rules/SnpSift_annotate_dbSNP_cohort.smk"
 
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     include: "rules/gatk_CalculateGenotypePosteriors.smk"
@@ -143,10 +120,10 @@ if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
 # Filtering to prepare for scout
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
     include: "rules/bcftools_view_multiallelicsites.smk"
-    include: "rules/genmod_score.smk"
+    include: "rules/genmod_score_single.smk"
 
 if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
     include: "rules/bcftools_view_multiallelicsites.smk"
     include: "rules/gunzip.smk"
     include: "rules/SnpSift_filter_proband.smk"
-    include: "rules/genmod_score.smk"
+    include: "rules/genmod_score_cohort.smk"
