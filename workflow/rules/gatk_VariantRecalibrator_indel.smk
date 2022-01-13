@@ -10,10 +10,10 @@ rule gatk_VariantRecalibrator_indel:
         rscript = "../results/filtered/{sample}_plots_indels.R"
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
-        indeltranche = expand("-tranche {indeltranche}", indeltranche = config['FILTERING']['TRANCHE']['INDELS']),
+        indeltranche = expand("-tranche {indeltranche}", indeltranche = config['TRANCHE']['INDELS']),
         padding = config['WES']['PADDING'],
         intervals = config['WES']['INTERVALS'],
-        resources = config['FILTERING']['COHORT']['INDELS'],
+        resources = get_cohort_indel_filtering_command,
         other = "-mode INDEL -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
     log: 
         "logs/gatk_VariantRecalibrator_indel/{sample}.log"

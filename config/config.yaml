@@ -35,32 +35,77 @@ WES:
 ##############################
 
 # Number of threads to use per rule/sample for multithreaded rules, multithreading will significantly speed up these rules (diminishing speed gains beyond 8 threads)
-THREADS:
+THREADS: 
 
 # Maximum memory usage per rule/sample (eg. '40g' for 40 gigabytes, this should suffice for exomes)
 MAXMEMORY: ""
 
 # Maximum number of GPU's to be used per rule/sample for gpu-accelerated runs (eg `1` for 1 GPU)
-GPU:
+GPU: 
 
 ##############################
 ###### Variant filtering #####
 ##############################
 
-# Resources used to filter indels and SNP's...
-FILTERING:
-  # ...for analysis of single samples
-  SINGLE: ""
+# Tranche filtering level/truth sensitivity
+TRANCHE:
+  SNPS: ""
+  INDELS: ""
 
-  # ...for analysis of cohorts
-  COHORT:
-    INDELS: ""
-    SNPS: ""
+###############################################
+###### Variant filtering - SINGLE SAMPLES #####
+###############################################
 
-  # Tranche filtering level/truth sensitivity
-  TRANCHE: 
-    SNPS: ""
-    INDELS: ""
+# Filtering for single sample analyses
+# If NOT analysing single sample data, leave this section blank
+# (see more about these settings for gatk FilterVariantTranches at https://gatk.broadinstitute.org/hc/en-us/articles/360042479092-FilterVariantTranches)
+
+SINGLE:
+
+  # Provide a list of resources
+  RESOURCES:
+    - 
+    - 
+
+################################################
+###### Variant filtering - COHORT ANALYSIS #####
+################################################
+
+# Filtering for cohort analyses
+# If NOT analysing cohorts, leave this section blank
+# (see more about these settings for gatk VariantRecalibrator at https://gatk.broadinstitute.org/hc/en-us/articles/360042914791-VariantRecalibrator)
+
+COHORT:
+
+  # For indels...
+  INDELS:
+
+    # ...provide a list of resources
+    RESOURCES:
+      - 
+      - 
+      - 
+
+    # ...provide associated machine learning parameters
+    PARAMS:
+      - 
+      - 
+      - 
+
+  # For SNP's...
+  SNPS:
+
+    # ...provide a list of resources
+    RESOURCES:
+    - 
+    - 
+    - 
+
+    # ...provide associated machine learning parameters
+    PARAMS:
+    - 
+    - 
+    - 
 
 ##############################
 ####### VCF annotation #######

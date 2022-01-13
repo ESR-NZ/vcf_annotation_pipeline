@@ -47,6 +47,48 @@ def get_genmod_score_params(command):
 
     return params
 
+def get_cohort_snp_filtering_command(resource):
+    """Return a string, a portion of the gatk VariantRecalibrator command (used in the gatk_VariantRecalibrator_snp rule)
+    (for cohort analyses) which dynamically includes each of the recalibration resources defined by the user in the
+    configuration file. For each recalibration resource (element in the list), we construct the command by adding
+    --resource:<recalibration resource file>
+    """
+    
+    command = ""
+    
+    for resource,param in zip(config['COHORT']['SNPS']['RESOURCES'], config['COHORT']['SNPS']['PARAMS']):
+        command += "--resource:" + param + " " + resource + " "
+
+    return command
+
+def get_cohort_indel_filtering_command(resource):
+    """Return a string, a portion of the gatk VariantRecalibrator command (used in the gatk_VariantRecalibrator_indel rule)
+    (for cohort analyses) which dynamically includes each of the recalibration resources defined by the user in the
+    configuration file. For each recalibration resource (element in the list), we construct the command by adding
+    --resource:<recalibration resource file>
+    """
+
+    command = ""
+    
+    for resource,param in zip(config['COHORT']['INDELS']['RESOURCES'], config['COHORT']['INDELS']['PARAMS']):
+        command += "--resource:" + param + " " + resource + " "
+
+    return command
+
+def get_single_filtering_command(resource):
+    """Return a string, a portion of the gatk FilterVariantTranches command (used in the gatk_FilterVariantTranches rule)
+    (for single sample analyses) which dynamically includes each of the recalibration resources defined by the user in the
+    configuration file. For each recalibration resource (element in the list), we construct the command by adding
+    --resource <recalibration resource file>
+    """
+
+    command = ""
+    
+    for resource in config['SINGLE']['RESOURCES']:
+        command += "--resource " + resource + " "
+
+    return command
+
 ##### Set up report #####
 
 report: "report/workflow.rst"
