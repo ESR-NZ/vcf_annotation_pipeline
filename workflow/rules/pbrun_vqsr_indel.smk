@@ -10,7 +10,7 @@ rule pbrun_vqsr_indel:
     params:
         indeltranche = expand("--truth-sensitivity-level {indeltranche}", indeltranche = config['TRANCHE']['INDELS']),
         resources = get_cohort_indel_filtering_command,
-        other = "--mode INDEL -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
+        other = "--mode INDEL --annotation QD --annotation MQ --annotation MQRankSum --annotation ReadPosRankSum"
     resources:
         gpu = config['GPU']
     log:

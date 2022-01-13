@@ -9,7 +9,7 @@ rule pbrun_vqsr_snp:
     params:
         snptranche = expand("--truth-sensitivity-level {snptranche}", snptranche = config['TRANCHE']['SNPS']),
         resources = get_cohort_snp_filtering_command,
-        other = "--mode SNP -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
+        other = "--mode SNP --annotation QD --annotation MQ --annotation MQRankSum --annotation ReadPosRankSum"
     resources:
         gpu = config['GPU']
     log:
