@@ -9,6 +9,9 @@ A Snakemake workflow to filter raw variants (snp and indels) and annotate vcf (v
   - [Pipeline summary - cohort samples - GPU accelerated](#pipeline-summary---cohort-samples---gpu-accelerated)
   - [Main output files](#main-output-files)
   - [Prerequisites](#prerequisites)
+  - [Test vcf_annotation_pipeline](#test-vcf_annotation_pipeline)
+  - [Run vcf_annotation_pipeline](#run-vcf_annotation_pipeline)
+  - [Contribute back!](#contribute-back)
 
 ## Pipeline summary - single samples
 
@@ -62,3 +65,22 @@ Cohort samples:
 
 - **Prerequisite hardware:** [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) (for GPU accelerated runs)
 - **Prerequisite software:** [NVIDIA CLARA parabricks and dependencies](https://www.nvidia.com/en-us/docs/parabricks/local-installation/) (for GPU accelerated runs), [Git](https://git-scm.com/) (tested with version 2.7.4), [Mamba](https://github.com/TheSnakePit/mamba) (tested with version 0.4.4) with [Conda](https://docs.conda.io/projects/conda/en/latest/index.html) (tested with version 4.8.2), [gsutil](https://pypi.org/project/gsutil/) (tested with version 4.52), [gunzip](https://linux.die.net/man/1/gunzip) (tested with version 1.6), [R](https://www.r-project.org/) (tested with version 3.2.2)
+
+## Test vcf_annotation_pipeline
+
+The provided [test dataset](./test) can be used to test running this pipeline on a new machine, or test pipeline developments/releases.
+
+## Run vcf_annotation_pipeline
+
+See the docs for a walkthrough guide for running [vcf_annotation_pipeline](https://github.com/ESR-NZ/vcf_annotation_pipeline) on:
+
+- [A single machine like a laptop or single server/computer](./docs/running_on_a_single_machine.md)
+- [A high performance cluster](./docs/running_on_a_hpc.md)
+
+## Contribute back!
+
+- Raise issues in [the issues page](https://github.com/ESR-NZ/vcf_annotation_pipeline/issues)
+- Create feature requests in [the issues page](https://github.com/ESR-NZ/vcf_annotation_pipeline/issues)
+- Contribute your code! Create your own branch from the [development branch](https://github.com/ESR-NZ/vcf_annotation_pipeline/tree/dev) and create a pull request to the [development branch](https://github.com/ESR-NZ/vcf_annotation_pipeline/tree/dev) once the code is on point!
+
+Contributions and feedback are always welcome! :blush:

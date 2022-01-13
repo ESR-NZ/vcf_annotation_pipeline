@@ -6,10 +6,10 @@ rule gatk_FilterVariantTranches:
     params:
         snptranche = expand("--snp-tranche {snptranche}", snptranche = config['FILTERING']['TRANCHE']['SNPS']),
         indeltranche = expand("--indel-tranche {indeltranche}", indeltranche = config['FILTERING']['TRANCHE']['INDELS']),
-        tdir = expand("{tdir}", tdir = config['TEMPDIR']),
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
-        resources = expand ("{resources}", resources = config['FILTERING']['SINGLE']),
+        tdir = config['TEMPDIR'],
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'],
+        resources = config['FILTERING']['SINGLE'],
         other = "--info-key CNN_2D"
     log:
         "logs/gatk_FilterVariantTranches/{sample}.log"

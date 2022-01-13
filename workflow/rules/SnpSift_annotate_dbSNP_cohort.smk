@@ -1,15 +1,9 @@
-if config['DATA'] == "Single" or config['DATA'] == 'single':
-    outfile = "../results/annotated/{sample}_filtered_annotated.vcf"
-
-elif config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    outfile = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp.vcf"
-
-rule SnpSift_annotate_dbSNP:
+rule SnpSift_annotate_dbSNP_cohort:
     input:
         vcf = "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd.vcf",
         dbsnp = expand("{dbsnp}", dbsnp = config['dbSNP'])
     output:
-        protected(outfile)
+        "../results/annotated/{sample}_filtered_dbnsfp_vep_cadd_dbsnp.vcf"
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY'])
     log: 
