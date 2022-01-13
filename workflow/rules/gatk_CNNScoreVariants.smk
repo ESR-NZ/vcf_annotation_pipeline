@@ -9,7 +9,7 @@ rule gatk_CNNScoreVariants:
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
         padding = config['WES']['PADDING'],
-        intervals = config['WES']['INTERVALS'])
+        intervals = config['WES']['INTERVALS'],
         other = "-tensor-type read_tensor"
     log:
         "logs/gatk_CNNScoreVariants/{sample}.log"
