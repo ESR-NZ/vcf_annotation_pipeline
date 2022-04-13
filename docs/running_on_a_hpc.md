@@ -74,18 +74,18 @@ If you're analysing cohort's of samples, you will need a directory with a [pedig
 
 .
 |___human_genomics_pipeline/results/called/
-|                                      |___sample1_raw_snps_indels.g.vcf
-|                                      |___sample1_raw_snps_indels.g.vcf.idx
-|                                      |___sample2_raw_snps_indels.g.vcf
-|                                      |___sample2_raw_snps_indels.g.vcf.idx
-|                                      |___sample3_raw_snps_indels.g.vcf
-|                                      |___sample3_raw_snps_indels.g.vcf.idx
-|                                      |___sample4_raw_snps_indels.g.vcf
-|                                      |___sample4_raw_snps_indels.g.vcf.idx
-|                                      |___sample5_raw_snps_indels.g.vcf
-|                                      |___sample5_raw_snps_indels.g.vcf.idx
-|                                      |___sample6_raw_snps_indels.g.vcf
-|                                      |___sample6_raw_snps_indels.g.vcf.idx
+|                                      |___sample1_raw_snps_indels.vcf
+|                                      |___sample1_raw_snps_indels.vcf.idx
+|                                      |___sample2_raw_snps_indels.vcf
+|                                      |___sample2_raw_snps_indels.vcf.idx
+|                                      |___sample3_raw_snps_indels.vcf
+|                                      |___sample3_raw_snps_indels.vcf.idx
+|                                      |___sample4_raw_snps_indels.vcf
+|                                      |___sample4_raw_snps_indels.vcf.idx
+|                                      |___sample5_raw_snps_indels.vcf
+|                                      |___sample5_raw_snps_indels.vcf.idx
+|                                      |___sample6_raw_snps_indels.vcf
+|                                      |___sample6_raw_snps_indels.vcf.idx
 |                                      |___ ...
 |
 |___pedigrees/

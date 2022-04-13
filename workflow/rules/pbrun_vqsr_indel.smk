@@ -1,6 +1,6 @@
 rule pbrun_vqsr_indel:
     input:
-        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf"
+        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf"
     output:
         vcf = temp("../results/filtered/{sample}_tmp_vqsr_recal_indels.vcf"),
         recal = temp("../results/filtered/{sample}_recal_indels"),
@@ -16,4 +16,4 @@ rule pbrun_vqsr_indel:
     message:
         "Building a recalibration model to score variant quality in {input.vcf} and apply a score cutoff to filter variants (indels)."
     shell:
-        "pbrun vqsr --in-vcf {input.vcf} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} {params.indeltranche} {params.resources} {params.other} &> {log}"
+        "/opt/parabricks/3.6.1/parabricks/pbrun vqsr --in-vcf {input.vcf} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} {params.indeltranche} {params.resources} {params.other} &> {log}"

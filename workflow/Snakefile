@@ -9,11 +9,7 @@ Modified: 2020-08-28
 ##### Set up wildcards #####
 
 # Define samples from vcf dir using wildcards
-if config['DATA'] == "Single" or config['DATA'] == 'single':
-    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
-
-if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
+SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
 
 ##### Setup helper functions #####
 import csv

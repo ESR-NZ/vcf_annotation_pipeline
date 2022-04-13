@@ -16,4 +16,4 @@ rule pbrun_vqsr_snp:
     message:
         "Building a recalibration model to score variant quality in {input.vcf} and apply a score cutoff to filter variants (snp's)."
     shell:
-        "pbrun vqsr --in-vcf {input.vcf} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} {params.snptranche} {params.resources} {params.other} &> {log}"
+        "/opt/parabricks/3.6.1/parabricks/pbrun vqsr --in-vcf {input.vcf} --out-vcf {output.vcf} --out-recal {output.recal} --out-tranches {output.tranches} {params.snptranche} {params.resources} {params.other} &> {log}"
