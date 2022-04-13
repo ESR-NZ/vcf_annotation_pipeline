@@ -108,7 +108,7 @@ Requirements:
 The provided [test dataset](./test) can be used. Setup the test dataset before running the pipeline on this data - choose to setup to run either a single sample analysis or a cohort analysis with the `-a` flag. For example:
 
 ```bash
-cd ./human_genomics_pipeline
+cd ./vcf_annotation_pipeline
 bash ./test/setup_test.sh -a cohort
 ```
 
