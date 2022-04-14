@@ -1,6 +1,6 @@
 rule gatk_VariantRecalibrator_snp:
     input:
-        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf",
+        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
         report("../results/filtered/{sample}_plots_snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),

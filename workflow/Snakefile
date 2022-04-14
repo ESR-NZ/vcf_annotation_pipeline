@@ -9,11 +9,7 @@ Modified: 2020-08-28
 ##### Set up wildcards #####
 
 # Define samples from vcf dir using wildcards
-if config['DATA'] == "Single" or config['DATA'] == 'single':
-    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
-
-if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
+SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
 
 ##### Setup helper functions #####
 import csv
@@ -55,9 +51,13 @@ def get_cohort_snp_filtering_command(resource):
     """
     
     command = ""
-    
-    for resource,param in zip(config['COHORT']['SNPS']['RESOURCES'], config['COHORT']['SNPS']['PARAMS']):
-        command += "--resource:" + param + " " + resource + " "
+
+    if (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
+        for resource,param in zip(config['COHORT']['SNPS']['RESOURCES'], config['COHORT']['SNPS']['PARAMS']):
+            command += "--resource:" + param + " " + resource + " "
+    if (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+        for resource,param in zip(config['COHORT']['SNPS']['RESOURCES'], config['COHORT']['SNPS']['PARAMS']):
+            command += "--resource " + param + ":" + resource + " "
 
     return command
 
@@ -69,9 +69,13 @@ def get_cohort_indel_filtering_command(resource):
     """
 
     command = ""
-    
-    for resource,param in zip(config['COHORT']['INDELS']['RESOURCES'], config['COHORT']['INDELS']['PARAMS']):
-        command += "--resource:" + param + " " + resource + " "
+
+    if (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
+        for resource,param in zip(config['COHORT']['INDELS']['RESOURCES'], config['COHORT']['INDELS']['PARAMS']):
+            command += "--resource:" + param + " " + resource + " "
+    if (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+        for resource,param in zip(config['COHORT']['INDELS']['RESOURCES'], config['COHORT']['INDELS']['PARAMS']):
+            command += "--resource " + param + ":" + resource + " "
 
     return command
 
@@ -124,7 +128,7 @@ if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPA
 
 ##### Load rules #####
 
-localrules: gunzip, bgzip, tabix, pbrun_cnnscorevariants
+localrules: gunzip, bgzip, tabix, pbrun_cnnscorevariants, pbrun_vqsr_snp, pbrun_vqsr_indel
 
 # Variant filtering
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
@@ -135,11 +139,15 @@ if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_A
     include: "rules/pbrun_cnnscorevariants.smk"
     include: "rules/gatk_FilterVariantTranches.smk"
 
-if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort'):
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
     include: "rules/gatk_VariantRecalibrator_indel.smk"
     include: "rules/gatk_VariantRecalibrator_snp.smk"
     include: "rules/gatk_ApplyVQSR_indel.smk"
     include: "rules/gatk_ApplyVQSR_snp.smk"
+
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+    include: "rules/pbrun_vqsr_indel.smk"
+    include: "rules/pbrun_vqsr_snp.smk"
 
 # Annotation
 include: "rules/SnpSift_dbnsfp.smk"
