@@ -83,6 +83,7 @@ See the docs for a walkthrough guide for running [vcf_annotation_pipeline](https
 
 - Raise issues in [the issues page](https://github.com/ESR-NZ/vcf_annotation_pipeline/issues)
 - Create feature requests in [the issues page](https://github.com/ESR-NZ/vcf_annotation_pipeline/issues)
+- Start a discussion in [the discussion page](https://github.com/ESR-NZ/vcf_annotation_pipeline/discussions)
 - Contribute your code! Create your own branch from the [development branch](https://github.com/ESR-NZ/vcf_annotation_pipeline/tree/dev) and create a pull request to the [development branch](https://github.com/ESR-NZ/vcf_annotation_pipeline/tree/dev) once the code is on point!
 
 Contributions and feedback are always welcome! :blush:
