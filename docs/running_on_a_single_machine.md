@@ -276,9 +276,9 @@ It is a good idea to consider the number of samples that you are processing. For
 Set the tranche filtering level for snps and indels (by [gatk FilterVariantTranches](https://gatk.broadinstitute.org/hc/en-us/articles/360041417412-FilterVariantTranches) and [gatk VariantRecalibrator](https://gatk.broadinstitute.org/hc/en-us/articles/360041851391-VariantRecalibrator) for single samples and cohorts respectively. For example:
 
 ```yaml
-  TRANCHE: 
-    SNPS: "99.95"
-    INDELS: "99.4"
+TRANCHE:
+  SNPS: "99.95"
+  INDELS: "99.4"
 ```
 
 #### Single samples
