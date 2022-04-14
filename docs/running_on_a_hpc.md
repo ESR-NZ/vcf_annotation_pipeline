@@ -252,7 +252,7 @@ WES:
 
 These settings allow you to configure the resources per rule/sample
 
-Set the number of threads to use per sample/rule for multithreaded rules (`rule gatk_CNNScoreVariants`, `rule vep` and `genmod models`). Multithreading will significantly speed up these rules, however the improvements in speed will diminish beyond 8 threads. If desired, a different number of threads can be set for these multithreaded rules by utilising the `--set-threads` flag in the runscript (see [step 8](#8-modify-the-run-scripts)).
+Set the number of threads to use per sample/rule for multithreaded rules (`rule gatk_CNNScoreVariants`, `rule vep` and `genmod models`). Multithreading will significantly speed up these rules, however the improvements in speed will diminish beyond 8 threads. If desired, a different number of threads can be set for these multithreaded rules by utilising the `--set-threads` flag in the runscript (see [step 9](#9-modify-the-run-scripts)).
 
 ```yaml
 THREADS: 8
@@ -270,7 +270,7 @@ Set the maximum number of GPU's to be used per rule/sample for gpu-accelerated r
 GPU: 1
 ```
 
-It is a good idea to consider the number of samples that you are processing. For example, if you set `THREADS: "8"` and set the maximum number of cores to be used by the pipeline in the run script to `-j 32` (see step 6), a maximum of 3 samples will be able to run at one time for these rules (if they are deployed at the same time), but each sample will complete faster. In contrast, if you set `THREADS: "1"` and `-j 32`, a maximum of 32 samples could be run at one time, but each sample will take longer to complete. This also needs to be considered when setting `MAXMEMORY` + `--resources mem_mb` and `GPU` + `--resources gpu`.
+It is a good idea to consider the number of samples that you are processing. For example, if you set `THREADS: "8"` and set the maximum number of cores to be used by the pipeline in the run script to `-j/--cores 32` (see [step 9](#9-modify-the-run-scripts)), a maximum of 3 samples will be able to run at one time for these rules (if they are deployed at the same time), but each sample will complete faster. In contrast, if you set `THREADS: "1"` and `-j/--cores 32`, a maximum of 32 samples could be run at one time, but each sample will take longer to complete. This also needs to be considered when setting `MAXMEMORY` + `--resources mem_mb` and `GPU` + `--resources gpu`.
 
 ### Variant filtering
 
