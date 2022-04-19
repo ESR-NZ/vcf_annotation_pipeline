@@ -9,7 +9,12 @@ Modified: 2020-08-28
 ##### Set up wildcards #####
 
 # Define samples from vcf dir using wildcards
-SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
+# (note. the `.g.vcf` needs to remain for backwards compatability with human_genomics_pipeline v2.0.0 and earlier)
+if config['DATA'] == "Single" or config['DATA'] == 'single':
+    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
+
+if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
 
 ##### Setup helper functions #####
 import csv
@@ -128,7 +133,9 @@ if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPA
 
 ##### Load rules #####
 
-localrules: gunzip, bgzip, tabix, pbrun_cnnscorevariants, pbrun_vqsr_snp, pbrun_vqsr_indel
+localrules: setup, gunzip, bgzip, tabix, pbrun_cnnscorevariants, pbrun_vqsr_snp, pbrun_vqsr_indel
+
+include: "rules/setup.smk"
 
 # Variant filtering
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
