@@ -4,12 +4,12 @@ rule gatk_FilterVariantTranches:
     output:
         protected("../results/filtered/{sample}_filtered.vcf")
     params:
-        snptranche = expand("--snp-tranche {snptranche}", snptranche = config['FILTERING']['TRANCHE']['SNPS']),
-        indeltranche = expand("--indel-tranche {indeltranche}", indeltranche = config['FILTERING']['TRANCHE']['INDELS']),
-        tdir = expand("{tdir}", tdir = config['TEMPDIR']),
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
-        resources = expand ("{resources}", resources = config['FILTERING']['SINGLE']),
+        snptranche = expand("--snp-tranche {snptranche}", snptranche = config['TRANCHE']['SNPS']),
+        indeltranche = expand("--indel-tranche {indeltranche}", indeltranche = config['TRANCHE']['INDELS']),
+        tdir = config['TEMPDIR'],
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'],
+        resources = get_single_filtering_command,
         other = "--info-key CNN_2D"
     log:
         "logs/gatk_FilterVariantTranches/{sample}.log"

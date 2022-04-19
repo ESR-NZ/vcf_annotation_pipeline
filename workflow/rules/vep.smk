@@ -8,7 +8,7 @@ rule vep:
         report("../results/annotated/{sample}_filtered_dbnsfp_vep.vcf.gz_summary.txt", caption = "../report/vep.rst", category = "Variant effect predictor"),
         vcf = temp("../results/annotated/{sample}_filtered_dbnsfp_vep.vcf.gz")
     params:
-        build = expand("{build}", build = config['BUILD']),
+        build = config['BUILD'],
         other = "--compress_output bgzip --cache --offline --stats_text --everything --vcf --force_overwrite"
     log: 
         "logs/vep/{sample}.log"

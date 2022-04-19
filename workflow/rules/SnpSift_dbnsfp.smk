@@ -16,4 +16,4 @@ rule SnpSift_dbnsfp:
     message:
         "Using the dbNSFP database to annotate {input.vcf} with functional predictions from multiple algorithms (SIFT, Polyphen2, LRT and MutationTaster, PhyloP and GERP++, etc.)"
     shell:
-        "SnpSift {params.maxmemory} dbnsfp {input.vcf} > {output} -db {input.dbnsfp} {params.other}"
+        "SnpSift {params.maxmemory} dbnsfp {input.vcf} > {output} -db {input.dbnsfp} {params.other} 2> {log}"

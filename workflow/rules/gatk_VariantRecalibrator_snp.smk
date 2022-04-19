@@ -1,6 +1,6 @@
 rule gatk_VariantRecalibrator_snp:
     input:
-        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf",
+        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME'])
     output:
         report("../results/filtered/{sample}_plots_snps.R.pdf", caption = "../report/recalibration.rst", category = "Recalibration - SNP's"),
@@ -11,10 +11,10 @@ rule gatk_VariantRecalibrator_snp:
         rscript = "../results/filtered/{sample}_plots_snps.R"
     params:
         maxmemory = expand('"-Xmx{maxmemory}"', maxmemory = config['MAXMEMORY']),
-        snptranche = expand("-tranche {snptranche}", snptranche = config['FILTERING']['TRANCHE']['SNPS']),
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
-        resources = expand("{resources}", resources = config['FILTERING']['COHORT']['SNPS']),
+        snptranche = expand("-tranche {snptranche}", snptranche = config['TRANCHE']['SNPS']),
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'],
+        resources = get_cohort_snp_filtering_command,
         other = "-mode SNP -an QD -an MQ -an MQRankSum -an ReadPosRankSum"
     log: 
         "logs/gatk_VariantRecalibrator_snp/{sample}.log"

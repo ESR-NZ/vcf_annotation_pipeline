@@ -6,16 +6,105 @@ Date created: 2020-03-06
 Modified: 2020-08-28
 """
 
-##### Set up #####
+##### Set up wildcards #####
 
 # Define samples from vcf dir using wildcards
+# (note. the `.g.vcf` needs to remain for backwards compatability with human_genomics_pipeline v2.0.0 and earlier)
 if config['DATA'] == "Single" or config['DATA'] == 'single':
     SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
 
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
 
+##### Setup helper functions #####
+import csv
+import glob
+
+def get_genmod_score_input(command):
+    """Return a string which defines the input file for the genmod_score rule. This changes based on the
+    user configurable options for running single samples or cohorts of samples
+    """
+    
+    input_files = ""
+
+    if config['DATA'] == "Single" or config['DATA'] == 'single':
+        input_files = "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites.vcf.gz"
+    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+        input_files = "../results/readyforscout/{sample}_filtered_annotated_multiallelicsites_probandonly.vcf"
+
+    return input_files
+
+def get_genmod_score_params(command):
+    """Return a string which defines some of the parameters for the genmod_score rule. This changes based on the
+    user configurable options for running single samples or cohorts of samples
+    """
+    
+    params = ""
+
+    if config['DATA'] == "Single" or config['DATA'] == 'single':
+        params = "--score_config scripts/score_single.ini"
+    if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
+        params = "--score_config scripts/score_cohort.ini --family_file ../../pedigrees/{sample}_pedigree.ped"
+
+    return params
+
+def get_cohort_snp_filtering_command(resource):
+    """Return a string, a portion of the gatk VariantRecalibrator command (used in the gatk_VariantRecalibrator_snp rule)
+    (for cohort analyses) which dynamically includes each of the recalibration resources defined by the user in the
+    configuration file. For each recalibration resource (element in the list), we construct the command by adding
+    --resource:<recalibration resource file>
+    """
+    
+    command = ""
+
+    if (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
+        for resource,param in zip(config['COHORT']['SNPS']['RESOURCES'], config['COHORT']['SNPS']['PARAMS']):
+            command += "--resource:" + param + " " + resource + " "
+    if (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+        for resource,param in zip(config['COHORT']['SNPS']['RESOURCES'], config['COHORT']['SNPS']['PARAMS']):
+            command += "--resource " + param + ":" + resource + " "
+
+    return command
+
+def get_cohort_indel_filtering_command(resource):
+    """Return a string, a portion of the gatk VariantRecalibrator command (used in the gatk_VariantRecalibrator_indel rule)
+    (for cohort analyses) which dynamically includes each of the recalibration resources defined by the user in the
+    configuration file. For each recalibration resource (element in the list), we construct the command by adding
+    --resource:<recalibration resource file>
+    """
+
+    command = ""
+
+    if (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
+        for resource,param in zip(config['COHORT']['INDELS']['RESOURCES'], config['COHORT']['INDELS']['PARAMS']):
+            command += "--resource:" + param + " " + resource + " "
+    if (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+        for resource,param in zip(config['COHORT']['INDELS']['RESOURCES'], config['COHORT']['INDELS']['PARAMS']):
+            command += "--resource " + param + ":" + resource + " "
+
+    return command
+
+def get_single_filtering_command(resource):
+    """Return a string, a portion of the gatk FilterVariantTranches command (used in the gatk_FilterVariantTranches rule)
+    (for single sample analyses) which dynamically includes each of the recalibration resources defined by the user in the
+    configuration file. For each recalibration resource (element in the list), we construct the command by adding
+    --resource <recalibration resource file>
+    """
+
+    command = ""
+    
+    for resource in config['SINGLE']['RESOURCES']:
+        command += "--resource " + resource + " "
+
+    return command
+
+##### Set up report #####
+
+report: "report/workflow.rst"
+
+
 ##### Target rules #####
+
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "No" or config['PREPARE_FOR_SCOUT'] == 'no'):
     rule all:
            input:
@@ -42,13 +131,11 @@ if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPA
                expand("../results/annotated/{sample}_filtered_annotated.vcf", sample = SAMPLES),
                expand("../results/readyforscout/{sample}_filtered_annotated_readyforscout.vcf", sample = SAMPLES)
 
-##### Set up report #####
-
-report: "report/workflow.rst"
-
 ##### Load rules #####
 
-localrules: gunzip, bgzip, tabix, pbrun_cnnscorevariants
+localrules: setup, gunzip, bgzip, tabix, pbrun_cnnscorevariants, pbrun_vqsr_snp, pbrun_vqsr_indel
+
+include: "rules/setup.smk"
 
 # Variant filtering
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
@@ -59,11 +146,15 @@ if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['GPU_A
     include: "rules/pbrun_cnnscorevariants.smk"
     include: "rules/gatk_FilterVariantTranches.smk"
 
-if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort'):
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['GPU_ACCELERATED'] == "No" or config['GPU_ACCELERATED'] == "no"):
     include: "rules/gatk_VariantRecalibrator_indel.smk"
     include: "rules/gatk_VariantRecalibrator_snp.smk"
     include: "rules/gatk_ApplyVQSR_indel.smk"
     include: "rules/gatk_ApplyVQSR_snp.smk"
+
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['GPU_ACCELERATED'] == "Yes" or config['GPU_ACCELERATED'] == "yes"):
+    include: "rules/pbrun_vqsr_indel.smk"
+    include: "rules/pbrun_vqsr_snp.smk"
 
 # Annotation
 include: "rules/SnpSift_dbnsfp.smk"
@@ -71,7 +162,12 @@ include: "rules/bgzip.smk"
 include: "rules/tabix.smk"
 include: "rules/vep.smk"
 include: "rules/genmod_annotate_CADD.smk"
-include: "rules/SnpSift_annotate_dbSNP.smk"
+
+if (config['DATA'] == "Single" or config['DATA'] == 'single'):
+    include: "rules/SnpSift_annotate_dbSNP_single.smk"
+
+if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort'):
+    include: "rules/SnpSift_annotate_dbSNP_cohort.smk"
 
 if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
     include: "rules/gatk_CalculateGenotypePosteriors.smk"
@@ -81,10 +177,10 @@ if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
 # Filtering to prepare for scout
 if (config['DATA'] == "Single" or config['DATA'] == 'single') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
     include: "rules/bcftools_view_multiallelicsites.smk"
-    include: "rules/genmod_score.smk"
+    include: "rules/genmod_score_single.smk"
 
 if (config['DATA'] == "Cohort" or config['DATA'] == 'cohort') and (config['PREPARE_FOR_SCOUT'] == "Yes" or config['PREPARE_FOR_SCOUT'] == 'yes'):
     include: "rules/bcftools_view_multiallelicsites.smk"
     include: "rules/gunzip.smk"
     include: "rules/SnpSift_filter_proband.smk"
-    include: "rules/genmod_score.smk"
+    include: "rules/genmod_score_cohort.smk"

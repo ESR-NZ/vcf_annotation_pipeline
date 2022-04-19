@@ -1,6 +1,6 @@
 rule gatk_ApplyVQSR_indel:
     input:
-        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf",
+        vcf = "../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf",
         refgenome = expand("{refgenome}", refgenome = config['REFGENOME']),
         recal = "../results/filtered/{sample}_recal_indels",
         recalindex = "../results/filtered/{sample}_recal_indels.idx",
@@ -9,8 +9,8 @@ rule gatk_ApplyVQSR_indel:
         vcf = temp("../results/filtered/{sample}_tmp_vqsr_recal_indels.vcf"),
         index = temp("../results/filtered/{sample}_tmp_vqsr_recal_indels.vcf.idx")
     params:
-        padding = expand("{padding}", padding = config['WES']['PADDING']),
-        intervals = expand("{intervals}", intervals = config['WES']['INTERVALS']),
+        padding = config['WES']['PADDING'],
+        intervals = config['WES']['INTERVALS'],
         other = "-mode INDEL"
     log:
         "logs/gatk_VQSR_indel/{sample}.log"
