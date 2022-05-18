@@ -7,19 +7,17 @@ Modified: 2020-08-28
 """
 
 ##### Set up wildcards #####
-
-# Define samples from vcf dir using wildcards
-# (note. the `.g.vcf` needs to remain for backwards compatability with human_genomics_pipeline v2.0.0 and earlier)
-if config['DATA'] == "Single" or config['DATA'] == 'single':
-    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
-
-if config['DATA'] == "Cohort" or config['DATA'] == 'cohort':
-    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
-
-##### Setup helper functions #####
 import csv
 import glob
 
+# Define samples from vcf dir using wildcards
+# (note. the `.g.vcf` needs to remain for backwards compatability with human_genomics_pipeline v2.0.0 and earlier)
+if len(glob.glob('../../human_genomics_pipeline/results/called/*_raw_snps_indels.vcf')) >=1:
+    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
+if len(glob.glob('../../human_genomics_pipeline/results/called/*_raw_snps_indels.g.vcf')) >=1:
+    SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.g.vcf")
+
+##### Setup helper functions #####
 def get_genmod_score_input(command):
     """Return a string which defines the input file for the genmod_score rule. This changes based on the
     user configurable options for running single samples or cohorts of samples
