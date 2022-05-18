@@ -11,7 +11,8 @@ import csv
 import glob
 
 # Define samples from vcf dir using wildcards
-# (note. the `.g.vcf` needs to remain for backwards compatability with human_genomics_pipeline v2.0.0 and earlier)
+# Here we search for vcf files to be analysed which have either the '_raw_snps_indels.vcf' or '_raw_snps_indels.g.vcf'
+# suffix. This is to ensure backwards compatability with with human_genomics_pipeline v2.0.0 and earlier
 if len(glob.glob('../../human_genomics_pipeline/results/called/*_raw_snps_indels.vcf')) >=1:
     SAMPLES, = glob_wildcards("../../human_genomics_pipeline/results/called/{sample}_raw_snps_indels.vcf")
 if len(glob.glob('../../human_genomics_pipeline/results/called/*_raw_snps_indels.g.vcf')) >=1:
