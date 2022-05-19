@@ -13,8 +13,8 @@ rule gatk_CalculateGenotypePosteriors:
         "logs/gatk_CalculateGenotypePosteriors/{sample}.log"
     benchmark:
         "benchmarks/gatk_CalculateGenotypePosteriors/{sample}.tsv"
-    conda:
-        "../envs/gatk4.yaml"
+    singularity:
+        "docker://broadinstitute/gatk:4.2.6.1"
     message:
         "Calculating genotype posterior probabilities given family and/or known population genotypes for {input.vcf}"
     shell:

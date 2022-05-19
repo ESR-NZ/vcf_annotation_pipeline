@@ -20,8 +20,8 @@ rule gatk_VariantRecalibrator_snp:
         "logs/gatk_VariantRecalibrator_snp/{sample}.log"
     benchmark:
         "benchmarks/gatk_VariantRecalibrator_snp/{sample}.tsv"
-    conda:
-        "../envs/gatk4.yaml"
+    singularity:
+        "docker://broadinstitute/gatk:4.2.6.1"
     message:
         "Building a recalibration model to score variant quality (snps)"
     shell:

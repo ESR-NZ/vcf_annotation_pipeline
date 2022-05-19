@@ -15,8 +15,8 @@ rule gatk_ApplyVQSR_snp:
         "logs/gatk_VQSR_snp/{sample}.log"
     benchmark:
         "benchmarks/gatk_VQSR_snp/{sample}.tsv"
-    conda:
-        "../envs/gatk4.yaml"
+    singularity:
+        "docker://broadinstitute/gatk:4.2.6.1"
     message:
         "Using machine learning to filter out probable artifacts from the variant callset (snps)"
     shell:

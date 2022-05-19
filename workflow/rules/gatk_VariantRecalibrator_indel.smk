@@ -19,8 +19,8 @@ rule gatk_VariantRecalibrator_indel:
         "logs/gatk_VariantRecalibrator_indel/{sample}.log"
     benchmark:
         "benchmarks/gatk_VariantRecalibrator_indel/{sample}.tsv"
-    conda:
-        "../envs/gatk4.yaml"
+    singularity:
+        "docker://broadinstitute/gatk:4.2.6.1"
     message:
         "Building a recalibration model to score variant quality (indels)"
     shell:
