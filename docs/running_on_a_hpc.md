@@ -9,22 +9,22 @@
   - [3. Setup files and directories](#3-setup-files-and-directories)
     - [Test data](#test-data)
   - [4. Get prerequisite software/hardware](#4-get-prerequisite-softwarehardware)
-  - [5. Create a local copy of the GATK resource bundle (either b37 or hg38)](#5-create-a-local-copy-of-the-gatk-resource-bundle-either-b37-or-hg38)
+  - [5. Create and activate a conda environment with python, snakemake, gsutil and wget installed](#5-create-and-activate-a-conda-environment-with-python-snakemake-gsutil-and-wget-installed)
+  - [6. Create a local copy of the GATK resource bundle (either b37 or hg38)](#6-create-a-local-copy-of-the-gatk-resource-bundle-either-b37-or-hg38)
     - [b37](#b37)
     - [hg38](#hg38)
-  - [6. Create a local copy of other databases (either GRCh37 or GRCh38)](#6-create-a-local-copy-of-other-databases-either-grch37-or-grch38)
+  - [7. Create a local copy of other databases (either GRCh37 or GRCh38)](#7-create-a-local-copy-of-other-databases-either-grch37-or-grch38)
     - [GRCh37](#grch37)
     - [GRCh38](#grch38)
-  - [7. Modify the configuration file](#7-modify-the-configuration-file)
+  - [8. Modify the configuration file](#8-modify-the-configuration-file)
     - [Overall workflow](#overall-workflow)
     - [Pipeline resources](#pipeline-resources)
     - [Variant filtering](#variant-filtering)
       - [Single samples](#single-samples)
       - [Cohort samples](#cohort-samples)
     - [VCF annotation](#vcf-annotation)
-  - [8. Configure to run on a HPC](#8-configure-to-run-on-a-hpc)
-  - [9. Modify the run scripts](#9-modify-the-run-scripts)
-  - [10. Create and activate a conda environment with python and snakemake installed](#10-create-and-activate-a-conda-environment-with-python-and-snakemake-installed)
+  - [9. Configure to run on a HPC](#9-configure-to-run-on-a-hpc)
+  - [10. Modify the run scripts](#10-modify-the-run-scripts)
   - [11. Run the pipeline](#11-run-the-pipeline)
   - [12. Evaluate the pipeline run](#12-evaluate-the-pipeline-run)
   - [13. Commit and push to your forked version of the github repo](#13-commit-and-push-to-your-forked-version-of-the-github-repo)
@@ -106,19 +106,25 @@ bash ./test/setup_test.sh -a cohort
 
 ## 4. Get prerequisite software/hardware
 
-For GPU accelerated runs, you'll need [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) and [NVIDIA CLARA PARABRICKS and dependencies](https://www.nvidia.com/en-us/docs/parabricks/local-installation/). Talk to your system administrator to see if the HPC has this hardware and software available.
+For GPU accelerated runs, you'll need [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) (tested with NVIDIA V100) and [NVIDIA CLARA PARABRICKS and dependencies](https://www.nvidia.com/en-us/docs/parabricks/local-installation/) (tested with parabricks version 3.6.1-1). Talk to your system administrator to see if the HPC has this hardware and software available.
 
 Other software required to get setup and run the pipeline:
 
-- [Git](https://git-scm.com/) (tested with version 2.7.4)
-- [Conda](https://docs.conda.io/projects/conda/en/latest/index.html) (tested with version 4.8.2)
-- [Mamba](https://github.com/TheSnakePit/mamba) (tested with version 0.4.4) (note. [mamba can be installed via conda with a single command](https://mamba.readthedocs.io/en/latest/installation.html#existing-conda-install))
-- [gsutil](https://pypi.org/project/gsutil/) (tested with version 4.52)
-- [gunzip](https://linux.die.net/man/1/gunzip) (tested with version 1.6)
+- [Git](https://git-scm.com/) (tested with version 1.8.3.1)
+- [Conda](https://docs.conda.io/projects/conda/en/latest/index.html) (tested with version 4.11.0)
+- [Mamba](https://github.com/TheSnakePit/mamba) (tested with version 0.19.1) (note. [mamba can be installed via conda with a single command](https://mamba.readthedocs.io/en/latest/installation.html#existing-conda-install))
 
-Most of this software is commonly pre-installed on HPC's, likely available as modules that can be loaded. Talk to your system administrator if you need help with this.
+This software is commonly pre-installed on HPC's, likely available as modules that can be loaded. Talk to your system administrator if you need help with this.
 
-## 5. Create a local copy of the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle) (either b37 or hg38)
+## 5. Create and activate a conda environment with python, snakemake, gsutil and wget installed
+
+```bash
+cd ./workflow/
+mamba env create -f pipeline_run_env.yml
+conda activate pipeline_run_env
+```
+
+## 6. Create a local copy of the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle) (either b37 or hg38)
 
 ### b37
 
@@ -136,7 +142,7 @@ Download from [Google Cloud Bucket](https://console.cloud.google.com/storage/bro
 gsutil cp -r gs://genomics-public-data/resources/broad/hg38 /where/to/download/
 ```
 
-## 6. Create a local copy of other databases (either GRCh37 or GRCh38)
+## 7. Create a local copy of other databases (either GRCh37 or GRCh38)
 
 ### GRCh37
 
@@ -180,7 +186,7 @@ wget https://krishna.gs.washington.edu/download/CADD/v1.5/GRCh38/whole_genome_SN
 
 Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) build by following [this documentation](https://github.com/GenomicsAotearoa/dbNSFP_build)
 
-## 7. Modify the configuration file
+## 8. Modify the configuration file
 
 Edit 'config.yaml' found within the config directory.
 
@@ -341,7 +347,7 @@ dbNSFP: "/scratch/publicData/dbNSFP/GRCh37/dbNSFPv4.0a.hg19.custombuild.gz"
 CADD: "/scratch/publicData/CADD/GRCh37/whole_genome_SNVs.tsv.gz"
 ```
 
-## 8. Configure to run on a HPC
+## 9. Configure to run on a HPC
 
 *This will deploy the non-GPU accelerated rules to slurm and deploy the GPU accelerated rules locally (pbrun_cnnscorevariants). Therefore, if running the pipeline gpu accelerated, the pipeline should be deployed from the machine with the GPU's.*
 
@@ -362,7 +368,7 @@ Configure `account:` and `partition:` in the default section of 'cluster.json' i
 
 There are a plethora of additional slurm parameters that can be configured (and can be configured per rule). If you set additional slurm parameters, remember to pass them to the `--cluster` flag in the runscripts. See [here](https://snakemake-on-nesi.sschmeier.com/snake.html#slurm-and-nesi-specific-setup) for a good working example of deploying a snakemake workflow to [NeSi](https://www.nesi.org.nz/).
 
-## 9. Modify the run scripts
+## 10. Modify the run scripts
 
 Set the singularity bind location to a directory that contains your pipeline working directory with the `--singularity-args '-B'` flag. Set the number maximum number of cores to be used with the `--cores` flag and the maximum amount of memory to be used (in megabytes) with the `resources mem_mb=` flag. If running GPU accelerated, also set the maximum number of GPU's to be used with the `--resources gpu=` flag. For example:
 
@@ -406,14 +412,6 @@ snakemake \
 ```
 
 See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/executable.html#all-options) for additional run parameters.
-
-## 10. Create and activate a conda environment with python and snakemake installed
-
-```bash
-cd ./workflow/
-mamba env create -f pipeline_run_env.yml
-conda activate pipeline_run_env
-```
 
 ## 11. Run the pipeline
 
