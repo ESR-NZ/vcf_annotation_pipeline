@@ -120,7 +120,7 @@ This software is commonly pre-installed on HPC's, likely available as modules th
 
 ```bash
 cd ./workflow/
-mamba env create -f pipeline_run_env.yml
+mamba env create -f ./envs/pipeline_run_env.yml
 conda activate pipeline_run_env
 ```
 
@@ -149,7 +149,7 @@ gsutil cp -r gs://genomics-public-data/resources/broad/hg38 /where/to/download/
 Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-mamba env create -f vep_database_install.yml
+mamba env create -f ./envs/vep_database_install.yml
 conda activate vep_database_install
 vep_install -a cf -s homo_sapiens -y GRCh37 -c /output/file/path/GRCh37 --CONVERT
 conda activate pipeline_run_env
@@ -169,7 +169,7 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-mamba env create -f vep_database_install.yml
+mamba env create -f ./envs/vep_database_install.yml
 conda activate vep_database_install
 vep_install -a cf -s homo_sapiens -y GRCh38 -c /output/file/path/GRCh38 --CONVERT
 conda activate pipeline_run_env
