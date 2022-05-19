@@ -146,14 +146,13 @@ gsutil cp -r gs://genomics-public-data/resources/broad/hg38 /where/to/download/
 
 ### GRCh37
 
-Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda version of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
+Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-conda create -n download_data_env python=3.7
-conda activate download_data_env
-conda install -c bioconda ensembl-vep=99.2
+mamba env create -f vep_database_install.yml
+conda activate vep_database_install
 vep_install -a cf -s homo_sapiens -y GRCh37 -c /output/file/path/GRCh37 --CONVERT
-conda deactivate
+conda activate pipeline_run_env
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
@@ -167,14 +166,13 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 ### GRCh38
 
-Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda install of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
+Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-mamba create -n download_data_env python=3.7
-conda activate download_data_env
-mamba install -c bioconda ensembl-vep=99.2
+mamba env create -f vep_database_install.yml
+conda activate vep_database_install
 vep_install -a cf -s homo_sapiens -y GRCh38 -c /output/file/path/GRCh38 --CONVERT
-conda deactivate
+conda activate pipeline_run_env
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
