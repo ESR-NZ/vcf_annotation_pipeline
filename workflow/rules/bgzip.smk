@@ -3,8 +3,8 @@ rule bgzip:
         "../results/annotated/{sample}_filtered_dbnsfp.vcf"
     output:
         temp("../results/annotated/{sample}_filtered_dbnsfp.vcf.gz")
-    conda:
-        "../envs/bgzip.yaml"
+    singularity:
+        "docker://staphb/samtools:1.15"
     message:
         "Bgzipping {input}"
     shell:

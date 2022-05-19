@@ -9,8 +9,8 @@ rule bcftools_view_multiallelicsites:
         "logs/bcftools_view_multiallelicsites/{sample}.log"
     benchmark:
         "benchmarks/bcftools_view_multiallelicsites/{sample}.tsv"
-    conda:
-        "../envs/bcftools.yaml"
+    singularity:
+        "docker://biocontainers/bcftools:v1.9-1-deb_cv1"
     message:
         "Filtering out multiallelic sites in {input}"
     shell:
