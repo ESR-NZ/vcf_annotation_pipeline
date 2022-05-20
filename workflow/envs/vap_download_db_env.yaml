@@ -1,4 +1,4 @@
-name: vep_database_install
+name: vap_download_db_env
 channels:
   - conda-forge
   - bioconda
@@ -6,19 +6,40 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
-  - binutils_impl_linux-64=2.36.1=h193b22a_2
-  - binutils_linux-64=2.36=hf3e587d_9
+  - aiohttp=3.8.1=py37h540881e_1
+  - aiosignal=1.2.0=pyhd8ed1ab_0
+  - argcomplete=2.0.0=pyhd8ed1ab_0
+  - async-timeout=4.0.2=pyhd8ed1ab_0
+  - asynctest=0.13.0=py_0
+  - attrs=21.4.0=pyhd8ed1ab_0
+  - boto=2.49.0=py_0
+  - brotlipy=0.7.0=py37h540881e_1004
   - bzip2=1.0.8=h7f98852_4
   - c-ares=1.18.1=h7f98852_0
-  - ca-certificates=2022.5.18=ha878542_0
+  - ca-certificates=2022.5.18.1=ha878542_0
+  - cachetools=5.0.0=pyhd8ed1ab_0
+  - certifi=2022.5.18.1=py37h89c1867_0
+  - cffi=1.15.0=py37hd667e15_1
+  - charset-normalizer=2.0.12=pyhd8ed1ab_0
   - clustalw=2.1=h9f5acd7_7
+  - crcmod=1.7=py37h540881e_1008
+  - cryptography=37.0.2=py37h38fbfac_0
   - curl=7.83.1=h7bff187_0
   - ensembl-vep=106.1=pl5321h4a94de4_0
   - expat=2.4.8=h27087fc_0
-  - gcc_impl_linux-64=10.3.0=hf2f2afa_16
-  - gcc_linux-64=10.3.0=hc39de41_9
+  - fasteners=0.17.3=pyhd8ed1ab_0
+  - frozenlist=1.3.0=py37h540881e_1
+  - gcs-oauth2-boto-plugin=3.0=pyhd8ed1ab_0
+  - gettext=0.19.8.1=h0b5b191_1005
+  - google-apitools=0.5.32=pyhd8ed1ab_0
+  - google-auth=2.6.6=pyh6c4a22f_0
+  - google-reauth=0.1.1=pyhd3deb0d_0
+  - gsutil=5.10=pyhd8ed1ab_0
   - htslib=1.14=h9753748_2
-  - kernel-headers_linux-64=2.6.32=he073ed8_15
+  - httplib2=0.20.4=pyhd8ed1ab_0
+  - idna=3.3=pyhd8ed1ab_0
+  - importlib-metadata=4.11.3=py37h89c1867_1
+  - importlib_metadata=4.11.3=hd8ed1ab_1
   - keyutils=1.6.1=h166bdaf_0
   - krb5=1.19.3=h3790be6_0
   - ld_impl_linux-64=2.36.1=hea4e1c9_2
@@ -28,17 +49,20 @@ dependencies:
   - libedit=3.1.20191231=he28a2e2_2
   - libev=4.33=h516909a_1
   - libffi=3.3=h58526e2_2
-  - libgcc-devel_linux-64=10.3.0=he6cfe16_16
   - libgcc-ng=12.1.0=h8d9b700_16
   - libgomp=12.1.0=h8d9b700_16
+  - libidn2=2.3.2=h7f98852_0
   - libnghttp2=1.47.0=h727a467_0
   - libnsl=2.0.0=h7f98852_0
-  - libsanitizer=10.3.0=h26c7422_16
   - libssh2=1.10.0=ha56f1ee_2
   - libstdcxx-ng=12.1.0=ha89aaad_16
+  - libunistring=0.9.10=h7f98852_0
   - libzlib=1.2.11=h166bdaf_1014
+  - monotonic=1.5=py_0
+  - multidict=6.0.2=py37h540881e_1
   - mysql-connector-c=6.1.11=h6eb9d5d_1007
   - ncurses=6.3=h27087fc_1
+  - oauth2client=4.1.3=py_0
   - openssl=1.1.1o=h166bdaf_0
   - paml=4.9=hec16e2b_7
   - perl=5.32.1=2_h7f98852_perl5
@@ -67,9 +91,8 @@ dependencies:
   - perl-constant=1.33=pl5321hd8ed1ab_0
   - perl-data-dumper=2.183=pl5321hec16e2b_1
   - perl-db_file=1.858=pl5321h166bdaf_0
-  - perl-dbd-mysql=4.050=pl5321h9f5acd7_0
+  - perl-dbd-mysql=4.046=pl5321h9f5acd7_4
   - perl-dbi=1.643=pl5321hec16e2b_1
-  - perl-devel-checklib=1.14=pl5321hec16e2b_1
   - perl-devel-stacktrace=2.04=pl5321hdfd78af_1
   - perl-digest-hmac=1.04=pl5321hdfd78af_0
   - perl-digest-md5=2.58=pl5321hec16e2b_1
@@ -135,17 +158,33 @@ dependencies:
   - perl-xml-parser=2.44_01=pl5321hc3e0081_1003
   - perl-xml-regexp=0.04=pl5321hdfd78af_3
   - perl-xml-xpathengine=0.14=pl5321hdfd78af_3
-  - pip=22.1=pyhd8ed1ab_0
+  - pip=22.0.4=pyhd8ed1ab_0
+  - pyasn1=0.4.8=py_0
+  - pyasn1-modules=0.2.7=py_0
+  - pycparser=2.21=pyhd8ed1ab_0
+  - pyopenssl=22.0.0=pyhd8ed1ab_0
+  - pyparsing=3.0.9=pyhd8ed1ab_0
+  - pysocks=1.7.1=py37h89c1867_5
   - python=3.7.13=h12debd9_0
   - python_abi=3.7=2_cp37m
+  - pyu2f=0.1.5=pyhd8ed1ab_0
   - readline=8.1=h46c0cb4_0
-  - setuptools=62.3.1=py37h89c1867_0
+  - requests=2.27.1=pyhd8ed1ab_0
+  - retry_decorator=1.1.1=pyh9f0ad1d_0
+  - rsa=4.8=pyhd8ed1ab_0
+  - setuptools=62.3.2=py37h89c1867_0
+  - six=1.16.0=pyh6c4a22f_0
+  - socksipy-branch=1.01=pyh9f0ad1d_0
   - sqlite=3.38.5=h4ff8645_0
-  - sysroot_linux-64=2.12=he073ed8_15
   - t_coffee=11.0.8=py37hea885bf_8
   - tk=8.6.12=h27826a3_0
+  - typing-extensions=4.2.0=hd8ed1ab_1
+  - typing_extensions=4.2.0=pyha770c72_1
   - unzip=6.0=h7f98852_3
+  - urllib3=1.26.9=pyhd8ed1ab_0
+  - wget=1.20.3=ha56f1ee_1
   - wheel=0.37.1=pyhd8ed1ab_0
   - xz=5.2.5=h516909a_1
+  - yarl=1.7.2=py37h540881e_2
+  - zipp=3.8.0=pyhd8ed1ab_0
   - zlib=1.2.11=h166bdaf_1014
-prefix: /home/lkemp/miniconda3/envs/vep_database_install
