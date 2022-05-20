@@ -3,6 +3,6 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - conda-forge::pip =20.2.2
+  - conda-forge::pip=22.0.4=pyhd8ed1ab_0
   - pip:
     - gunzip==0.1.10
