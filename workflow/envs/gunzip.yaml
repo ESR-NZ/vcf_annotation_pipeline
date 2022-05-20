@@ -1,3 +1,4 @@
+name: gunzip_env
 channels:
   - bioconda
   - conda-forge
