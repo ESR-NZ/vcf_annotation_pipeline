@@ -154,6 +154,17 @@ Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.ht
 vep_install -a cf -s homo_sapiens -y GRCh37 -c ./GRCh37 --CONVERT
 ```
 
+The same version of [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) that is run in the pipeline needs to be used to create the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database, therefore, if prompted to install a newer version of ensembl-vep, choose `continue (n)`. For example:
+
+```bash
+
+Version check reports a newer release of 'ensembl-vep' is available (installed: 105, available: 106)
+
+You should exit this installer and re-download 'ensembl-vep' if you wish to update
+
+Do you wish to exit so you can get updates (y) or continue (n): n
+```
+
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
 
 ```bash
@@ -169,6 +180,17 @@ Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) 
 
 ```bash
 vep_install -a cf -s homo_sapiens -y GRCh38 -c /output/file/path/GRCh38 --CONVERT
+```
+
+The same version of [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) that is run in the pipeline needs to be used to create the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database, therefore, if prompted to install a newer version of ensembl-vep, choose `continue (n)`. For example:
+
+```bash
+
+Version check reports a newer release of 'ensembl-vep' is available (installed: 105, available: 106)
+
+You should exit this installer and re-download 'ensembl-vep' if you wish to update
+
+Do you wish to exit so you can get updates (y) or continue (n): n
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
