@@ -151,10 +151,7 @@ gsutil -m cp -r gs://genomics-public-data/resources/broad/hg38 /where/to/downloa
 Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-mamba env create -f ./envs/vep_database_install.yml
-conda activate vep_database_install
 vep_install -a cf -s homo_sapiens -y GRCh37 -c ./GRCh37 --CONVERT
-conda activate pipeline_run_env
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
@@ -171,10 +168,7 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-mamba env create -f ./envs/vep_database_install.yml
-conda activate vep_database_install
 vep_install -a cf -s homo_sapiens -y GRCh38 -c /output/file/path/GRCh38 --CONVERT
-conda activate pipeline_run_env
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
