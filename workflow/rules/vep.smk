@@ -15,7 +15,7 @@ rule vep:
     benchmark:
         "benchmarks/vep/{sample}.tsv"
     singularity:
-        "docker://ensemblorg/ensembl-vep:release_106.1"
+        "docker://ensemblorg/ensembl-vep:release_105.0"
     threads: config['THREADS']
     message:
         "Using the VEP database to determine the effect of the variants in {input.vcf}"
