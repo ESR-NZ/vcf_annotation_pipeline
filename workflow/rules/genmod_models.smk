@@ -11,8 +11,8 @@ rule genmod_models:
         "logs/genmod_models/{sample}.log"
     benchmark:
         "benchmarks/genmod_models/{sample}.tsv"
-    singularity:
-        "docker://clinicalgenomics/genmod:3.7.4"
+    conda:
+        "../envs/genmod.yaml"
     threads: config['THREADS']
     message:
         "Annotating {input.vcf} with patterns of inheritance"

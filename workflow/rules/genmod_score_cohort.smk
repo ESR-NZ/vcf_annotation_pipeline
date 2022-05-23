@@ -10,8 +10,8 @@ rule genmod_score_cohort:
         "logs/genmod_score/{sample}.log"
     benchmark:
         "benchmarks/genmod_score/{sample}.tsv"
-    singularity:
-        "docker://clinicalgenomics/genmod:3.7.4"
+    conda:
+        "../envs/genmod.yaml"
     message:
         "Scoring the variants in {input.vcf} based on several annotations"
     shell:

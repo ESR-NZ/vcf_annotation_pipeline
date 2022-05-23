@@ -8,8 +8,8 @@ rule genmod_annotate_CADD:
         "logs/genmod_annotate_CADD/{sample}.log"
     benchmark:
         "benchmarks/genmod_annotate_CADD/{sample}.tsv"
-    singularity:
-        "docker://clinicalgenomics/genmod:3.7.4"
+    conda:
+        "../envs/genmod.yaml"
     message:
         "Using genmod to annotate {input.vcf} with CADD"
     shell:
