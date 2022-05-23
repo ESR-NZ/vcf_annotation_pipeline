@@ -4,7 +4,7 @@ rule bgzip:
     output:
         temp("../results/annotated/{sample}_filtered_dbnsfp.vcf.gz")
     singularity:
-        "docker://biocontainers/samtools:v1.9-4-deb_cv1"
+        "docker://staphb/htslib:1.15"
     message:
         "Bgzipping {input}"
     shell:
