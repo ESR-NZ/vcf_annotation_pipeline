@@ -6,4 +6,4 @@ channels:
 dependencies:
   - conda-forge::pip=22.1.1=pyhd8ed1ab_0
   - pip:
-    - genmod==3.7.4
+    - genmod==3.7.3
