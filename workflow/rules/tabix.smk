@@ -3,8 +3,8 @@ rule tabix:
         "../results/annotated/{sample}_filtered_dbnsfp.vcf.gz"
     output:
         temp("../results/annotated/{sample}_filtered_dbnsfp.vcf.gz.tbi")
-    conda:
-        "../envs/bgzip.yaml"
+    singularity:
+        "docker://staphb/htslib:1.15"
     message:
         "Tabix indexing {input}"
     shell:

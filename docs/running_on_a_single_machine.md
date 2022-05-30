@@ -9,26 +9,27 @@
   - [3. Setup files and directories](#3-setup-files-and-directories)
     - [Test data](#test-data)
   - [4. Get prerequisite software/hardware](#4-get-prerequisite-softwarehardware)
-  - [5. Create a local copy of the GATK resource bundle (either b37 or hg38)](#5-create-a-local-copy-of-the-gatk-resource-bundle-either-b37-or-hg38)
+  - [5. Create and activate a conda environment with software for downloading databases](#5-create-and-activate-a-conda-environment-with-software-for-downloading-databases)
+  - [6. Create a local copy of the GATK resource bundle (either b37 or hg38)](#6-create-a-local-copy-of-the-gatk-resource-bundle-either-b37-or-hg38)
     - [b37](#b37)
     - [hg38](#hg38)
-  - [6. Create a local copy of other databases (either GRCh37 or GRCh38)](#6-create-a-local-copy-of-other-databases-either-grch37-or-grch38)
+  - [7. Create a local copy of other databases (either GRCh37 or GRCh38)](#7-create-a-local-copy-of-other-databases-either-grch37-or-grch38)
     - [GRCh37](#grch37)
     - [GRCh38](#grch38)
-  - [7. Modify the configuration file](#7-modify-the-configuration-file)
+  - [8. Modify the configuration file](#8-modify-the-configuration-file)
     - [Overall workflow](#overall-workflow)
     - [Pipeline resources](#pipeline-resources)
     - [Variant filtering](#variant-filtering)
       - [Single samples](#single-samples)
       - [Cohort samples](#cohort-samples)
     - [VCF annotation](#vcf-annotation)
-  - [8. Modify the run scripts](#8-modify-the-run-scripts)
-  - [9. Create and activate a conda environment with python and snakemake installed](#9-create-and-activate-a-conda-environment-with-python-and-snakemake-installed)
-  - [10. Run the pipeline](#10-run-the-pipeline)
-  - [11. Evaluate the pipeline run](#11-evaluate-the-pipeline-run)
-  - [12. Commit and push to your forked version of the github repo](#12-commit-and-push-to-your-forked-version-of-the-github-repo)
-  - [13. Repeat step 12 each time you re-run the analysis with different parameters](#13-repeat-step-12-each-time-you-re-run-the-analysis-with-different-parameters)
-  - [14. Raise issues, create feature requests or create a pull request with the upstream repo to merge any useful changes to the pipeline (optional)](#14-raise-issues-create-feature-requests-or-create-a-pull-request-with-the-upstream-repo-to-merge-any-useful-changes-to-the-pipeline-optional)
+  - [9. Modify the run scripts](#9-modify-the-run-scripts)
+  - [10. Create and activate a conda environment with software for running the pipeline](#10-create-and-activate-a-conda-environment-with-software-for-running-the-pipeline)
+  - [11. Run the pipeline](#11-run-the-pipeline)
+  - [12. Evaluate the pipeline run](#12-evaluate-the-pipeline-run)
+  - [13. Commit and push to your forked version of the github repo](#13-commit-and-push-to-your-forked-version-of-the-github-repo)
+  - [14. Repeat step 13 each time you re-run the analysis with different parameters](#14-repeat-step-13-each-time-you-re-run-the-analysis-with-different-parameters)
+  - [15. Raise issues, create feature requests or create a pull request with the upstream repo to merge any useful changes to the pipeline (optional)](#15-raise-issues-create-feature-requests-or-create-a-pull-request-with-the-upstream-repo-to-merge-any-useful-changes-to-the-pipeline-optional)
 
 ## 1. Fork the pipeline repo to a personal or lab account
 
@@ -105,26 +106,34 @@ bash ./test/setup_test.sh -a cohort
 
 ## 4. Get prerequisite software/hardware
 
-For GPU accelerated runs, you'll need [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) and [NVIDIA CLARA PARABRICKS and dependencies](https://www.nvidia.com/en-us/docs/parabricks/local-installation/). Talk to your system administrator to see if the HPC has this hardware and software available.
+For GPU accelerated runs, you'll need [NVIDIA GPUs](https://www.nvidia.com/en-gb/graphics-cards/) (tested with NVIDIA V100) and [NVIDIA CLARA PARABRICKS and dependencies](https://www.nvidia.com/en-us/docs/parabricks/local-installation/) (tested with parabricks version 3.6.1-1). Talk to your system administrator to see if the HPC has this hardware and software available.
 
 Other software required to get setup and run the pipeline:
 
-- [Git](https://git-scm.com/) (tested with version 2.7.4)
-- [Conda](https://docs.conda.io/projects/conda/en/latest/index.html) (tested with version 4.8.2)
-- [Mamba](https://github.com/TheSnakePit/mamba) (tested with version 0.4.4) (note. [mamba can be installed via conda with a single command](https://mamba.readthedocs.io/en/latest/installation.html#existing-conda-install))
-- [gsutil](https://pypi.org/project/gsutil/) (tested with version 4.52)
-- [gunzip](https://linux.die.net/man/1/gunzip) (tested with version 1.6)
+- [Git](https://git-scm.com/) (tested with version 1.8.3.1)
+- [Conda](https://docs.conda.io/projects/conda/en/latest/index.html) (tested with version 4.11.0)
+- [Mamba](https://github.com/TheSnakePit/mamba) (tested with version 0.19.1) (note. [mamba can be installed via conda with a single command](https://mamba.readthedocs.io/en/latest/installation.html#existing-conda-install))
 
-Most of this software is commonly pre-installed on HPC's, likely available as modules that can be loaded. Talk to your system administrator if you need help with this.
+This software is commonly pre-installed on HPC's, likely available as modules that can be loaded. Talk to your system administrator if you need help with this.
 
-## 5. Create a local copy of the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle) (either b37 or hg38)
+## 5. Create and activate a conda environment with software for downloading databases
+
+This installs [gsutil](https://cloud.google.com/storage/docs/gsutil), [ensembl-vep](https://grch37.ensembl.org/info/docs/tools/vep/index.html), [wget](https://www.gnu.org/software/wget/) and their dependencies
+
+```bash
+cd ./workflow/
+mamba env create -f ./envs/vap_download_db_env.yaml
+conda activate vap_download_db_env
+```
+
+## 6. Create a local copy of the [GATK resource bundle](https://gatk.broadinstitute.org/hc/en-us/articles/360035890811-Resource-bundle) (either b37 or hg38)
 
 ### b37
 
 Download from [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/gatk-legacy-bundles/b37?prefix=)
 
 ```bash
-gsutil cp -r gs://gatk-legacy-bundles/b37 /where/to/download/
+gsutil -m cp -r gs://gatk-legacy-bundles/b37 /where/to/download/
 ```
 
 ### hg38
@@ -132,21 +141,28 @@ gsutil cp -r gs://gatk-legacy-bundles/b37 /where/to/download/
 Download from [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/genomics-public-data/resources/broad/hg38/v0)
 
 ```bash
-gsutil cp -r gs://genomics-public-data/resources/broad/hg38 /where/to/download/
+gsutil -m cp -r gs://genomics-public-data/resources/broad/hg38 /where/to/download/
 ```
 
-## 6. Create a local copy of other databases (either GRCh37 or GRCh38)
+## 7. Create a local copy of other databases (either GRCh37 or GRCh38)
 
 ### GRCh37
 
-Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda version of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
+Download the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-conda create -n download_data_env python=3.7
-conda activate download_data_env
-conda install -c bioconda ensembl-vep=99.2
-vep_install -a cf -s homo_sapiens -y GRCh37 -c /output/file/path/GRCh37 --CONVERT
-conda deactivate
+vep_install -a cf -s homo_sapiens -y GRCh37 -c ./GRCh37 --CONVERT
+```
+
+The same version of [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) that is run in the pipeline needs to be used to create the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database, therefore, if prompted to install a newer version of ensembl-vep, choose `continue (n)`. For example:
+
+```bash
+
+Version check reports a newer release of 'ensembl-vep' is available (installed: 105, available: 106)
+
+You should exit this installer and re-download 'ensembl-vep' if you wish to update
+
+Do you wish to exit so you can get updates (y) or continue (n): n
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
@@ -160,14 +176,21 @@ Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) 
 
 ### GRCh38
 
-Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database using a [conda install of Ensembl-VEP](https://anaconda.org/bioconda/ensembl-vep)
+Download [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database
 
 ```bash
-mamba create -n download_data_env python=3.7
-conda activate download_data_env
-mamba install -c bioconda ensembl-vep=99.2
 vep_install -a cf -s homo_sapiens -y GRCh38 -c /output/file/path/GRCh38 --CONVERT
-conda deactivate
+```
+
+The same version of [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) that is run in the pipeline needs to be used to create the [Ensembl-VEP](https://asia.ensembl.org/info/docs/tools/vep/index.html) database, therefore, if prompted to install a newer version of ensembl-vep, choose `continue (n)`. For example:
+
+```bash
+
+Version check reports a newer release of 'ensembl-vep' is available (installed: 105, available: 106)
+
+You should exit this installer and re-download 'ensembl-vep' if you wish to update
+
+Do you wish to exit so you can get updates (y) or continue (n): n
 ```
 
 Download the [CADD database](https://cadd.gs.washington.edu/download) and it's associated index file.
@@ -179,7 +202,7 @@ wget https://krishna.gs.washington.edu/download/CADD/v1.5/GRCh38/whole_genome_SN
 
 Create a custom [dbNSFP database](https://sites.google.com/site/jpopgen/dbNSFP) build by following [this documentation](https://github.com/GenomicsAotearoa/dbNSFP_build)
 
-## 7. Modify the configuration file
+## 8. Modify the configuration file
 
 Edit 'config.yaml' found within the config directory.
 
@@ -261,7 +284,7 @@ Set the maximum number of GPU's to be used per rule/sample for gpu-accelerated r
 GPU: 1
 ```
 
-It is a good idea to consider the number of samples that you are processing. For example, if you set `THREADS: "8"` and set the maximum number of cores to be used by the pipeline in the run script to `-j/--cores 32` (see [step 8](#8-modify-the-run-scripts)), a maximum of 3 samples will be able to run at one time for these rules (if they are deployed at the same time), but each sample will complete faster. In contrast, if you set `THREADS: "1"` and `-j/--cores 32`, a maximum of 32 samples could be run at one time, but each sample will take longer to complete. This also needs to be considered when setting `MAXMEMORY` + `--resources mem_mb` and `GPU` + `--resources gpu`.
+It is a good idea to consider the number of samples that you are processing. For example, if you set `THREADS: "8"` and set the maximum number of jobs to be run in the run script to `-j/--jobs 32` (see [step 8](#8-modify-the-run-scripts)), a maximum of 3 samples will be able to run at one time for these rules (if they are deployed at the same time), but each sample will complete faster. In contrast, if you set `THREADS: "1"` and `-j/--jobs 32`, a maximum of 32 samples could be run at one time, but each sample will take longer to complete. This also needs to be considered when setting `MAXMEMORY` + `--resources mem_mb` and `GPU` + `--resources gpu`.
 
 ### Variant filtering
 
@@ -340,16 +363,18 @@ dbNSFP: "/scratch/publicData/dbNSFP/GRCh37/dbNSFPv4.0a.hg19.custombuild.gz"
 CADD: "/scratch/publicData/CADD/GRCh37/whole_genome_SNVs.tsv.gz"
 ```
 
-## 8. Modify the run scripts
+## 9. Modify the run scripts
 
-Set the singularity bind location to a directory that contains your pipeline working directory with the `--singularity-args '-B'` flag. Set the number maximum number of cores to be used with the `--cores` flag and the maximum amount of memory to be used (in megabytes) with the `resources mem_mb=` flag. If running GPU accelerated, also set the maximum number of GPU's to be used with the `--resources gpu=` flag. For example:
+Set the singularity bind location to a directory that contains your pipeline working directory with the `--singularity-args '-B'` flag. Set the number maximum number of job to be deployed with the `--jobs` flag and the maximum amount of memory to be used (in megabytes) with the `resources mem_mb=` flag. If running GPU accelerated, also set the maximum number of GPU's to be used with the `--resources gpu=` flag. For example:
 
 Dry run (dryrun_hpc.sh):
 
 ```bash
+#!/bin/bash -x
+
 snakemake \
 --dryrun \
---cores 32 \
+--jobs 32 \
 --resources mem_mb=150000 \
 --resources gpu=2 \
 --use-conda \
@@ -357,18 +382,16 @@ snakemake \
 --latency-wait 120 \
 --use-singularity \
 --singularity-args '-B /scratch/' \
---configfile ../config/config.yaml \
---cluster-config ../config/cluster.json \
---cluster "sbatch -A {cluster.account} \
--p {cluster.partition} \
--o {cluster.output}"
+--configfile ../config/config.yaml
 ```
 
 Full run (run_hpc.sh):
 
 ```bash
+#!/bin/bash -x
+
 snakemake \
---cores 32 \
+--jobs 32 \
 --resources mem_mb=150000 \
 --resources gpu=2 \
 --use-conda \
@@ -376,24 +399,21 @@ snakemake \
 --latency-wait 120 \
 --use-singularity \
 --singularity-args '-B /scratch/' \
---configfile ../config/config.yaml \
---cluster-config ../config/cluster.json \
---cluster "sbatch -A {cluster.account} \
--p {cluster.partition} \
--o {cluster.output}"
+--configfile ../config/config.yaml
 ```
 
 See the [snakemake documentation](https://snakemake.readthedocs.io/en/v4.5.1/executable.html#all-options) for additional run parameters.
 
-## 9. Create and activate a conda environment with python and snakemake installed
+## 10. Create and activate a conda environment with software for running the pipeline
+
+This installs [snakemake](https://snakemake.github.io/) and it's dependencies
 
 ```bash
-cd ./workflow/
-mamba env create -f pipeline_run_env.yml
+mamba env create -f ./envs/pipeline_run_env.yaml
 conda activate pipeline_run_env
 ```
 
-## 10. Run the pipeline
+## 11. Run the pipeline
 
 First carry out a dry run
 
@@ -407,7 +427,7 @@ If there are no issues, start a full run
 bash run_hpc.sh
 ```
 
-## 11. Evaluate the pipeline run
+## 12. Evaluate the pipeline run
 
 Generate an interactive html report
 
@@ -415,16 +435,17 @@ Generate an interactive html report
 bash report.sh
 ```
 
-## 12. Commit and push to your forked version of the github repo
+## 13. Commit and push to your forked version of the github repo
 
 To maintain reproducibility, commit and push:
 
+- All documentation
 - All configuration files
 - All run scripts
 - The final report
 
-## 13. Repeat step 12 each time you re-run the analysis with different parameters
+## 14. Repeat step 13 each time you re-run the analysis with different parameters
 
-## 14. Raise issues, create feature requests or create a pull request with the [upstream repo](https://github.com/ESR-NZ/vcf_annotation_pipeline) to merge any useful changes to the pipeline (optional)
+## 15. Raise issues, create feature requests or create a pull request with the [upstream repo](https://github.com/ESR-NZ/vcf_annotation_pipeline) to merge any useful changes to the pipeline (optional)
 
 See [the README](https://github.com/ESR-NZ/vcf_annotation_pipeline/blob/dev/README.md#contribute-back) for info on how to contribute back to the pipeline!

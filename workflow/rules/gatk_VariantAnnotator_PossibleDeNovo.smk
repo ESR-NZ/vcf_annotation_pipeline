@@ -13,8 +13,8 @@ rule gatk_VariantAnnotator_PossibleDeNovo:
         "logs/gatk_VariantAnnotator_PossibleDeNovo/{sample}.log"
     benchmark:
         "benchmarks/gatk_VariantAnnotator_PossibleDeNovo/{sample}.tsv"
-    conda:
-        "../envs/gatk4.yaml"
+    singularity:
+        "docker://broadinstitute/gatk:4.2.6.1"
     message:
         "Marking variants in {input.vcf} that are possible denovo mutations"
     shell:

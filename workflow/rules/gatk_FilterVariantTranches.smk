@@ -16,7 +16,7 @@ rule gatk_FilterVariantTranches:
     benchmark:
         "benchmarks/gatk_FilterVariantTranches/{sample}.tsv"
     singularity:
-        "docker://broadinstitute/gatk:4.1.7.0"
+        "docker://broadinstitute/gatk:4.2.6.1"
     message:
         "Applying tranche filtering to variant calls in {input}"
     shell:

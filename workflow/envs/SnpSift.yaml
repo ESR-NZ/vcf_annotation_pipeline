@@ -1,6 +1,7 @@
+name: snpsift_env
 channels:
   - bioconda
   - conda-forge
   - defaults
 dependencies:
-  - bioconda::snpsift =4.3.1t
+  - bioconda::snpsift=5.1=hdfd78af_0

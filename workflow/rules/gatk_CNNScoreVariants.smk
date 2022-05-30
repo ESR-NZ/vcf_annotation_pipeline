@@ -16,7 +16,7 @@ rule gatk_CNNScoreVariants:
     benchmark:
         "benchmarks/gatk_CNNScoreVariants/{sample}.tsv"
     singularity:
-        "docker://broadinstitute/gatk:4.1.7.0"
+        "docker://broadinstitute/gatk:4.2.6.1"
     threads: config['THREADS']
     message:
         "Annotating {input.vcf} with scores from a Convolutional Neural Network (CNN) (2D model with pre-trained architecture)"

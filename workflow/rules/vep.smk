@@ -9,13 +9,13 @@ rule vep:
         vcf = temp("../results/annotated/{sample}_filtered_dbnsfp_vep.vcf.gz")
     params:
         build = config['BUILD'],
-        other = "--compress_output bgzip --cache --offline --stats_text --everything --vcf --force_overwrite"
+        other = "--compress_output bgzip --offline --stats_text --everything --vcf --force_overwrite"
     log: 
         "logs/vep/{sample}.log"
     benchmark:
         "benchmarks/vep/{sample}.tsv"
-    conda:
-        "../envs/vep.yaml"
+    singularity:
+        "docker://ensemblorg/ensembl-vep:release_105.0"
     threads: config['THREADS']
     message:
         "Using the VEP database to determine the effect of the variants in {input.vcf}"
